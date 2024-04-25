@@ -152,6 +152,8 @@ public class MainMenuManager : MonoBehaviour
             _saveFiles[index].SaveFileButton.onClick.AddListener(delegate { LoadSaveFile(_saveFiles[index]); });
             _saveFiles[index].DeleteFileButton.onClick.AddListener(delegate { DeleteSaveFileButton(index); });
         }
+
+        _firstLoadButton = _saveFiles[0].gameObject;
     }
 
     public void NewGame()
