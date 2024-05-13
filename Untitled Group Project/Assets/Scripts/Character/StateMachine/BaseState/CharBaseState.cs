@@ -46,8 +46,6 @@ public abstract class CharBaseState
 
     public abstract void FixedUpdateState();
 
-    public abstract void LateUpdateState();
-
     public abstract void CheckSwitchStates();
 
     public abstract void InitializeSubState();
@@ -69,15 +67,6 @@ public abstract class CharBaseState
         if (_currentSubState != null)
         {
             _currentSubState.FixedUpdateState();
-        }
-    }
-
-    public void LateUpdateStates()
-    {
-        LateUpdateState();
-        if (_currentSubState != null)
-        {
-            _currentSubState.LateUpdateState();
         }
     }
 

@@ -29,11 +29,6 @@ public class TestSubState : CharBaseState
 
     }
 
-    public override void LateUpdateState()
-    {
-
-    }
-
     public override void CheckSwitchStates()
     {
 
