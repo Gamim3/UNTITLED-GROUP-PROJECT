@@ -29,11 +29,6 @@ public class TestUltraState : CharBaseState
 
     }
 
-    public override void LateUpdateState()
-    {
-
-    }
-
     public override void CheckSwitchStates()
     {
 
@@ -41,6 +36,6 @@ public class TestUltraState : CharBaseState
 
     public override void InitializeSubState()
     {
-        SetSubState(Factory.Super());
+        // SetSubState(Factory.Super());
     }
 }
