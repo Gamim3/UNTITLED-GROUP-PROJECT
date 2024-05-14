@@ -33,7 +33,8 @@ public class KeyRebinding : MonoBehaviour
 
     public static void StartRebind(InputActionReference actionReference, bool excludeMouse, int actionIndex)
     {
-        Debug.Log(actionReference.action.name + " " + actionIndex);
+        Debug.Log("STARTED REBIND");
+        // Debug.Log(actionReference.action.name + " " + actionIndex);
         InputAction action = _playerInput.actions.FindAction(actionReference.action.name);
 
         if (action == null)

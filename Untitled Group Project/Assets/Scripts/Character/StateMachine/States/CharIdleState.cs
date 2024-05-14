@@ -6,8 +6,6 @@ public class CharIdleState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("IDLE ENTER");
-
         InitializeSubState();
     }
 
@@ -18,8 +16,6 @@ public class CharIdleState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("IDLE UPDATE");
-
         CheckSwitchStates();
     }
 

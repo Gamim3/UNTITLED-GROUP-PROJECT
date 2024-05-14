@@ -47,7 +47,7 @@ public class ThirdPersonCam : MonoBehaviour
 
         for (int i = 0; i < _cinemachineCams.Count; i++)
         {
-            DontDestroyOnLoad(_cinemachineCams[i]);
+            // DontDestroyOnLoad(_cinemachineCams[i]);
         }
 
         _orientation = _stateMachine.Orientation;

@@ -9,8 +9,6 @@ public class CharWalkState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("WALK ENTER");
-
         InitializeSubState();
     }
 
@@ -21,8 +19,6 @@ public class CharWalkState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("WALK UPDATE");
-
         CheckSwitchStates();
     }
 
