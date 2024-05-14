@@ -86,7 +86,6 @@ public class CraftingManager : MonoBehaviour
             for (int i = 0; i < selectedRecipeToCraft.itemsNeeded.Length; i++)
             {
                 InventoryManager.Instance.UseItem(selectedRecipeToCraft.itemsNeeded[i].item.itemID, selectedRecipeToCraft.itemsNeeded[i].amount);
-                Debug.Log("Harold IK EET NU ITEMS");
             }
             InventoryManager.Instance.AddItem(selectedRecipeToCraft.itemToCraft.itemID, selectedRecipeToCraft.amountToCraft);
             InventoryManager.Instance.UpdateItemsInfoList();
@@ -97,7 +96,7 @@ public class CraftingManager : MonoBehaviour
         }
     }
 
-    public void RecipeButton(int itemID)
+    public void AddRecipeButton(int itemID)
     {
         for (int r = 0; r < allRecipes.Length; r++)
         {
@@ -118,7 +117,7 @@ public class CraftingManager : MonoBehaviour
             }
         }
 
-        Debug.LogError("Item Index Does Not Exist As Item");
+        Debug.LogError("Item ID Does Not Exist");
     }
 
     public void AddRecipe(Recipe recipe)
