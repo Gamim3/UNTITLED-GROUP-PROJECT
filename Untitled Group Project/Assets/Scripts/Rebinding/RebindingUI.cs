@@ -84,13 +84,13 @@ public class RebindingUI : MonoBehaviour
             {
                 if (Application.isPlaying)
                 {
-                    _keyboardKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_keyboardKeybinds[i]);
-                    _inputTest = KeyRebinding.GetBindingName(_keyboardKeybinds[i]);
+                    _keyboardKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_keyboardKeybinds[i]._inputActionReference, _keyboardKeybinds[i]._actionIndex);
+                    _inputTest = KeyRebinding.GetBindingName(_keyboardKeybinds[i]._inputActionReference, _keyboardKeybinds[i]._actionIndex);
                 }
                 else
                 {
-                    _keyboardKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_keyboardKeybinds[i]);
-                    _inputTest = KeyRebinding.GetBindingName(_keyboardKeybinds[i]);
+                    _keyboardKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_keyboardKeybinds[i]._inputActionReference, _keyboardKeybinds[i]._actionIndex);
+                    _inputTest = KeyRebinding.GetBindingName(_keyboardKeybinds[i]._inputActionReference, _keyboardKeybinds[i]._actionIndex);
                 }
 
             }
@@ -101,11 +101,11 @@ public class RebindingUI : MonoBehaviour
             {
                 if (Application.isPlaying)
                 {
-                    _controllerKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_controllerKeybinds[i]);
+                    _controllerKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_controllerKeybinds[i]._inputActionReference, _controllerKeybinds[i]._actionIndex);
                 }
                 else
                 {
-                    _controllerKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_controllerKeybinds[i]);
+                    _controllerKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_controllerKeybinds[i]._inputActionReference, _controllerKeybinds[i]._actionIndex);
                 }
 
             }
@@ -116,11 +116,11 @@ public class RebindingUI : MonoBehaviour
             {
                 if (Application.isPlaying)
                 {
-                    _combinedKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_combinedKeybinds[i]);
+                    _combinedKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_combinedKeybinds[i]._inputActionReference, _combinedKeybinds[i]._actionIndex);
                 }
                 else
                 {
-                    _combinedKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_combinedKeybinds[i]);
+                    _combinedKeybinds[i]._actionTxt.text = KeyRebinding.GetBindingName(_combinedKeybinds[i]._inputActionReference, _combinedKeybinds[i]._actionIndex);
                 }
 
             }
@@ -138,12 +138,12 @@ public class RebindingUI : MonoBehaviour
 
     public void KeyboardRebindBtn(int keybindIndex)
     {
-        KeyRebinding.StartRebind(_keyboardKeybinds[keybindIndex]);
+        KeyRebinding.StartRebind(_keyboardKeybinds[keybindIndex]._inputActionReference, _keyboardKeybinds[keybindIndex]._excludeMouse, _keyboardKeybinds[keybindIndex]._actionIndex);
     }
 
     public void ResetKeyboardBindingBtn(int keybindIndex)
     {
-        KeyRebinding.ResetBinding(_keyboardKeybinds[keybindIndex]);
+        KeyRebinding.ResetBinding(_keyboardKeybinds[keybindIndex]._inputActionReference, _keyboardKeybinds[keybindIndex]._actionIndex);
         UpdateAllUI();
     }
 
@@ -157,7 +157,7 @@ public class RebindingUI : MonoBehaviour
     {
         for (int i = 0; i < _keyboardKeybinds.Count; i++)
         {
-            KeyRebinding.ResetBinding(_keyboardKeybinds[i]);
+            KeyRebinding.ResetBinding(_keyboardKeybinds[i]._inputActionReference, _keyboardKeybinds[i]._actionIndex);
         }
         UpdateAllUI();
     }
@@ -185,14 +185,14 @@ public class RebindingUI : MonoBehaviour
 
     public void ControllerRebindBtn(int keybindIndex)
     {
-        KeyRebinding.StartRebind(_controllerKeybinds[keybindIndex]);
+        KeyRebinding.StartRebind(_controllerKeybinds[keybindIndex]._inputActionReference, _controllerKeybinds[keybindIndex]._excludeMouse, _controllerKeybinds[keybindIndex]._actionIndex);
     }
 
     public void ResetControllerBindings()
     {
         for (int i = 0; i < _controllerKeybinds.Count; i++)
         {
-            KeyRebinding.ResetBinding(_controllerKeybinds[i]);
+            KeyRebinding.ResetBinding(_controllerKeybinds[i]._inputActionReference, _controllerKeybinds[i]._actionIndex);
         }
         UpdateAllUI();
     }
@@ -220,14 +220,14 @@ public class RebindingUI : MonoBehaviour
 
     public void CombinedRebindBtn(int keybindIndex)
     {
-        KeyRebinding.StartRebind(_combinedKeybinds[keybindIndex]);
+        KeyRebinding.StartRebind(_combinedKeybinds[keybindIndex]._inputActionReference, _combinedKeybinds[keybindIndex]._excludeMouse, _combinedKeybinds[keybindIndex]._actionIndex);
     }
 
     public void ResetCombinedBindings()
     {
         for (int i = 0; i < _combinedKeybinds.Count; i++)
         {
-            KeyRebinding.ResetBinding(_combinedKeybinds[i]);
+            KeyRebinding.ResetBinding(_combinedKeybinds[i]._inputActionReference, _combinedKeybinds[i]._actionIndex);
         }
         UpdateAllUI();
     }

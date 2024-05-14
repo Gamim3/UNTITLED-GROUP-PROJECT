@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class KeyRebinding : MonoBehaviour
 {
-    // private static CharStateMachine _playerInput;
     private static PlayerInput _playerInput;
     public static NewControls inputActions;
 
@@ -32,48 +31,48 @@ public class KeyRebinding : MonoBehaviour
         }
     }
 
-    public static void StartRebind(RebindingUI.Keybind keybind)
+    public static void StartRebind(InputActionReference actionReference, bool excludeMouse, int actionIndex)
     {
-        Debug.Log(keybind._inputActionReference.action.name + " " + keybind._actionIndex);
-        InputAction action = _playerInput.actions.FindAction(keybind._inputActionReference.action.name);
+        Debug.Log(actionReference.action.name + " " + actionIndex);
+        InputAction action = _playerInput.actions.FindAction(actionReference.action.name);
 
         if (action == null)
         {
             return;
         }
-        if (action.bindings.Count > keybind._actionIndex && action.bindings[keybind._actionIndex].isComposite)
+        if (action.bindings.Count > actionIndex && action.bindings[actionIndex].isComposite)
         {
             Debug.Log("IsComposite");
-            var firstPartIndex = keybind._actionIndex + 1;
+            var firstPartIndex = actionIndex + 1;
 
             if (firstPartIndex < action.bindings.Count && action.bindings[firstPartIndex].isPartOfComposite)
             {
                 Debug.Log("DoExtraRebind");
-                DoRebind(action, keybind, firstPartIndex, true);
+                DoRebind(action, excludeMouse, firstPartIndex, true);
             }
         }
-        else if (action.bindings.Count > keybind._actionIndex && action.bindings[keybind._actionIndex].isPartOfComposite)
+        else if (action.bindings.Count > actionIndex && action.bindings[actionIndex].isPartOfComposite)
         {
-            DoRebind(action, keybind, keybind._actionIndex, false);
+            DoRebind(action, excludeMouse, actionIndex, false);
         }
         else
         {
-            DoRebind(action, keybind, keybind._actionIndex, false);
+            DoRebind(action, excludeMouse, actionIndex, false);
         }
     }
 
-    private static void DoRebind(InputAction actionToRebind, RebindingUI.Keybind keybind, int bindingIndex, bool allCompositeParts)
+    private static void DoRebind(InputAction actionToRebind, bool excludeMouse, int actionIndex, bool allCompositeParts)
     {
-        if (actionToRebind == null || keybind._actionIndex < 0)
+        if (actionToRebind == null || actionIndex < 0)
         {
             return;
         }
 
-        keybind._actionTxt.text = $"Press a Button";
+        // keybind._actionTxt.text = $"Press a Button";
 
         actionToRebind.Disable();
 
-        var rebind = actionToRebind.PerformInteractiveRebinding(bindingIndex);
+        var rebind = actionToRebind.PerformInteractiveRebinding(actionIndex);
 
         rebind.WithBindingGroup("Gamepad");
 
@@ -84,10 +83,10 @@ public class KeyRebinding : MonoBehaviour
 
             if (allCompositeParts)
             {
-                var nextBindingIndex = bindingIndex + 1;
+                var nextBindingIndex = actionIndex + 1;
                 if (nextBindingIndex < actionToRebind.bindings.Count && actionToRebind.bindings[nextBindingIndex].isPartOfComposite)
                 {
-                    DoRebind(actionToRebind, keybind, nextBindingIndex, allCompositeParts);
+                    DoRebind(actionToRebind, excludeMouse, nextBindingIndex, allCompositeParts);
                 }
             }
 
@@ -104,36 +103,36 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.WithCancelingThrough("<Keyboard>/escape");
 
-        if (keybind._excludeMouse)
+        if (excludeMouse)
         {
             rebind.WithControlsExcluding("Mouse");
         }
 
-        rebindStarted?.Invoke(actionToRebind, bindingIndex);
+        rebindStarted?.Invoke(actionToRebind, actionIndex);
         rebind.Start();
     }
 
-    public static string GetBindingName(RebindingUI.Keybind keybind)
+    public static string GetBindingName(InputActionReference actionReference, int actionIndex)
     {
         if (_playerInput == null)
         {
             _playerInput = FindObjectOfType<PlayerInput>();
         }
 
-        InputAction action = _playerInput.actions.FindAction(keybind._inputActionReference.action.name);
+        InputAction action = _playerInput.actions.FindAction(actionReference.action.name);
 
-        if (action.bindings[keybind._actionIndex].isComposite)
+        if (action.bindings[actionIndex].isComposite)
         {
             // Debug.Log("IsComposite: " + keybind._actionName);
             return action.GetBindingDisplayString(0);
         }
-        else if (action.bindings[keybind._actionIndex].isPartOfComposite)
+        else if (action.bindings[actionIndex].isPartOfComposite)
         {
-            Debug.Log("IsPartOfComposite: " + keybind._actionIndex);
-            return GetPartOfCompositeButton(keybind._actionIndex, action);
+            Debug.Log("IsPartOfComposite: " + actionIndex);
+            return GetPartOfCompositeButton(actionIndex, action);
         }
         // Debug.Log(keybind._actionName + " " + keybind._actionIndex);
-        return action.GetBindingDisplayString(keybind._actionIndex);
+        return action.GetBindingDisplayString(actionIndex);
     }
 
     public static string GetPartOfCompositeButton(int compositePartIndex, InputAction action)
@@ -192,25 +191,25 @@ public class KeyRebinding : MonoBehaviour
         }
     }
 
-    public static void ResetBinding(RebindingUI.Keybind keybind)
+    public static void ResetBinding(InputActionReference actionReference, int actionIndex)
     {
-        InputAction action = _playerInput.actions.FindAction(keybind._inputActionReference.action.name);
+        InputAction action = _playerInput.actions.FindAction(actionReference.action.name);
 
-        if (action == null || action.bindings.Count <= keybind._actionIndex)
+        if (action == null || action.bindings.Count <= actionIndex)
         {
             return;
         }
 
-        if (action.bindings[keybind._actionIndex].isComposite)
+        if (action.bindings[actionIndex].isComposite)
         {
-            for (int i = keybind._actionIndex; i < action.bindings.Count && action.bindings[i].isComposite; i++)
+            for (int i = actionIndex; i < action.bindings.Count && action.bindings[i].isComposite; i++)
             {
                 action.RemoveBindingOverride(i);
             }
         }
         else
         {
-            action.RemoveBindingOverride(keybind._actionIndex);
+            action.RemoveBindingOverride(actionIndex);
         }
 
         SaveBindingOverride(action);
