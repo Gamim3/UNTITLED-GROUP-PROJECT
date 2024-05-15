@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Controls;
+using static UnityEngine.InputSystem.HID.HID;
 
 public class CutsceneRebinding : MonoBehaviour
 {
+
+    private Keyboard _keyboard;
+    private KeyboardState _keyboardState;
 
     [SerializeField] bool _completedRebind;
 
@@ -30,6 +35,12 @@ public class CutsceneRebinding : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        _keyboard = InputSystem.GetDevice<Keyboard>();
+        _keyboardState = new KeyboardState();
+    }
+
     private void OnEnable()
     {
         KeyRebinding.rebindComplete += CompleteRebind;
@@ -44,10 +55,27 @@ public class CutsceneRebinding : MonoBehaviour
     {
         Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)} )");
 
-
-
-
         _completedRebind = true;
+
+
+
+        // var Gamepad = InputSystem.GetDevice<Gamepad>();
+        // var GamepadState = new GamepadState();
+        // InputSystem.QueueStateEvent(Gamepad, GamepadState);
+
+
+
+
+
+        // GamepadState.WithButton((GamepadButton)(Button)System.Enum.Parse(typeof(Button), KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)));
+
+        // GamepadState.WithButton();
+        // GamepadState.Release(Key.Space);
+        // InputSystem.QueueStateEvent(Keyboard, KeyboardState);
+
+
+
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -67,21 +95,36 @@ public class CutsceneRebinding : MonoBehaviour
     private void Start()
     {
         StartNewRebind(0);
+
     }
 
     private void Update()
     {
-        if (Input.anyKey)
+        // _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)));
+
+        if (Input.anyKey && !_cutsceneActions[_actionToRebind]._inputActionReference.action.IsPressed())
         {
-            StartNewRebind(_actionToRebind);
-            Debug.Log("YES");
+            _keyboardState.Release(Key.Slash);
+            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+            _keyboardState.Press(Key.);
+            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+
+
+
         }
-        else
-        {
-            _isRebinding = false;
-            _completedRebind = false;
-            Debug.Log("NO");
-        }
+        // {
+        //     StartNewRebind(_actionToRebind);
+        //     Debug.Log("YES");
+
+        //     // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+
+        // }
+        // else
+        // {
+        //     _isRebinding = false;
+        //     _completedRebind = false;
+        //     Debug.Log("NO");
+        // }
 
     }
 

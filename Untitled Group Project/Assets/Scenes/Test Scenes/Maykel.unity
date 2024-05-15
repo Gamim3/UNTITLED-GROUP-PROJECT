@@ -539,18 +539,6 @@ MonoBehaviour:
       type: 3}
     _actionIndex: 1
     _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
-      type: 3}
-    _actionIndex: 2
-    _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
-      type: 3}
-    _actionIndex: 3
-    _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
-      type: 3}
-    _actionIndex: 4
-    _excludeMouse: 1
 --- !u!4 &1914064252
 Transform:
   m_ObjectHideFlags: 0
