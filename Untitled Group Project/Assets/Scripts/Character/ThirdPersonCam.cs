@@ -40,7 +40,7 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(_camHolder);
+        // DontDestroyOnLoad(_camHolder);
         _stateMachine = FindObjectOfType<CharStateMachine>();
 
         _cinemachineCams.Add(GameObject.FindGameObjectWithTag("CineMachine"));
