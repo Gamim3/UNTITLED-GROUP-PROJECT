@@ -106,7 +106,7 @@ public class CutsceneRebinding : MonoBehaviour
         {
             _keyboardState.Release(Key.Slash);
             InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-            _keyboardState.Press(Key.);
+            // _keyboardState.Press(Key.);
             InputSystem.QueueStateEvent(_keyboard, _keyboardState);
 
 
