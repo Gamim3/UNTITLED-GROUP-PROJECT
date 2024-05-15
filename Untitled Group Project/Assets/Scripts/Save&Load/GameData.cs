@@ -17,6 +17,11 @@ public class GameData
     public int[] itemId;
     public int[] itemAmount;
 
+    [Header("Player")]
+    public int level;
+    public int xp;
+    public int xpGoal;
+
     public GameData()
     {
         cubePos = Vector3.zero;
@@ -29,6 +34,10 @@ public class GameData
             itemId[i] = -1;
             itemAmount[i] = 0;
         }
+
+        xp = 0;
+        xpGoal = 0;
+        level = 0;
 
     }
 }
