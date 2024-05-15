@@ -16,7 +16,6 @@ public class FuzzyLogic : MonoBehaviour
     public float distance;
 
     [Header("FuzzyficationSettings")]
-    public Transform playerPosition;
     public int fuzzyValueDecimals;
     private string decimalText;
 
@@ -91,8 +90,6 @@ public class FuzzyLogic : MonoBehaviour
 
     public void Update()
     {
-        distance = Vector3.Distance(transform.position, playerPosition.position);
-
         fuzzyEnemyHealth = new Vector3(Mathf.Round(criticalCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(hurtCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(healthyCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals);
 
         fuzzyPlayerHealth = new Vector3(Mathf.Round(playerCriticalCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(playerHurtCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(playerHealthyCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals);

@@ -19,7 +19,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(MakeDesicion());
+        StartCoroutine(Think());
     }
 
     public void Update()
@@ -30,16 +30,16 @@ public class EnemyBrain : MonoBehaviour
         distanceData = fuzzyLogic.fuzzyDistance;
     }
 
-    public IEnumerator MakeDesicion()
+    public IEnumerator Think()
     {
         yield return new WaitForSeconds(DecisionTime);
 
-        Think();
+        MakeDesicion();
 
-        StartCoroutine(MakeDesicion());
+        StartCoroutine(Think());
     }
 
-    public void Think()
+    public void MakeDesicion()
     {
         float enemyHealthState = Mathf.Max(enemyHealthData.x, Mathf.Max(enemyHealthData.y, enemyHealthData.z));
         float playerHealthState = Mathf.Max(playerHealthData.x, Mathf.Max(playerHealthData.y, playerHealthData.z));
@@ -52,247 +52,247 @@ public class EnemyBrain : MonoBehaviour
         switch (enemyHealth)
         {
             case EnemyHealth state when state == EnemyHealth.Healthy &&  playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(full) | distance(far)");
+                //("enemy(Healthy) | player(Healthy) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(full) | distance(middle)");
+                //("enemy(Healthy) | player(Healthy) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(full) | distance(close)");
+                //("enemy(Healthy) | player(Healthy) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(medium) | distance(far)");
+                //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(medium) | distance(middle)");
+                //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(medium) | distance(close)");
+                //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(low) | distance(far)");
+                //("enemy(Healthy) | player(Healthy) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(low) | distance(middle)");
+                //("enemy(Healthy) | player(Healthy) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(Healthy) | energy(low) | distance(close)");
+                //("enemy(Healthy) | player(Healthy) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(full) | distance(far)");
+                //("enemy(Healthy) | player(hurt) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(full) | distance(middle)");
+                //("enemy(Healthy) | player(hurt) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(full) | distance(close)");
+                //("enemy(Healthy) | player(hurt) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(medium) | distance(far)");
+                //("enemy(Healthy) | player(hurt) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(medium) | distance(middle)");
+                //("enemy(Healthy) | player(hurt) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(medium) | distance(close)");
+                //("enemy(Healthy) | player(hurt) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(low) | distance(far)");
+                //("enemy(Healthy) | player(hurt) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(low) | distance(middle)");
+                //("enemy(Healthy) | player(hurt) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(hurt) | energy(low) | distance(close)");
+                //("enemy(Healthy) | player(hurt) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(full) | distance(far)");
+                //("enemy(Healthy) | player(critical) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(full) | distance(middle)");
+                //("enemy(Healthy) | player(critical) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(full) | distance(close)");
+                //("enemy(Healthy) | player(critical) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(medium) | distance(far)");
+                //("enemy(Healthy) | player(critical) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(medium) | distance(middle)");
+                //("enemy(Healthy) | player(critical) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(medium) | distance(close)");
+                //("enemy(Healthy) | player(critical) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(low) | distance(far)");
+                //("enemy(Healthy) | player(critical) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(low) | distance(middle)");
+                //("enemy(Healthy) | player(critical) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(Healthy) | player(critical) | energy(low) | distance(close)");
+                //("enemy(Healthy) | player(critical) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(full) | distance(far)");
+                //("enemy(hurt) | player(Healthy) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(full) | distance(middle)");
+                //("enemy(hurt) | player(Healthy) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(full) | distance(close)");
+                //("enemy(hurt) | player(Healthy) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(medium) | distance(far)");
+                //("enemy(hurt) | player(Healthy) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(medium) | distance(middle)");
+                //("enemy(hurt) | player(Healthy) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(medium) | distance(close)");
+                //("enemy(hurt) | player(Healthy) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(low) | distance(far)");
+                //("enemy(hurt) | player(Healthy) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(low) | distance(middle)");
+                //("enemy(hurt) | player(Healthy) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(Healthy) | energy(low) | distance(close)");
+                //("enemy(hurt) | player(Healthy) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(full) | distance(far)");
+                //("enemy(hurt) | player(hurt) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(full) | distance(middle)");
+                //("enemy(hurt) | player(hurt) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(full) | distance(close)");
+                //("enemy(hurt) | player(hurt) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(medium) | distance(far)");
+                //("enemy(hurt) | player(hurt) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(medium) | distance(middle)");
+                //("enemy(hurt) | player(hurt) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(medium) | distance(close)");
+                //("enemy(hurt) | player(hurt) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(low) | distance(far)");
+                //("enemy(hurt) | player(hurt) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(low) | distance(middle)");
+                //("enemy(hurt) | player(hurt) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(hurt) | energy(low) | distance(close)");
+                //("enemy(hurt) | player(hurt) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(critical) | energy(full) | distance(far)");
+                //("enemy(hurt) | player(critical) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(critical) | energy(full) | distance(middle)");
+                //("enemy(hurt) | player(critical) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(critical) | energy(full) | distance(close)");
+                //("enemy(hurt) | player(critical) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(critical) | energy(medium) | distance(far)");
+                //("enemy(hurt) | player(critical) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(critical) | energy(medium) | distance(middle)");
+                //("enemy(hurt) | player(critical) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(critical) | energy(medium) | distance(close)");
+                //("enemy(hurt) | player(critical) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(hurt) | player(critical) | energy(low) | distance(far)");
+                //("enemy(hurt) | player(critical) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(hurt) | player(critical) | energy(low) | distance(middle)");
+                //("enemy(hurt) | player(critical) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(hurt) | player(critical) | energy(low) | distance(close)");
+                //("enemy(hurt) | player(critical) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(full) | distance(far)");
+                //("enemy(critical) | player(Healthy) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(full) | distance(middle)");
+                //("enemy(critical) | player(Healthy) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(full) | distance(close)");
+                //("enemy(critical) | player(Healthy) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(medium) | distance(far)");
+                //("enemy(critical) | player(Healthy) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(medium) | distance(middle)");
+                //("enemy(critical) | player(Healthy) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(medium) | distance(close)");
+                //("enemy(critical) | player(Healthy) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(low) | distance(far)");
+                //("enemy(critical) | player(Healthy) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(low) | distance(middle)");
+                //("enemy(critical) | player(Healthy) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(Healthy) | energy(low) | distance(close)");
+                //("enemy(critical) | player(Healthy) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(hurt) | energy(full) | distance(far)");
+                //("enemy(critical) | player(hurt) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(hurt) | energy(full) | distance(middle)");
+                //("enemy(critical) | player(hurt) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(hurt) | energy(full) | distance(close)");
+                //("enemy(critical) | player(hurt) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(hurt) | energy(medium) | distance(far)");
+                //("enemy(critical) | player(hurt) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(hurt) | energy(medium) | distance(middle)");
+                //("enemy(critical) | player(hurt) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(hurt) | energy(medium) | distance(close)");
+                //("enemy(critical) | player(hurt) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(hurt) | energy(low) | distance(far)");
+                //("enemy(critical) | player(hurt) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(hurt) | energy(low) | distance(middle)");
+                //("enemy(critical) | player(hurt) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(hurt) | energy(low) | distance(close)");
+                //("enemy(critical) | player(hurt) | energy(low) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(critical) | energy(full) | distance(far)");
+                //("enemy(critical) | player(critical) | energy(full) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(critical) | energy(full) | distance(middle)");
+                //("enemy(critical) | player(critical) | energy(full) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(critical) | energy(full) | distance(close)");
+                //("enemy(critical) | player(critical) | energy(full) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(critical) | energy(medium) | distance(far)");
+                //("enemy(critical) | player(critical) | energy(medium) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(critical) | energy(medium) | distance(middle)");
+                //("enemy(critical) | player(critical) | energy(medium) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(critical) | energy(medium) | distance(close)");
+                //("enemy(critical) | player(critical) | energy(medium) | distance(close)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
-                Debug.Log("enemy(critical) | player(critical) | energy(low) | distance(far)");
+                //("enemy(critical) | player(critical) | energy(low) | distance(far)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
-                Debug.Log("enemy(critical) | player(critical) | energy(low) | distance(middle)");
+                //("enemy(critical) | player(critical) | energy(low) | distance(middle)");
                 break;
             case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
-                Debug.Log("enemy(critical) | player(critical) | energy(low) | distance(close)");
+                //("enemy(critical) | player(critical) | energy(low) | distance(close)");
                 break;
 
             default:

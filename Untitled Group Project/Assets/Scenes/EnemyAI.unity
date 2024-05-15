@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 385659124}
   - component: {fileID: 385659126}
   - component: {fileID: 385659127}
+  - component: {fileID: 385659129}
   - component: {fileID: 385659123}
   - component: {fileID: 385659128}
   m_Layer: 0
@@ -613,6 +614,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuzzyLogic: {fileID: 385659123}
   DecisionTime: 1
+--- !u!114 &385659129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385659121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd2461b0524e274f93cb3aa1984880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 150
+  energy: 100
+  playerPosition: {fileID: 202634469}
+  distance: 0
+  brain: {fileID: 385659128}
+  logic: {fileID: 385659123}
 --- !u!1 &1140178632
 GameObject:
   m_ObjectHideFlags: 0
