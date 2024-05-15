@@ -225,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 202634465}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.75}
+  m_LocalPosition: {x: 3.5, y: 0, z: 52.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 385659126}
   - component: {fileID: 385659127}
   - component: {fileID: 385659123}
+  - component: {fileID: 385659128}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -380,7 +381,7 @@ Transform:
   m_GameObject: {fileID: 385659121}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.3, y: 0, z: -84.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -400,16 +401,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuzzyEnemyHealth: {x: 0, y: 0, z: 0}
   fuzzyPlayerHealth: {x: 0, y: 0, z: 0}
+  fuzzyEnergy: {x: 0, y: 0, z: 0}
+  fuzzyDistance: {x: 0, y: 0, z: 0}
   enemyHealth: 100
   playerHealth: 100
+  energy: 100
   distance: 0
-  healthRiskPercentage: 0
   playerPosition: {fileID: 202634469}
   fuzzyValueDecimals: 2
   criticalHealthLimit: 40
   minHurtValue: 20
   fullHurt: 40
-  maxHurtValue: 80
+  maxHurtValue: 70
   beginHealthyValue: 60
   criticalCurve:
     serializedVersion: 2
@@ -429,8 +432,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  nearDistanceLimit: 20
-  beginFarDistance: 70
+  playerCriticalHealthLimit: 40
+  playerMinHurtValue: 20
+  playerFullHurt: 40
+  playerMaxHurtValue: 70
+  playerBeginHealthyValue: 60
+  playerCriticalCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  playerHurtCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  playerHealthyCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  nearDistanceLimit: 25
+  minDistance: 20
+  midMiddleDistance: 40
+  maxMiddleDistance: 55
+  beginFarDistance: 50
   nearCurve:
     serializedVersion: 2
     m_Curve: []
@@ -444,6 +473,29 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   farCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  lowEnergyLimit: 30
+  minMiddleEnergy: 25
+  midMiddleEnergy: 50
+  maxMiddleEnergy: 70
+  beginfullEnergy: 75
+  lowEnergyCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  mediumEnergyCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fullEnergyCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
@@ -547,6 +599,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &385659128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385659121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49076e33ca2796409e2fd9b62c3f33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fuzzyLogic: {fileID: 385659123}
+  DecisionTime: 1
 --- !u!1 &1140178632
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +744,7 @@ GameObject:
   - component: {fileID: 1579969520}
   - component: {fileID: 1579969519}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,7 +791,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 9661bb95bbfc5c441a52655b9de761b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -765,7 +831,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.51, z: 0}
-  m_LocalScale: {x: -19.62, y: 1, z: -29.44}
+  m_LocalScale: {x: -87.2, y: 1, z: -182.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
