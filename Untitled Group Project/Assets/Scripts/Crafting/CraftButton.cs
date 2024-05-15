@@ -25,7 +25,10 @@ public class CraftButton : MonoBehaviour
 
     private void Update()
     {
-        isSelected = CraftingManager.Instance.selectedButtonObject == this;
+        if (CraftingManager.Instance.selectedButtonObject != null)
+        {
+            isSelected = CraftingManager.Instance.selectedButtonObject == this;
+        }
         _selectedObj.SetActive(isSelected);
     }
 

@@ -84,7 +84,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             Destroy(gameObject);
         }
-        else if (parentAfterDrag.childCount == 0)
+        else if (parentAfterDrag.childCount == 1)
         {
             image.raycastTarget = true;
             transform.SetParent(parentAfterDrag);

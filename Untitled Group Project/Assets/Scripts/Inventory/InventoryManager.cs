@@ -12,8 +12,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Transform _slotParent;
     public List<InventorySlot> inventorySlots = new();
 
-    [SerializeField] InventorySlot[] _toolbarSlots;
-
     [SerializeField] GameObject _inventoryItemPrefab;
     public GameObject InventoryItemPrefab { get { return _inventoryItemPrefab; } }
 
@@ -63,32 +61,23 @@ public class InventoryManager : MonoBehaviour
             UpdateItemsInfoList();
             Debug.LogWarning("Manually Called UpdateItemInfoList (KeyCode.U)");
         }
-
-        if (Input.inputString != null)
-        {
-            bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number > 0 && number <= _toolbarSlots.Length)
-            {
-                ChangeSelectedSlot(number - 1);
-            }
-        }
     }
 
     void ChangeSelectedSlot(int newSlot)
     {
         if (_selectedSlot == newSlot)
         {
-            _toolbarSlots[_selectedSlot].Deselect();
+            inventorySlots[_selectedSlot].Deselect();
             _selectedSlot = -1;
             return;
         }
 
         if (_selectedSlot >= 0)
         {
-            _toolbarSlots[_selectedSlot].Deselect();
+            inventorySlots[_selectedSlot].Deselect();
         }
 
-        _toolbarSlots[newSlot].Select();
+        inventorySlots[newSlot].Select();
         _selectedSlot = newSlot;
     }
 
@@ -96,8 +85,8 @@ public class InventoryManager : MonoBehaviour
     {
         if (_selectedSlot > -1)
         {
-            if (_toolbarSlots[_selectedSlot].GetInventoryItem() != null)
-                return _toolbarSlots[_selectedSlot].GetInventoryItem().item;
+            if (inventorySlots[_selectedSlot].GetInventoryItem() != null)
+                return inventorySlots[_selectedSlot].GetInventoryItem().item;
             else return null;
         }
         else
@@ -316,11 +305,11 @@ public class InventoryManager : MonoBehaviour
     static int GetTotalItemAmount(List<InventorySlot> list, Item item)
     {
         int result = 0;
-        foreach (var itm in list)
+        foreach (var slot in list)
         {
-            if (itm.transform.childCount > 0)
+            if (slot.transform.childCount > 1)
             {
-                InventoryItem thisItem = itm.GetComponentInChildren<InventoryItem>();
+                InventoryItem thisItem = slot.GetComponentInChildren<InventoryItem>();
 
                 // HashSet<Item> items = list.Select(o => thisItem.item).ToHashSet();
                 if (thisItem != null)
@@ -408,10 +397,11 @@ public class InventoryManager : MonoBehaviour
             itemToId.itemID = highestId + 1;
             itemToId.itemIdSet = true;
         }
+
+        _slotParent = transform.GetChild(transform.childCount - 1);
         if (_slotParent.childCount != inventorySlots.Count)
         {
             inventorySlots.Clear();
-            _slotParent = transform.GetChild(transform.childCount - 1);
             for (int i = 0; i < _slotParent.childCount; i++)
             {
                 var slot = _slotParent.GetChild(i).GetComponent<InventorySlot>();

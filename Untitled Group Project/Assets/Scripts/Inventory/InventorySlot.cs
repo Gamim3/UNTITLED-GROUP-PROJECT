@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Windows;
+using UnityEditor.PackageManager.UI;
 
 public class InventorySlot : MonoBehaviour, IDropHandler, IDataPersistence
 {
@@ -30,7 +32,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDataPersistence
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
+        if (transform.childCount == 1)
         {
             if (InventoryManager.Instance.heldItem != null)
             {
@@ -39,7 +41,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDataPersistence
         }
         else
         {
-            _itemInThisSlot = transform.GetChild(0).GetComponent<InventoryItem>();
+            _itemInThisSlot = transform.GetChild(1).GetComponent<InventoryItem>();
 
             if (InventoryManager.Instance.heldItem.item == _itemInThisSlot.item)
             {
