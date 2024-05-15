@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
     public GameObject player;
 
+    [SerializeField] Transform _slotParent;
     public List<InventorySlot> inventorySlots = new();
 
     [SerializeField] InventorySlot[] _toolbarSlots;
@@ -48,7 +48,11 @@ public class InventoryManager : MonoBehaviour
             Instance = this;
         }
 
-        player = FindObjectOfType<CharStateMachine>().gameObject;
+        // player = FindObjectOfType<CharStateMachine>().gameObject;
+    }
+
+    private void Start()
+    {
         UpdateItemsInfoList();
     }
 
@@ -318,7 +322,7 @@ public class InventoryManager : MonoBehaviour
             {
                 InventoryItem thisItem = itm.GetComponentInChildren<InventoryItem>();
 
-                HashSet<Item> items = list.Select(o => thisItem.item).ToHashSet();
+                // HashSet<Item> items = list.Select(o => thisItem.item).ToHashSet();
                 if (thisItem != null)
                 {
                     if (thisItem.item != item)
@@ -377,6 +381,7 @@ public class InventoryManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         var items = (Item[])Resources.FindObjectsOfTypeAll(typeof(Item));
+        allItems = items;
 
         var itemsToId = new List<Item>();
         Debug.Log($"Items Found In Files: {items.Length}");
@@ -402,6 +407,17 @@ public class InventoryManager : MonoBehaviour
             }
             itemToId.itemID = highestId + 1;
             itemToId.itemIdSet = true;
+        }
+        if (_slotParent.childCount != inventorySlots.Count)
+        {
+            inventorySlots.Clear();
+            _slotParent = transform.GetChild(transform.childCount - 1);
+            for (int i = 0; i < _slotParent.childCount; i++)
+            {
+                var slot = _slotParent.GetChild(i).GetComponent<InventorySlot>();
+                inventorySlots.Add(slot);
+                slot.slotId = i;
+            }
         }
 #endif
     }

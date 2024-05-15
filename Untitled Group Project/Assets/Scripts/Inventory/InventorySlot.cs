@@ -2,18 +2,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IDropHandler//, IDataPersistence
+public class InventorySlot : MonoBehaviour, IDropHandler, IDataPersistence
 {
     [Header("Slot Settings")]
     public int slotId;
 
-    public Image image;
+    Image image;
     public Color selectedColor, notSelectedColor;
 
     [SerializeField] InventoryItem _itemInThisSlot;
 
     private void Awake()
     {
+        image = GetComponent<Image>();
         Deselect();
     }
 
@@ -136,42 +137,30 @@ public class InventorySlot : MonoBehaviour, IDropHandler//, IDataPersistence
 
     }
 
-    // public void LoadData(GameData data)
-    // {
-    //     if (isMachineSlot || isFuelSlot || isResourceSlot || isToolSlot)
-    //     {
-    //         // InventoryManager.Instance.SpawnNewItemMining(data.itemId[slotId], data.itemAmount[slotId], this.slotId);
-    //         return;
-    //     }
-    //     if (data.itemId[slotId] == -1)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         InventoryManager.Instance.SpawnNewItem(data.itemId[slotId], data.itemAmount[slotId], this.slotId);
-    //         Debug.Log($"Spawned New Item From Slot {slotId} On GameObject {gameObject.name}");
-    //     }
-    // }
+    public void LoadData(GameData data)
+    {
+        if (data.itemId[slotId] == -1)
+        {
+            return;
+        }
+        else
+        {
+            InventoryManager.Instance.SpawnNewItem(data.itemId[slotId], data.itemAmount[slotId], this.slotId);
+            Debug.Log($"Spawned New Item From Slot {slotId} On GameObject {gameObject.name}");
+        }
+    }
 
-    // public void SaveData(GameData data)
-    // {
-    //     if (isMachineSlot || isFuelSlot || isResourceSlot || isToolSlot)
-    //     {
-    //         //Not needed to save and load
-    //         return;
-    //     }
-    //     if (_itemInThisSlot == null)
-    //     {
-    //         // Debug.Log("didnt find Item in slot: " + slotId);
-
-    //         data.itemId[slotId] = -1;
-    //         data.itemAmount[slotId] = 0;
-    //         return;
-    //     }
-    //     // Debug.Log("found Item in slot: " + slotId);
-    //     data.itemId[slotId] = _itemInThisSlot.item.itemID;
-    //     data.itemAmount[slotId] = _itemInThisSlot.count;
-    // }
+    public void SaveData(GameData data)
+    {
+        if (_itemInThisSlot == null)
+        {
+            data.itemId[slotId] = -1;
+            data.itemAmount[slotId] = 0;
+            return;
+        }
+        // Debug.Log("found Item in slot: " + slotId);
+        data.itemId[slotId] = _itemInThisSlot.item.itemID;
+        data.itemAmount[slotId] = _itemInThisSlot.count;
+    }
 
 }

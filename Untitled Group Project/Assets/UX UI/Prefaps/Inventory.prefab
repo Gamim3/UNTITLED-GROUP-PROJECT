@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8032769320046696339}
   - component: {fileID: 7953497975871585465}
   - component: {fileID: 4274045861621291110}
+  - component: {fileID: 5961011625230229803}
+  - component: {fileID: 3333766046067741320}
   m_Layer: 5
   m_Name: InventorySlot (23)
   m_TagString: Untagged
@@ -76,6 +78,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5961011625230229803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53573545676939031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 23
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &3333766046067741320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53573545676939031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5961011625230229803}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5961011625230229803}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &56720432432604475
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,6 +225,8 @@ GameObject:
   - component: {fileID: 416379240012627175}
   - component: {fileID: 2462708270938053494}
   - component: {fileID: 7305054529175320492}
+  - component: {fileID: 7761468461156811803}
+  - component: {fileID: 1350067987178260753}
   m_Layer: 5
   m_Name: InventorySlot (5)
   m_TagString: Untagged
@@ -227,6 +292,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7761468461156811803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178606491742421847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 5
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &1350067987178260753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178606491742421847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7761468461156811803}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7761468461156811803}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &180629387818091527
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.000004}
   m_AnchorMin: {x: 0, y: 0.9028805}
   m_AnchorMax: {x: 0.104439825, y: 1}
-  m_AnchoredPosition: {x: -29.358826, y: 25.664154}
+  m_AnchoredPosition: {x: -29.358826, y: 25.664124}
   m_SizeDelta: {x: -8.682156, y: -5.542328}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8857079622872370523
@@ -389,6 +515,8 @@ GameObject:
   - component: {fileID: 4477992471181144789}
   - component: {fileID: 2533189563106262230}
   - component: {fileID: 8046960429362850394}
+  - component: {fileID: 2879751678983878125}
+  - component: {fileID: 4979009404782737958}
   m_Layer: 5
   m_Name: InventorySlot (10)
   m_TagString: Untagged
@@ -454,6 +582,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2879751678983878125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197834734788617157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 10
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &4979009404782737958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197834734788617157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2879751678983878125}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2879751678983878125}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &402664996138586773
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.3913574, y: 1.5046997}
+  m_AnchoredPosition: {x: 2.3913574, y: 1.5046387}
   m_SizeDelta: {x: -60.412537, y: -56.755493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &425546560241565428
@@ -525,10 +714,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2513729977637196945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.036593333, y: 0}
+  m_AnchorMin: {x: 0.049000002, y: 0}
   m_AnchorMax: {x: 0.95900005, y: 0.0061641997}
-  m_AnchoredPosition: {x: 0.5750122, y: -2.0822449}
-  m_SizeDelta: {x: -0.59625244, y: 3.8498383}
+  m_AnchoredPosition: {x: 0.12251282, y: -1.5599976}
+  m_SizeDelta: {x: 0.30878, y: 3.8498}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1099520049033963882
 CanvasRenderer:
@@ -579,6 +768,8 @@ GameObject:
   - component: {fileID: 6543101830231825651}
   - component: {fileID: 7592388765693108545}
   - component: {fileID: 1952132999727616907}
+  - component: {fileID: 6575541019897127356}
+  - component: {fileID: 4980023976763164772}
   m_Layer: 5
   m_Name: InventorySlot (16)
   m_TagString: Untagged
@@ -644,6 +835,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6575541019897127356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457656363576610574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 16
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &4980023976763164772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457656363576610574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6575541019897127356}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6575541019897127356}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &782919121846823428
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +1057,8 @@ GameObject:
   - component: {fileID: 603177239233595055}
   - component: {fileID: 7465054563216965159}
   - component: {fileID: 2450316515925787890}
+  - component: {fileID: 3256105518225563030}
+  - component: {fileID: 285396803516908559}
   m_Layer: 5
   m_Name: InventorySlot (7)
   m_TagString: Untagged
@@ -870,6 +1124,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3256105518225563030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208617857221613200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 7
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &285396803516908559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208617857221613200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3256105518225563030}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3256105518225563030}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1283884973744893200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1480,8 @@ GameObject:
   - component: {fileID: 9155741229954459745}
   - component: {fileID: 3573239543782709996}
   - component: {fileID: 7696787537617977383}
+  - component: {fileID: 5348085567512140161}
+  - component: {fileID: 1588129933012591446}
   m_Layer: 5
   m_Name: InventorySlot (2)
   m_TagString: Untagged
@@ -1230,6 +1547,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5348085567512140161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577038709116470749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 2
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &1588129933012591446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577038709116470749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5348085567512140161}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5348085567512140161}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1597463568565144261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,6 +1619,8 @@ GameObject:
   - component: {fileID: 7587573280435948378}
   - component: {fileID: 7738228063074265319}
   - component: {fileID: 2309033706282361132}
+  - component: {fileID: 8446503516389727150}
+  - component: {fileID: 8616090419923335767}
   m_Layer: 5
   m_Name: InventorySlot (9)
   m_TagString: Untagged
@@ -1306,6 +1686,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8446503516389727150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597463568565144261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 9
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &8616090419923335767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597463568565144261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8446503516389727150}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8446503516389727150}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1797703122389458618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,7 +1857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.000004}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.104439825, y: 0.1014023}
-  m_AnchoredPosition: {x: -29.25885, y: -27.053406}
+  m_AnchoredPosition: {x: -29.25885, y: -27.053345}
   m_SizeDelta: {x: -9.682156, y: -7.3016663}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &681346642897325881
@@ -1567,7 +2008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.000004}
   m_AnchorMin: {x: 0.4228133, y: 1}
   m_AnchorMax: {x: 0.5733465, y: 1}
-  m_AnchoredPosition: {x: 0.30010986, y: 1.8800831}
+  m_AnchoredPosition: {x: 0.3001709, y: 1.8800831}
   m_SizeDelta: {x: -16.349827, y: 55.689877}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6792268528094097237
@@ -1619,6 +2060,8 @@ GameObject:
   - component: {fileID: 2276454731360925731}
   - component: {fileID: 9039264700857069828}
   - component: {fileID: 6257931580148686341}
+  - component: {fileID: 1898219224153432356}
+  - component: {fileID: 4843941367930955177}
   m_Layer: 5
   m_Name: InventorySlot (18)
   m_TagString: Untagged
@@ -1684,6 +2127,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1898219224153432356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114229955059096588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 18
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &4843941367930955177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114229955059096588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1898219224153432356}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1898219224153432356}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2135423648020173703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,6 +2274,8 @@ GameObject:
   - component: {fileID: 1388299731639755742}
   - component: {fileID: 6385235251989520943}
   - component: {fileID: 2922717483685127244}
+  - component: {fileID: 2280850957250604596}
+  - component: {fileID: 4947828857980102000}
   m_Layer: 5
   m_Name: InventorySlot
   m_TagString: Untagged
@@ -1835,6 +2341,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2280850957250604596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327331063045864736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 0
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &4947828857980102000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327331063045864736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2280850957250604596}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2280850957250604596}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2379298719451753831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,10 +2434,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2513729977637196945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
-  m_AnchorMin: {x: 0, y: 0.026835801}
+  m_AnchorMin: {x: 0, y: 0.042000003}
   m_AnchorMax: {x: 0.013593332, y: 0.96616423}
-  m_AnchoredPosition: {x: 0.15771484, y: -0.3612671}
-  m_SizeDelta: {x: 427.06088, y: -428.2111}
+  m_AnchoredPosition: {x: 0.15769958, y: -0.49189758}
+  m_SizeDelta: {x: 420.3223, y: -421.2111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7581388003278652908
 CanvasRenderer:
@@ -2071,6 +2638,8 @@ GameObject:
   - component: {fileID: 230245482614785973}
   - component: {fileID: 7597838012147164514}
   - component: {fileID: 3654842698670533852}
+  - component: {fileID: 8945912233372714483}
+  - component: {fileID: 3579192310654509608}
   m_Layer: 5
   m_Name: InventorySlot (12)
   m_TagString: Untagged
@@ -2136,6 +2705,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8945912233372714483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861057279254424421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 12
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &3579192310654509608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861057279254424421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8945912233372714483}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8945912233372714483}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2875208946811066667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,6 +2850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5396776636990089917}
+  - component: {fileID: 4532737459827145712}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -2236,7 +2867,7 @@ RectTransform:
   m_GameObject: {fileID: 3063288051920572008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7099617834970142753}
@@ -2252,6 +2883,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.079956055}
   m_SizeDelta: {x: 0, y: -0.12006}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &4532737459827145712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063288051920572008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff5c1edeb4f5542abc8b605e71d5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  inventorySlots:
+  - {fileID: 0}
+  _toolbarSlots: []
+  _inventoryItemPrefab: {fileID: 0}
+  itemsInInventory: []
+  allItems:
+  - {fileID: 11400000, guid: 01e8bf5310dd7084ca1cca7c650a4b5a, type: 2}
+  - {fileID: 11400000, guid: 864547fb35ecdd341a766d4da229c1e8, type: 2}
+  heldItem: {fileID: 0}
+  _itemToSpawn: {fileID: 0}
+  _droppedBag: {fileID: 0}
+  eventSystem: {fileID: 0}
+  graphicRaycasters:
+  - {fileID: 0}
+  rectTransform: {fileID: 0}
+  canCheckInventoryQuest: 0
 --- !u!1 &3114929628122004046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2923,8 @@ GameObject:
   - component: {fileID: 1246235182893629841}
   - component: {fileID: 4514083690184388067}
   - component: {fileID: 6554877718880971976}
+  - component: {fileID: 1677276232462605024}
+  - component: {fileID: 5516215946131224633}
   m_Layer: 5
   m_Name: InventorySlot (4)
   m_TagString: Untagged
@@ -2328,6 +2990,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1677276232462605024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114929628122004046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 4
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &5516215946131224633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114929628122004046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677276232462605024}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1677276232462605024}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3190689352495085269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,6 +3137,8 @@ GameObject:
   - component: {fileID: 7664597501249322345}
   - component: {fileID: 3520264881319280575}
   - component: {fileID: 4351397747415860066}
+  - component: {fileID: 5692537088429329960}
+  - component: {fileID: 8098790997251893576}
   m_Layer: 5
   m_Name: InventorySlot (20)
   m_TagString: Untagged
@@ -2479,6 +3204,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5692537088429329960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211511314238044796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 20
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &8098790997251893576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211511314238044796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5692537088429329960}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5692537088429329960}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3361265813993185191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,6 +3276,8 @@ GameObject:
   - component: {fileID: 4711462169167880535}
   - component: {fileID: 7475182179423486625}
   - component: {fileID: 1234503390473811680}
+  - component: {fileID: 8133114520280498413}
+  - component: {fileID: 2787610735115597381}
   m_Layer: 5
   m_Name: InventorySlot (22)
   m_TagString: Untagged
@@ -2555,6 +3343,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8133114520280498413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361265813993185191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 22
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &2787610735115597381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361265813993185191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8133114520280498413}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8133114520280498413}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3522676011393233423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,7 +3817,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.04780984, y: 0.039475035}
   m_AnchorMax: {x: 0.9551782, y: 0.9635615}
-  m_AnchoredPosition: {x: 1.9799805, y: -0.049987793}
+  m_AnchoredPosition: {x: 1.9799805, y: -0.050048828}
   m_SizeDelta: {x: -0.40054122, y: -0.048219204}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3739329128316144823
@@ -3020,6 +3869,8 @@ GameObject:
   - component: {fileID: 6539434129836351286}
   - component: {fileID: 1808539822217553877}
   - component: {fileID: 4510049899898555702}
+  - component: {fileID: 3228203294780588385}
+  - component: {fileID: 9213256928932091897}
   m_Layer: 5
   m_Name: InventorySlot (13)
   m_TagString: Untagged
@@ -3085,6 +3936,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3228203294780588385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095661695006634180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 13
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &9213256928932091897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095661695006634180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3228203294780588385}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3228203294780588385}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4257349355648843072
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,6 +4008,8 @@ GameObject:
   - component: {fileID: 2320738356903448471}
   - component: {fileID: 8212568005188440468}
   - component: {fileID: 3824868855457857271}
+  - component: {fileID: 7020353623841198104}
+  - component: {fileID: 7049276438541742824}
   m_Layer: 5
   m_Name: InventorySlot (19)
   m_TagString: Untagged
@@ -3161,6 +4075,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7020353623841198104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4257349355648843072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 19
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &7049276438541742824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4257349355648843072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7020353623841198104}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7020353623841198104}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4386383495335610890
 GameObject:
   m_ObjectHideFlags: 0
@@ -3672,6 +4647,8 @@ GameObject:
   - component: {fileID: 8920674167860309195}
   - component: {fileID: 2520534196536750318}
   - component: {fileID: 5426978469239773951}
+  - component: {fileID: 5745978654774437610}
+  - component: {fileID: 3156912816579864503}
   m_Layer: 5
   m_Name: InventorySlot (3)
   m_TagString: Untagged
@@ -3737,6 +4714,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5745978654774437610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802683804395304966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 3
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &3156912816579864503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802683804395304966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5745978654774437610}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5745978654774437610}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &5344107898303526313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3748,6 +4786,8 @@ GameObject:
   - component: {fileID: 6524376689779665059}
   - component: {fileID: 412626971549442024}
   - component: {fileID: 6668442779360266402}
+  - component: {fileID: 5636133061477728619}
+  - component: {fileID: 1878796733270768955}
   m_Layer: 5
   m_Name: InventorySlot (11)
   m_TagString: Untagged
@@ -3813,6 +4853,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5636133061477728619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344107898303526313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 11
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &1878796733270768955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344107898303526313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5636133061477728619}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5636133061477728619}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &5386222872633782759
 GameObject:
   m_ObjectHideFlags: 0
@@ -4199,6 +5300,8 @@ GameObject:
   - component: {fileID: 2577876778758070567}
   - component: {fileID: 6618437763126770540}
   - component: {fileID: 5714928917105033733}
+  - component: {fileID: 3950463749057931757}
+  - component: {fileID: 459493554501471858}
   m_Layer: 5
   m_Name: InventorySlot (14)
   m_TagString: Untagged
@@ -4264,6 +5367,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3950463749057931757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144280495129594935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 14
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &459493554501471858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144280495129594935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3950463749057931757}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3950463749057931757}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6211312466387401171
 GameObject:
   m_ObjectHideFlags: 0
@@ -4651,6 +5815,8 @@ GameObject:
   - component: {fileID: 4874414897531946625}
   - component: {fileID: 616148940951680961}
   - component: {fileID: 7697109524846298113}
+  - component: {fileID: 6575098390237430275}
+  - component: {fileID: 6284293770029513201}
   m_Layer: 5
   m_Name: InventorySlot (17)
   m_TagString: Untagged
@@ -4716,6 +5882,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6575098390237430275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385102515968577835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 17
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &6284293770029513201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385102515968577835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6575098390237430275}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6575098390237430275}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7446726246103926786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4790,7 +6017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.000004}
   m_AnchorMin: {x: 0.90200007, y: 0}
   m_AnchorMax: {x: 1, y: 0.1014023}
-  m_AnchoredPosition: {x: 26.510742, y: -27.553406}
+  m_AnchoredPosition: {x: 26.510742, y: -27.553345}
   m_SizeDelta: {x: -6.0717163, y: -7.3016663}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7399930659193407236
@@ -4918,6 +6145,8 @@ GameObject:
   - component: {fileID: 514485155259126672}
   - component: {fileID: 5696179798846298592}
   - component: {fileID: 8595984394250153257}
+  - component: {fileID: 2823360055479186703}
+  - component: {fileID: 1397770968393233472}
   m_Layer: 5
   m_Name: InventorySlot (15)
   m_TagString: Untagged
@@ -4983,6 +6212,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2823360055479186703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7872144248382752188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 15
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &1397770968393233472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7872144248382752188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2823360055479186703}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2823360055479186703}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7954923493112854769
 GameObject:
   m_ObjectHideFlags: 0
@@ -4994,6 +6284,8 @@ GameObject:
   - component: {fileID: 7375822220351152714}
   - component: {fileID: 5212908296102310066}
   - component: {fileID: 7241715658204128306}
+  - component: {fileID: 8559309024575088359}
+  - component: {fileID: 5872446584170770605}
   m_Layer: 5
   m_Name: InventorySlot (1)
   m_TagString: Untagged
@@ -5059,6 +6351,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8559309024575088359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954923493112854769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 1
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &5872446584170770605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954923493112854769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8559309024575088359}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8559309024575088359}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8175086719201931659
 GameObject:
   m_ObjectHideFlags: 0
@@ -5145,6 +6498,8 @@ GameObject:
   - component: {fileID: 6151722082258947573}
   - component: {fileID: 3826666588305545054}
   - component: {fileID: 7118979430049193115}
+  - component: {fileID: 5689770420923831849}
+  - component: {fileID: 166892683233394662}
   m_Layer: 5
   m_Name: InventorySlot (8)
   m_TagString: Untagged
@@ -5210,6 +6565,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5689770420923831849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8198571687515416673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 8
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &166892683233394662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8198571687515416673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5689770420923831849}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5689770420923831849}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8222135954352931052
 GameObject:
   m_ObjectHideFlags: 0
@@ -5296,6 +6712,8 @@ GameObject:
   - component: {fileID: 3209982767760266225}
   - component: {fileID: 3680318914772968094}
   - component: {fileID: 775369585527686773}
+  - component: {fileID: 2471981101467064197}
+  - component: {fileID: 5622499018606474776}
   m_Layer: 5
   m_Name: InventorySlot (6)
   m_TagString: Untagged
@@ -5361,6 +6779,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2471981101467064197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8522304138060665997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 6
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &5622499018606474776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8522304138060665997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2471981101467064197}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2471981101467064197}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8637422363896280717
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,6 +7001,8 @@ GameObject:
   - component: {fileID: 2552516933177235352}
   - component: {fileID: 9128514451087119981}
   - component: {fileID: 97262332223947319}
+  - component: {fileID: 6450337984665518464}
+  - component: {fileID: 8376001443993365618}
   m_Layer: 5
   m_Name: InventorySlot (21)
   m_TagString: Untagged
@@ -5587,3 +7068,64 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6450337984665518464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088176095453898520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6225238adec77204d97564e221a4612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotId: 21
+  selectedColor: {r: 0.7179487, g: 0.735849, b: 0.2950338, a: 1}
+  notSelectedColor: {r: 0.6117647, g: 0.6117647, b: 0.3372549, a: 1}
+  _itemInThisSlot: {fileID: 0}
+--- !u!114 &8376001443993365618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088176095453898520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6450337984665518464}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6450337984665518464}
+          m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+          m_MethodName: Deselect
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
