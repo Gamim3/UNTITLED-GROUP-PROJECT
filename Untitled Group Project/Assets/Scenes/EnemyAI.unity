@@ -408,7 +408,6 @@ MonoBehaviour:
   playerHealth: 100
   energy: 100
   distance: 0
-  playerPosition: {fileID: 202634469}
   fuzzyValueDecimals: 2
   criticalHealthLimit: 40
   minHurtValue: 20
@@ -613,7 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuzzyLogic: {fileID: 385659123}
-  DecisionTime: 1
+  DecisionTime: 3
 --- !u!114 &385659129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 150
   energy: 100
+  moveSpeed: 0
   playerPosition: {fileID: 202634469}
   distance: 0
   brain: {fileID: 385659128}
