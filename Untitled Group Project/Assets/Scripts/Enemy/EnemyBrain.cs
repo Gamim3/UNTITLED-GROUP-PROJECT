@@ -12,15 +12,22 @@ public class EnemyBrain : MonoBehaviour
     Vector3 energyData;
     Vector3 distanceData;
 
+    public Queue<Attacks> attackQueue;
+
+    public Attacks[] notImplementedAttacks;
+    public Attacks[] attacksCurrentlyInQueue;
+
     private EnemyHealth enemyHealth;
     private PlayerHealth playerHealth;
     private Energy energy;
     private Distance distance;
 
-    public Queue<Attacks> attackQueue;
+    private Enemy enemy;
 
     public void Start()
     {
+        enemy = GetComponent<Enemy>();
+
         attackQueue = new Queue<Attacks>();
 
         StartCoroutine(Think());
@@ -28,18 +35,38 @@ public class EnemyBrain : MonoBehaviour
 
     public void Update()
     {
-        playerHealthData = fuzzyLogic.fuzzyPlayerHealth;
-        enemyHealthData = fuzzyLogic.fuzzyEnemyHealth;
-        energyData = fuzzyLogic.fuzzyEnergy;
-        distanceData = fuzzyLogic.fuzzyDistance;
+        GetFuzzyData();
 
+        //Queue debugging
         if (Input.GetKeyDown(KeyCode.E))
         {
-            foreach (Attacks attack in attackQueue)
+            attackQueue.Clear();
+        }
+
+        if (enemy.detectedPlayer && attackQueue.Count != 0)
+        {
+            switch (attackQueue.Peek())
             {
-                Debug.Log(attack);
+                case Attacks attack when attack == Attacks.Engage:
+                    enemy.engaging = true;
+                    enemy.Engage();
+                    break;
+                case Attacks attack when attack == Attacks.DisengageDash:
+                    enemy.disengaging = true;
+                    enemy.Disengage();
+                    break;
             }
-                attackQueue.Clear();
+
+            for (int i = 0; i < notImplementedAttacks.Length; i++)
+            {
+                if (attackQueue.Count != 0)
+                {
+                    if (attackQueue.Peek() == notImplementedAttacks[i])
+                    {
+                        attackQueue.Clear();
+                    }
+                }
+            }
         }
     }
 
@@ -610,6 +637,7 @@ public class EnemyBrain : MonoBehaviour
                 Debug.Log("geen case matched!! ||  eHPState " + enemyHealthState + " pHPState " + playerHealthState + " enState " + energyState + " dState " + distanceState);
                 break;
         }
+        attacksCurrentlyInQueue = attackQueue.ToArray();
     }
 
     public void ConvertToReadableEnum(float enemyHealthState, float playerHealthState, float energyState, float distanceState)
@@ -665,6 +693,14 @@ public class EnemyBrain : MonoBehaviour
                 distance = Distance.Close;
                 break;
         }
+    }
+
+    public void GetFuzzyData()
+    {
+        playerHealthData = fuzzyLogic.fuzzyPlayerHealth;
+        enemyHealthData = fuzzyLogic.fuzzyEnemyHealth;
+        energyData = fuzzyLogic.fuzzyEnergy;
+        distanceData = fuzzyLogic.fuzzyDistance;
     }
 
     public enum Attacks
