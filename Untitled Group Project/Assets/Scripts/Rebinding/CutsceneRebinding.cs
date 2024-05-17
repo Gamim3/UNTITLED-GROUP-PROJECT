@@ -172,7 +172,7 @@ public class CutsceneRebinding : MonoBehaviour
         ("RightApple", "Right Windows"), // not sure
         ("LeftCommand", "Left Command"), // not sure
         ("RightCommand", "Right Command"), // not sure
-        ("ContextMenu", ""), // BAS TEST
+        ("ContextMenu", "Application"), // BAS TEST
         ("Escape", "Escape"),
         ("LeftArrow", "Left"),
         ("RightArrow", "Right"),
@@ -183,13 +183,13 @@ public class CutsceneRebinding : MonoBehaviour
         ("PageUp", "Pgup"),
         ("Home", "Home"),
         ("End", "End"),
-        ("Insert", ""), // BAS TEST
+        ("Insert", "Insert"), // BAS TEST
         ("Delete", "Delete"),
         ("CapsLock", "CapsLock"),
         ("NumLock", "Num Lock"),
         ("PrintScreen", "Prnt Scrn"),
-        ("ScrollLock", ""), // GERLOF TEST
-        ("Pause", ""), // BAS TEST
+        ("ScrollLock", "Scroll Lock"),
+        ("Pause", "Break"), // BAS TEST
         ("NumpadEnter", "Num Enter"),
         ("NumpadDivide", "Num Divide"),
         ("NumpadMultiply", "*"),
