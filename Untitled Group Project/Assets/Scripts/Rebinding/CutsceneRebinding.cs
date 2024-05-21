@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Controls;
 using static UnityEngine.InputSystem.HID.HID;
+using System.Collections;
 
 public class CutsceneRebinding : MonoBehaviour
 {
@@ -12,15 +13,21 @@ public class CutsceneRebinding : MonoBehaviour
     private Keyboard _keyboard;
     private KeyboardState _keyboardState;
 
-    [SerializeField] bool _completedRebind;
-
-    [SerializeField] bool _isRebinding;
-
-    [SerializeField] int _actionToRebind;
-
     [SerializeField] List<Keybind> _cutsceneActions;
 
+    [SerializeField] bool _completedRebind;
+    [SerializeField] bool _isRebinding;
+    [SerializeField] bool _startedRebind;
+
+    [SerializeField] bool _newInput;
+
+    [SerializeField] int _bindingIndex;
+
+    [SerializeField] string _lastPressedKey;
     [SerializeField] string _currentKeyboardInputIndex;
+
+    [SerializeField] string _currentPressedKey;
+    [SerializeField] string _previousPressedKey;
 
     [Serializable]
     public struct Keybind
@@ -46,262 +53,246 @@ public class CutsceneRebinding : MonoBehaviour
     private void OnEnable()
     {
         KeyRebinding.rebindComplete += CompleteRebind;
+        KeyRebinding.rebindStarted += StartRebind;
     }
 
     private void OnDisable()
     {
         KeyRebinding.rebindComplete -= CompleteRebind;
+        KeyRebinding.rebindStarted -= StartRebind;
+    }
+
+    private void StartRebind(InputAction action, int arg2)
+    {
+        _startedRebind = true;
     }
 
     void CompleteRebind()
     {
-        Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)} )");
+        Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex)} )");
 
         _completedRebind = true;
 
-        _currentKeyboardInputIndex = GetKeyboardInputNameFromName(KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex));
+        _startedRebind = false;
 
-        var Gamepad = InputSystem.GetDevice<Gamepad>();
-        var GamepadState = new GamepadState();
-        // GamepadState.WithButton((GamepadButton)(Button)System.Enum.Parse(typeof(Button), ));
-        Gamepad.leftStick.up.IsPressed();
-        InputSystem.QueueStateEvent(Gamepad, GamepadState);
+        _isRebinding = false;
 
+        _newInput = false;
 
-
-        // GamepadState.WithButton((GamepadButton)(Button)System.Enum.Parse(typeof(Button), KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)));
-
-        // GamepadState.WithButton();
-        // GamepadState.Release(Key.Space);
-        // InputSystem.QueueStateEvent(Keyboard, KeyboardState);
-
-
-
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (!_completedRebind)
-        {
-            _completedRebind = false;
-
-            Debug.Log($"Rebind has been saved");
-
-            _actionToRebind++;
-
-            StartNewRebind(_actionToRebind);
-        }
+        _currentKeyboardInputIndex = GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
     }
 
     private void Start()
     {
         StartNewRebind(0);
-
     }
 
-    public bool test;
-
-    private List<(string, string)> stringPairs = new List<(string, string)>
+    private List<(string, string, KeyCode)> stringPairs = new List<(string, string, KeyCode)>
     {
-        ("None", ""),
-        ("Space", "Space"),
-        ("Enter", "Enter"),
-        ("Tab", "Tab"),
-        ("Backquote", "Grave"),
-        ("Backquote", "``"),
-        ("Quote", "''"),
-        ("Quote", "Acute"),
-        ("Semicolon", ";"),
-        ("Comma", ","),
-        ("Period", "."),
-        ("Slash", "/"),
-        ("Backslash", "\\"),
-        ("LeftBracket", "["),
-        ("RightBracket", "]"),
-        ("Minus", "-"),
-        ("Equals", "="),
-        ("A", "A"),
-        ("B", "B"),
-        ("C", "C"),
-        ("D", "D"),
-        ("E", "E"),
-        ("F", "F"),
-        ("G", "G"),
-        ("H", "H"),
-        ("I", "I"),
-        ("J", "J"),
-        ("K", "K"),
-        ("L", "L"),
-        ("M", "M"),
-        ("N", "N"),
-        ("O", "O"),
-        ("P", "P"),
-        ("Q", "Q"),
-        ("R", "R"),
-        ("S", "S"),
-        ("T", "T"),
-        ("U", "U"),
-        ("V", "V"),
-        ("W", "W"),
-        ("X", "X"),
-        ("Y", "Y"),
-        ("Z", "Z"),
-        ("Digit1", "1"),
-        ("Digit2", "2"),
-        ("Digit3", "3"),
-        ("Digit4", "4"),
-        ("Digit5", "5"),
-        ("Digit6", "6"),
-        ("Digit7", "7"),
-        ("Digit8", "8"),
-        ("Digit9", "9"),
-        ("Digit0", "0"),
-        ("LeftShift", "Shift"),
-        ("RightShift", "Right Shift"),
-        ("LeftAlt", "Alt"),
-        ("RightAlt", "Right Alt"),
-        ("AltGr", "Right Alt"),
-        ("LeftCtrl", "Ctrl"),
-        ("LeftWindows", "Left Windows"),
-        ("RightWindows", "Right Windows"), // TEST GERLOF
-        ("RightCtrl", "Right Ctrl"),
-        ("LeftMeta", "Left Windows"),
-        ("RightMeta", "Right Windows"), // not sure
-        ("LeftApple", "Left Windows"), // not sure
-        ("RightApple", "Right Windows"), // not sure
-        ("LeftCommand", "Left Command"), // not sure
-        ("RightCommand", "Right Command"), // not sure
-        ("ContextMenu", "Application"), // BAS TEST
-        ("Escape", "Escape"),
-        ("LeftArrow", "Left"),
-        ("RightArrow", "Right"),
-        ("UpArrow", "Up"),
-        ("DownArrow", "Down"),
-        ("Backspace", "Backspace"),
-        ("PageDown", "Pgdown"),
-        ("PageUp", "Pgup"),
-        ("Home", "Home"),
-        ("End", "End"),
-        ("Insert", "Insert"), // BAS TEST
-        ("Delete", "Delete"),
-        ("CapsLock", "CapsLock"),
-        ("NumLock", "Num Lock"),
-        ("PrintScreen", "Prnt Scrn"),
-        ("ScrollLock", "Scroll Lock"),
-        ("Pause", "Break"), // BAS TEST
-        ("NumpadEnter", "Num Enter"),
-        ("NumpadDivide", "Num Divide"),
-        ("NumpadMultiply", "*"),
-        ("NumpadPlus", "+"),
-        ("NumpadMinus", "-"),
-        ("NumpadPeriod", "Num Decimal"),
-        ("NumpadEquals", ""), // this shit does not exist idk what unity is cooking
-        ("Numpad0", "Num 0"),
-        ("Numpad1", "Num 1"),
-        ("Numpad2", "Num 2"),
-        ("Numpad3", "Num 3"),
-        ("Numpad4", "Num 4"),
-        ("Numpad5", "Num 5"),
-        ("Numpad6", "Num 6"),
-        ("Numpad7", "Num 7"),
-        ("Numpad8", "Num 8"),
-        ("Numpad9", "Num 9"),
-        ("F1", "F1"),
-        ("F2", "F2"),
-        ("F3", "F3"),
-        ("F4", "F4"),
-        ("F5", "F5"),
-        ("F6", "F6"),
-        ("F7", "F7"),
-        ("F8", "F8"),
-        ("F9", "F9"),
-        ("F10", "F10"),
-        ("F11", "F11"),
-        ("F12", "F12"),
-        ("OEM1", ""),
-        ("OEM2", ""),
-        ("OEM3", ""),
-        ("OEM4", ""),
-        ("OEM5", ""),
-        ("IMESelected", "")
+        ("None", "", KeyCode.None),
+        ("Space", "Space", KeyCode.Space),
+        ("Enter", "Enter", KeyCode.Return),
+        ("Tab", "Tab", KeyCode.Tab),
+        ("Backquote", "Grave", KeyCode.BackQuote),
+        ("Backquote", "``", KeyCode.BackQuote),
+        ("Quote", "''", KeyCode.Quote),
+        ("Quote", "Acute", KeyCode.Quote),
+        ("Semicolon", ";", KeyCode.Semicolon),
+        ("Comma", ",", KeyCode.Comma),
+        ("Period", ".", KeyCode.Period),
+        ("Slash", "/", KeyCode.Slash),
+        ("Backslash", "\\", KeyCode.Backslash),
+        ("LeftBracket", "[", KeyCode.LeftBracket),
+        ("RightBracket", "]", KeyCode.RightBracket),
+        ("Minus", "-", KeyCode.Minus),
+        ("Equals", "=", KeyCode.Equals),
+        ("A", "A", KeyCode.A),
+        ("B", "B", KeyCode.B),
+        ("C", "C", KeyCode.C),
+        ("D", "D", KeyCode.D),
+        ("E", "E", KeyCode.E),
+        ("F", "F", KeyCode.F),
+        ("G", "G", KeyCode.G),
+        ("H", "H", KeyCode.H),
+        ("I", "I", KeyCode.I),
+        ("J", "J", KeyCode.J),
+        ("K", "K", KeyCode.K),
+        ("L", "L", KeyCode.L),
+        ("M", "M", KeyCode.M),
+        ("N", "N", KeyCode.N),
+        ("O", "O", KeyCode.O),
+        ("P", "P", KeyCode.P),
+        ("Q", "Q", KeyCode.Q),
+        ("R", "R", KeyCode.R),
+        ("S", "S", KeyCode.S),
+        ("T", "T", KeyCode.T),
+        ("U", "U", KeyCode.U),
+        ("V", "V", KeyCode.V),
+        ("W", "W", KeyCode.W),
+        ("X", "X", KeyCode.X),
+        ("Y", "Y", KeyCode.Y),
+        ("Z", "Z", KeyCode.Z),
+        ("Digit1", "1", KeyCode.Alpha1),
+        ("Digit2", "2", KeyCode.Alpha2),
+        ("Digit3", "3", KeyCode.Alpha3),
+        ("Digit4", "4", KeyCode.Alpha4),
+        ("Digit5", "5", KeyCode.Alpha5),
+        ("Digit6", "6", KeyCode.Alpha6),
+        ("Digit7", "7", KeyCode.Alpha7),
+        ("Digit8", "8", KeyCode.Alpha8),
+        ("Digit9", "9", KeyCode.Alpha9),
+        ("Digit0", "0", KeyCode.Alpha0),
+        ("LeftShift", "Shift", KeyCode.LeftShift),
+        ("RightShift", "Right Shift", KeyCode.RightShift),
+        ("LeftAlt", "Alt", KeyCode.LeftAlt),
+        ("RightAlt", "Right Alt", KeyCode.RightAlt),
+        ("AltGr", "Right Alt", KeyCode.AltGr),
+        ("LeftCtrl", "Ctrl", KeyCode.LeftControl),
+        ("LeftWindows", "Left Windows", KeyCode.LeftWindows),
+        ("RightWindows", "Right Windows", KeyCode.RightWindows),
+        ("RightCtrl", "Right Ctrl", KeyCode.RightControl),
+        ("LeftMeta", "Left Windows", KeyCode.LeftCommand), // macOS Command key
+        ("RightMeta", "Right Windows", KeyCode.RightCommand), // macOS Command key
+        ("LeftApple", "Left Windows", KeyCode.LeftCommand), // macOS Command key
+        ("RightApple", "Right Windows", KeyCode.RightCommand), // macOS Command key
+        ("LeftCommand", "Left Command", KeyCode.LeftCommand), // macOS Command key
+        ("RightCommand", "Right Command", KeyCode.RightCommand), // macOS Command key
+        ("ContextMenu", "Application", KeyCode.Menu),
+        ("Escape", "Escape", KeyCode.Escape),
+        ("LeftArrow", "Left", KeyCode.LeftArrow),
+        ("RightArrow", "Right", KeyCode.RightArrow),
+        ("UpArrow", "Up", KeyCode.UpArrow),
+        ("DownArrow", "Down", KeyCode.DownArrow),
+        ("Backspace", "Backspace", KeyCode.Backspace),
+        ("PageDown", "Pgdown", KeyCode.PageDown),
+        ("PageUp", "Pgup", KeyCode.PageUp),
+        ("Home", "Home", KeyCode.Home),
+        ("End", "End", KeyCode.End),
+        ("Insert", "Insert", KeyCode.Insert),
+        ("Delete", "Delete", KeyCode.Delete),
+        ("CapsLock", "CapsLock", KeyCode.CapsLock),
+        ("NumLock", "Num Lock", KeyCode.Numlock),
+        ("PrintScreen", "Prnt Scrn", KeyCode.Print),
+        ("ScrollLock", "Scroll Lock", KeyCode.ScrollLock),
+        ("Pause", "Break", KeyCode.Pause),
+        ("NumpadEnter", "Num Enter", KeyCode.KeypadEnter),
+        ("NumpadDivide", "Num Divide", KeyCode.KeypadDivide),
+        ("NumpadMultiply", "*", KeyCode.KeypadMultiply),
+        ("NumpadPlus", "+", KeyCode.KeypadPlus),
+        ("NumpadMinus", "-", KeyCode.KeypadMinus),
+        ("NumpadPeriod", "Num Decimal", KeyCode.KeypadPeriod),
+        ("NumpadEquals", "", KeyCode.KeypadEquals),
+        ("Numpad0", "Num 0", KeyCode.Keypad0),
+        ("Numpad1", "Num 1", KeyCode.Keypad1),
+        ("Numpad2", "Num 2", KeyCode.Keypad2),
+        ("Numpad3", "Num 3", KeyCode.Keypad3),
+        ("Numpad4", "Num 4", KeyCode.Keypad4),
+        ("Numpad5", "Num 5", KeyCode.Keypad5),
+        ("Numpad6", "Num 6", KeyCode.Keypad6),
+        ("Numpad7", "Num 7", KeyCode.Keypad7),
+        ("Numpad8", "Num 8", KeyCode.Keypad8),
+        ("Numpad9", "Num 9", KeyCode.Keypad9),
+        ("F1", "F1", KeyCode.F1),
+        ("F2", "F2", KeyCode.F2),
+        ("F3", "F3", KeyCode.F3),
+        ("F4", "F4", KeyCode.F4),
+        ("F5", "F5", KeyCode.F5),
+        ("F6", "F6", KeyCode.F6),
+        ("F7", "F7", KeyCode.F7),
+        ("F8", "F8", KeyCode.F8),
+        ("F9", "F9", KeyCode.F9),
+        ("F10", "F10", KeyCode.F10),
+        ("F11", "F11", KeyCode.F11),
+        ("F12", "F12", KeyCode.F12),
+        ("OEM1", "", KeyCode.None), // OEM keys vary and need specific context
+        ("OEM2", "", KeyCode.None), // OEM keys vary and need specific context
+        ("OEM3", "", KeyCode.None), // OEM keys vary and need specific context
+        ("OEM4", "", KeyCode.None), // OEM keys vary and need specific context
+        ("OEM5", "", KeyCode.None), // OEM keys vary and need specific context
+        ("IMESelected", "", KeyCode.None) // IME selection is context-specific
     };
 
-    private string GetKeyboardInputNameFromName(string inputName)
+    private string GetKeyboardItem1FromItem2(string possibleItem2)
     {
         foreach (var pair in stringPairs)
         {
-            if (pair.Item2 == inputName)
+            if (pair.Item2 == possibleItem2)
             {
-                Debug.Log($"{pair.Item1} == {inputName}");
                 return pair.Item1;
             }
         }
         return null;
     }
 
+    private KeyCode GetKeyboardItem3FromItem2(string possibleItem2)
+    {
+        foreach (var pair in stringPairs)
+        {
+            if (pair.Item2 == possibleItem2)
+            {
+                Debug.Log($"{pair.Item1} == {possibleItem2}");
+                return pair.Item3;
+            }
+        }
+        return KeyCode.None;
+    }
+
     private void Update()
     {
-        // _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), KeyRebinding.GetBindingName(_cutsceneActions[_actionToRebind]._inputActionReference, _cutsceneActions[_actionToRebind]._actionIndex)));
 
         if (Input.anyKey && _completedRebind)
         {
+            // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
             _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
             InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-            // _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex.ToString()));
-            // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+            // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
+
+            if (!_newInput)
+            {
+                foreach (var pair in stringPairs)
+                {
+                    if (Input.GetKey(pair.Item3))
+                    {
+                        if (_currentPressedKey == "")
+                        {
+                            _currentPressedKey = pair.Item2;
+                            _previousPressedKey = pair.Item2;
+                            Debug.Log("FIRST TIME KEY PRESSED");
+                        }
+                        if (_currentPressedKey != pair.Item2)
+                        {
+                            // THIS CURRENTLY LOOPS NEED TO FIND A WAT TO MAKE IT NOT LOOP
+                            Debug.Log($"NEW INPUT {pair.Item2}");
+                            _newInput = true;
+
+                            _previousPressedKey = _currentPressedKey;
+                            _currentPressedKey = pair.Item2;
+
+                            // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
+                            _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), pair.Item1));
+                            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+
+                            _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), pair.Item1));
+                            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                            // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
+
+                            StartNewRebind(_bindingIndex);
+                            break; // Currently for not checking more needs a bigger solution later
+                        }
+                    }
+                }
+            }
         }
-
-        if (test)
-        {
-            test = false;
-            _isRebinding = false;
-            _completedRebind = false;
-            StartNewRebind(0);
-        }
-        // {
-        //     StartNewRebind(_actionToRebind);
-        //     Debug.Log("YES");
-
-        //     // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-
-        // }
-        // else
-        // {
-        //     _isRebinding = false;
-        //     _completedRebind = false;
-        //     Debug.Log("NO");
-        // }
-
     }
-
-    // var Gamepad = InputSystem.GetDevice<Gamepad>();
-    // var GamepadState = new GamepadState();
-
-    // Gamepad.rightStick.up.IsPressed();
-    // Gamepad.rightStick.down.IsPressed();
-    // Gamepad.rightStick.left.IsPressed();
-    // Gamepad.rightStick.right.IsPressed();
-
-    // Gamepad.leftStick.up.IsPressed();
-    // Gamepad.leftStick.down.IsPressed();
-    // Gamepad.leftStick.left.IsPressed();
-    // Gamepad.leftStick.right.IsPressed();
-
-    // InputSystem.QueueStateEvent(Gamepad, GamepadState);
 
     void StartNewRebind(int index)
     {
-        if (!_isRebinding)
+        if (!_isRebinding && !_startedRebind)
         {
             _isRebinding = true;
-
-            if (!_completedRebind)
-            {
-                KeyRebinding.StartRebind(_cutsceneActions[index]._inputActionReference, _cutsceneActions[index]._excludeMouse, _cutsceneActions[index]._actionIndex);
-            }
+            _completedRebind = false;
+            Debug.Log("REBIND");
+            KeyRebinding.StartRebind(_cutsceneActions[index]._inputActionReference, _cutsceneActions[index]._excludeMouse, _cutsceneActions[index]._actionIndex);
         }
-
     }
-
 }
