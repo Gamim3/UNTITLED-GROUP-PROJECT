@@ -168,7 +168,7 @@ public class Enemy : Entity
     {
         if (throwingSpikeTimer >= 0 && throwingSpike)
         {
-            Exhaustion(exhaustionSpeed * 750);
+            Exhaustion(exhaustionSpeed * 1000);
 
             GameObject thrownProjectile = Instantiate(projectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, parent);
 

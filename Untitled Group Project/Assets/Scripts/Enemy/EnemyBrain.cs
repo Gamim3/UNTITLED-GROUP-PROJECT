@@ -368,16 +368,7 @@ public class EnemyBrain : MonoBehaviour
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
                 //("enemy(hurt) | player(hurt) | energy(full) | distance(middle)");
-                switch (Random.Range(0, 2))
-                {
-                    case 0:
-                        attackQueue.Enqueue(Attacks.Engage);
-                        break;
-
-                    case 1:
-                        attackQueue.Enqueue(Attacks.SpikeThrow);
-                        break;
-                }
+                attackQueue.Enqueue(Attacks.Engage);
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
                 //("enemy(hurt) | player(hurt) | energy(full) | distance(close)");
@@ -720,7 +711,6 @@ public class EnemyBrain : MonoBehaviour
         RightClawBackAttack,
         SpikeSlamAttack,
         Engage,
-        Block,
         DisengageDash,
         RegainEnergy,
     }
