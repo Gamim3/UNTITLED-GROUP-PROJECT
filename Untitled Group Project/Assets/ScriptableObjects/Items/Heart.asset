@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c98f2d34cfd33c14394bd2c507c63dc5, type: 3}
-  m_Name: Item 2
+  m_Name: Heart
   m_EditorClassIdentifier: 
   itemID: 1
   itemPrefab: {fileID: 0}
   image: {fileID: 21300038, guid: 34ecf51bcd3f4424eafda7dafd885bd0, type: 3}
-  maxStack: 10
+  maxStack: 16
   itemIdSet: 1
