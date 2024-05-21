@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
 
     public void Exhaustion(float Energy)
     {
-        energy -= Energy;
+        energy -= (Energy / 50);
     }
 
     public void TakeDamage(float damage)
