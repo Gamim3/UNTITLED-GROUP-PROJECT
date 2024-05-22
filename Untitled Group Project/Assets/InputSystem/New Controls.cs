@@ -123,7 +123,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""6b0523d3-7008-416d-80ae-b0fd7b4e37fe"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Controller"",
@@ -134,7 +134,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""3fc13b78-6dfc-4fca-9e89-74637f4f3314"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Controller"",
@@ -145,7 +145,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""61b10d38-8cf4-477e-86ac-5fad6f752c5c"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Controller"",
@@ -156,7 +156,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""3b22233a-b91c-4e99-85ae-ea7dd477d83e"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Controller"",

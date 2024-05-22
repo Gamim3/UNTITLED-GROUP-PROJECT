@@ -124,21 +124,23 @@ public class KeyRebinding : MonoBehaviour
 
         if (action.bindings[actionIndex].isComposite)
         {
-            // Debug.Log("IsComposite: " + keybind._actionName);
+            Debug.Log("IsComposite: " + actionReference.action.name);
             return action.GetBindingDisplayString(0);
         }
         else if (action.bindings[actionIndex].isPartOfComposite)
         {
-            // Debug.Log("IsPartOfComposite: " + actionIndex);
+            Debug.Log("IsPartOfComposite: " + actionIndex);
             return GetPartOfCompositeButton(actionIndex, action);
         }
-        // Debug.Log(keybind._actionName + " " + keybind._actionIndex);
+        Debug.Log(actionReference.action.name + " " + actionIndex);
         return action.GetBindingDisplayString(actionIndex);
     }
 
     public static string GetPartOfCompositeButton(int compositePartIndex, InputAction action)
     {
         char[] unModifiedBindingChars = action.GetBindingDisplayString(0).ToCharArray();
+
+        Debug.Log(action.GetBindingDisplayString(0));
 
         int index = 1;
 

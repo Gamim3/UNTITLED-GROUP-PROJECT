@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.Controls;
-using static UnityEngine.InputSystem.HID.HID;
-using System.Collections;
 
 public class CutsceneRebinding : MonoBehaviour
 {
@@ -29,6 +26,10 @@ public class CutsceneRebinding : MonoBehaviour
     [SerializeField] string _currentPressedKey;
     [SerializeField] string _previousPressedKey;
 
+    [SerializeField] List<string> _bindedKeys = new(); // CHECK FOR PREVIOUS BINDINGS PLS THANKS
+
+    [SerializeField] GameObject[] _movementPoints;
+
     [Serializable]
     public struct Keybind
     {
@@ -48,6 +49,13 @@ public class CutsceneRebinding : MonoBehaviour
     {
         _keyboard = InputSystem.GetDevice<Keyboard>();
         _keyboardState = new KeyboardState();
+
+        for (int i = 0; i < _movementPoints.Length; i++)
+        {
+            _movementPoints[i].SetActive(false);
+            _movementPoints[i].GetComponentInChildren<CutsceneMovementPoint>().CutsceneRebinding = this;
+        }
+        _movementPoints[0].SetActive(true);
     }
 
     private void OnEnable()
@@ -85,6 +93,8 @@ public class CutsceneRebinding : MonoBehaviour
     private void Start()
     {
         StartNewRebind(0);
+
+        Debug.Log($"binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[1]._inputActionReference, _cutsceneActions[1]._actionIndex)} )");
     }
 
     private List<(string, string, KeyCode)> stringPairs = new List<(string, string, KeyCode)>
@@ -224,18 +234,18 @@ public class CutsceneRebinding : MonoBehaviour
         return null;
     }
 
-    private KeyCode GetKeyboardItem3FromItem2(string possibleItem2)
-    {
-        foreach (var pair in stringPairs)
-        {
-            if (pair.Item2 == possibleItem2)
-            {
-                Debug.Log($"{pair.Item1} == {possibleItem2}");
-                return pair.Item3;
-            }
-        }
-        return KeyCode.None;
-    }
+    // private KeyCode GetKeyboardItem3FromItem2(string possibleItem2)
+    // {
+    //     foreach (var pair in stringPairs)
+    //     {
+    //         if (pair.Item2 == possibleItem2)
+    //         {
+    //             Debug.Log($"{pair.Item1} == {possibleItem2}");
+    //             return pair.Item3;
+    //         }
+    //     }
+    //     return KeyCode.None;
+    // }
 
     private void Update()
     {
@@ -276,7 +286,7 @@ public class CutsceneRebinding : MonoBehaviour
                             InputSystem.QueueStateEvent(_keyboard, _keyboardState);
                             // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
 
-                            StartNewRebind(_bindingIndex);
+                            // StartNewRebind(_bindingIndex); // MAYBE NEED TO CANCLE IF REBIND IS SAVED
                             break; // Currently for not checking more needs a bigger solution later
                         }
                     }
@@ -294,5 +304,25 @@ public class CutsceneRebinding : MonoBehaviour
             Debug.Log("REBIND");
             KeyRebinding.StartRebind(_cutsceneActions[index]._inputActionReference, _cutsceneActions[index]._excludeMouse, _cutsceneActions[index]._actionIndex);
         }
+    }
+
+    public void SaveNewRebind()
+    {
+        Debug.Log("SAVE BINDING");
+        KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex]._inputActionReference.action);
+        _completedRebind = false;
+
+        _movementPoints[_bindingIndex].SetActive(false);
+        _bindingIndex++;
+        _movementPoints[_bindingIndex].SetActive(true);
+
+        _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
+        InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+
+        _currentKeyboardInputIndex = "";
+        _currentPressedKey = "";
+        _previousPressedKey = "";
+
+        StartNewRebind(_bindingIndex);
     }
 }
