@@ -21,6 +21,13 @@ public class CraftButton : MonoBehaviour
             _itemImage.sprite = recipe.itemToCraft.image;
             _itemNameText.text = recipe.itemToCraft.name;
         }
+        else
+        {
+            Debug.Log($"Button did not have a recipe.\nDestroying Button {gameObject.name}...");
+            Destroy(gameObject);
+        }
+
+        GetComponent<Button>().onClick.AddListener(SelectRecipe);
     }
 
     private void Update()
@@ -28,6 +35,10 @@ public class CraftButton : MonoBehaviour
         if (CraftingManager.Instance.selectedButtonObject != null)
         {
             isSelected = CraftingManager.Instance.selectedButtonObject == this;
+        }
+        else
+        {
+            isSelected = false;
         }
         _selectedObj.SetActive(isSelected);
     }

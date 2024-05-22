@@ -49,6 +49,8 @@ public class CraftingManager : MonoBehaviour
         if (recipe == null)
         {
             Debug.Log("No Recipe Selected");
+            imageListTransform.gameObject.SetActive(false);
+            selectedButtonObject = null;
             return;
         }
 
@@ -56,6 +58,7 @@ public class CraftingManager : MonoBehaviour
         selectedButtonObject = button;
 
         Debug.Log($"Selected Recipe {recipe}");
+        imageListTransform.gameObject.SetActive(true);
 
         for (int i = 0; i < recipe.itemsNeeded.Length; i++)
         {
