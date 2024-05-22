@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyBrain : MonoBehaviour
 {
-    public FuzzyLogic fuzzyLogic;
-    public int DecisionTime;
+    [SerializeField] FuzzyLogic fuzzyLogic;
+    [SerializeField] int DecisionTime;
 
     Vector3 playerHealthData;
     Vector3 enemyHealthData;
@@ -14,15 +16,15 @@ public class EnemyBrain : MonoBehaviour
 
     public Queue<Attacks> attackQueue;
 
-    public Attacks[] notImplementedAttacks;
-    public Attacks[] attacksCurrentlyInQueue;
+    [SerializeField] Attacks[] notImplementedAttacks;
+    [SerializeField] Attacks[] attacksCurrentlyInQueue;
 
-    private EnemyHealth enemyHealth;
-    private PlayerHealth playerHealth;
-    private Energy energy;
-    private Distance distance;
+    [NonSerialized] EnemyHealth enemyHealth;
+    [NonSerialized] PlayerHealth playerHealth;
+    [NonSerialized] Energy energy;
+    [NonSerialized] Distance distance;
 
-    private Enemy enemy;
+    [NonSerialized] Enemy enemy;
 
     public void Start()
     {

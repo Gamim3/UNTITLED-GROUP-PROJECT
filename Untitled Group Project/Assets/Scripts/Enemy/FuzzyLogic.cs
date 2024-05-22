@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,63 +17,63 @@ public class FuzzyLogic : MonoBehaviour
     public float distance;
 
     [Header("FuzzyficationSettings")]
-    public int fuzzyValueDecimals;
-    private string decimalText;
+    [SerializeField] int fuzzyValueDecimals;
+    [NonSerialized] string decimalText;
 
     [Header("FuzzyLogicSets")]
 
     [Header("EnemyHealthSet")]
-    public float criticalHealthLimit;
+    [SerializeField] float criticalHealthLimit;
 
-    public float minHurtValue;
-    public float fullHurt;
-    public float maxHurtValue;
+    [SerializeField] float minHurtValue;
+    [SerializeField] float fullHurt;
+    [SerializeField] float maxHurtValue;
 
-    public float beginHealthyValue;
+    [SerializeField] float beginHealthyValue;
 
-    public AnimationCurve criticalCurve;
-    public AnimationCurve hurtCurve;
-    public AnimationCurve healthyCurve;
+    [SerializeField] AnimationCurve criticalCurve;
+    [SerializeField] AnimationCurve hurtCurve;
+    [SerializeField] AnimationCurve healthyCurve;
 
 
     [Header("PlayerHealthSet")]
-    public float playerCriticalHealthLimit;
+    [SerializeField] float playerCriticalHealthLimit;
 
-    public float playerMinHurtValue;
-    public float playerFullHurt;
-    public float playerMaxHurtValue;
+    [SerializeField] float playerMinHurtValue;
+    [SerializeField] float playerFullHurt;
+    [SerializeField] float playerMaxHurtValue;
 
-    public float playerBeginHealthyValue;
+    [SerializeField] float playerBeginHealthyValue;
 
-    public AnimationCurve playerCriticalCurve;
-    public AnimationCurve playerHurtCurve;
-    public AnimationCurve playerHealthyCurve;
+    [SerializeField] AnimationCurve playerCriticalCurve;
+    [SerializeField] AnimationCurve playerHurtCurve;
+    [SerializeField] AnimationCurve playerHealthyCurve;
 
     [Header("DistanceSet")]
-    public float nearDistanceLimit;
+    [SerializeField] float nearDistanceLimit;
 
-    public float minDistance;
-    public float midMiddleDistance;
-    public float maxMiddleDistance;
+    [SerializeField] float minDistance;
+    [SerializeField] float midMiddleDistance;
+    [SerializeField] float maxMiddleDistance;
 
-    public float beginFarDistance;
+    [SerializeField] float beginFarDistance;
 
-    public AnimationCurve nearCurve;
-    public AnimationCurve middleCurve;
-    public AnimationCurve farCurve;
+    [SerializeField] AnimationCurve nearCurve;
+    [SerializeField] AnimationCurve middleCurve;
+    [SerializeField] AnimationCurve farCurve;
 
     [Header("EnergySet")]
-    public float lowEnergyLimit;
+    [SerializeField] float lowEnergyLimit;
 
-    public float minMiddleEnergy;
-    public float midMiddleEnergy;
-    public float maxMiddleEnergy;
+    [SerializeField] float minMiddleEnergy;
+    [SerializeField] float midMiddleEnergy;
+    [SerializeField] float maxMiddleEnergy;
 
-    public float beginfullEnergy;
+    [SerializeField] float beginfullEnergy;
 
-    public AnimationCurve lowEnergyCurve;
-    public AnimationCurve mediumEnergyCurve;
-    public AnimationCurve fullEnergyCurve;
+    [SerializeField] AnimationCurve lowEnergyCurve;
+    [SerializeField] AnimationCurve mediumEnergyCurve;
+    [SerializeField] AnimationCurve fullEnergyCurve;
 
     public void Start()
     {

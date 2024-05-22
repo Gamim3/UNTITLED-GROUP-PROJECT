@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public float healthPoints;
-    public float energy;
-    public float moveSpeed;
+    [SerializeField] protected float healthPoints;
+    [SerializeField] protected float energy;
+    [SerializeField] protected float moveSpeed;
 
     protected float maxHealth;
     protected float maxEnergy;
