@@ -1,11 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Cinemachine;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ThirdPersonCam : MonoBehaviour
 {

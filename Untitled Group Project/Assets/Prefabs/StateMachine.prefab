@@ -82,9 +82,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 7120629029091282}
-  _playerObj: {fileID: 0}
+  _playerObj: {fileID: 6470602492927477769}
   _playerAnimator: {fileID: 0}
-  _playerCam: {fileID: 0}
+  _playerCam: {fileID: 1850566987780869691}
   _orientation: {fileID: 4348710489577697380}
   _playerRigidBody: {fileID: 4834270810644566719}
   _currentMovementInput: {x: 0, y: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   _isGrounded: 1
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
   _groundDrag: 4
   sphereRadius: 0.5
   sphereOffset: 0.4
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 6711244995347219863}
   m_Layer: 0
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 1131209598356222554}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,6 +459,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 681c0e4b529a3a14295072964b35548d, type: 3}
+--- !u!4 &1850566987780869691 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4518575434092309589, guid: 681c0e4b529a3a14295072964b35548d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2818053474546000494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3988029935433150852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1172036155949143018, guid: 681c0e4b529a3a14295072964b35548d,

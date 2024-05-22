@@ -26,6 +26,8 @@ public class CutsceneRebinding : MonoBehaviour
     [SerializeField] string _currentPressedKey;
     [SerializeField] string _previousPressedKey;
 
+
+    [SerializeField] bool _pressingBindedKey;
     [SerializeField] List<string> _bindedKeys = new(); // CHECK FOR PREVIOUS BINDINGS PLS THANKS
 
     [SerializeField] GameObject[] _movementPoints;
@@ -94,7 +96,7 @@ public class CutsceneRebinding : MonoBehaviour
     {
         StartNewRebind(0);
 
-        Debug.Log($"binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[1]._inputActionReference, _cutsceneActions[1]._actionIndex)} )");
+        // KeyRebinding.LoadBindingOverride("Move"); // TO LOAD 
     }
 
     private List<(string, string, KeyCode)> stringPairs = new List<(string, string, KeyCode)>
@@ -253,8 +255,6 @@ public class CutsceneRebinding : MonoBehaviour
         if (Input.anyKey && _completedRebind)
         {
             // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
-            _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
-            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
             // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
 
             if (!_newInput)
@@ -263,6 +263,20 @@ public class CutsceneRebinding : MonoBehaviour
                 {
                     if (Input.GetKey(pair.Item3))
                     {
+                        for (int i = 0; i < _bindedKeys.Count; i++)
+                        {
+                            if (_bindedKeys[i] == pair.Item2)
+                            {
+                                Debug.Log("ALREADY BINDED");
+                                _pressingBindedKey = true;
+                                return;
+                            }
+                        }
+                        _pressingBindedKey = false;
+
+                        InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                        _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
+
                         if (_currentPressedKey == "")
                         {
                             _currentPressedKey = pair.Item2;
@@ -297,11 +311,22 @@ public class CutsceneRebinding : MonoBehaviour
 
     void StartNewRebind(int index)
     {
+        if (index >= _cutsceneActions.Count)
+        {
+            Debug.LogError("OUT OF RANGE");
+            return;
+        }
+        if (_pressingBindedKey)
+        {
+            Debug.LogWarning("This key is already binded");
+            return;
+        }
         if (!_isRebinding && !_startedRebind)
         {
             _isRebinding = true;
             _completedRebind = false;
             Debug.Log("REBIND");
+
             KeyRebinding.StartRebind(_cutsceneActions[index]._inputActionReference, _cutsceneActions[index]._excludeMouse, _cutsceneActions[index]._actionIndex);
         }
     }
@@ -312,9 +337,21 @@ public class CutsceneRebinding : MonoBehaviour
         KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex]._inputActionReference.action);
         _completedRebind = false;
 
-        _movementPoints[_bindingIndex].SetActive(false);
-        _bindingIndex++;
-        _movementPoints[_bindingIndex].SetActive(true);
+        _bindedKeys.Add(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
+
+        if (_bindingIndex < _movementPoints.Length)
+        {
+            _movementPoints[_bindingIndex].SetActive(false);
+            _bindingIndex++;
+            if (_bindingIndex < _movementPoints.Length)
+            {
+                _movementPoints[_bindingIndex].SetActive(true);
+            }
+        }
+        else
+        {
+            _bindingIndex++;
+        }
 
         _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
         InputSystem.QueueStateEvent(_keyboard, _keyboardState);
@@ -322,6 +359,7 @@ public class CutsceneRebinding : MonoBehaviour
         _currentKeyboardInputIndex = "";
         _currentPressedKey = "";
         _previousPressedKey = "";
+
 
         StartNewRebind(_bindingIndex);
     }
