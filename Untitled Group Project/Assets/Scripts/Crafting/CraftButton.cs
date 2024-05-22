@@ -23,7 +23,7 @@ public class CraftButton : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Button did not have a recipe.\nDestroying Button {gameObject.name}...");
+            // Debug.Log($"Button did not have a recipe.\nDestroying Button {gameObject.name}...");
             Destroy(gameObject);
         }
 
@@ -60,7 +60,7 @@ public class CraftButton : MonoBehaviour
     {
         if (recipe == null)
         {
-            Debug.Log("Could Not Update RecipeUI As There Is No Recipe Attatched To " + gameObject.name);
+            Debug.LogError("Could Not Update RecipeUI As There Is No Recipe Attatched To " + gameObject.name);
             return;
         }
         _itemImage.sprite = recipe.itemToCraft.image;
