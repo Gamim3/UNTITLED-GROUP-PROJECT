@@ -65,6 +65,14 @@ public class EnemyBrain : MonoBehaviour
                     enemy.throwingSpike = true;
                     enemy.SpikeThrow();
                     break;
+                case Attacks attack when attack == Attacks.LeftClaw:
+                    enemy.leftClawAttack = true;
+                    enemy.LeftClawAttack();
+                    break;
+                case Attacks attack when attack == Attacks.RightClaw:
+                    enemy.rightClawAttack = true;
+                    enemy.RightClawAttack();
+                    break;
             }
 
             for (int i = 0; i < notImplementedAttacks.Length; i++)
@@ -278,7 +286,16 @@ public class EnemyBrain : MonoBehaviour
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
                 //("enemy(Healthy) | player(critical) | energy(medium) | distance(close)");
-                attackQueue.Enqueue(Attacks.SpikeSlamAttack);
+                switch (Random.Range(0, 2))
+                {
+                    case 0:
+                        attackQueue.Enqueue(Attacks.RightClaw);
+                        break;
+
+                    case 1:
+                        attackQueue.Enqueue(Attacks.LeftClaw);
+                        break;
+                }
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
                 //("enemy(Healthy) | player(critical) | energy(low) | distance(far)");
@@ -420,7 +437,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
 
                     case 1:
-                        attackQueue.Enqueue(Attacks.DisengageDash);
+                        attackQueue.Enqueue(Attacks.RightClaw);
                         break;
                 }
                 break;
@@ -484,7 +501,20 @@ public class EnemyBrain : MonoBehaviour
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
                 //("enemy(hurt) | player(critical) | energy(medium) | distance(close)");
-                attackQueue.Enqueue(Attacks.SpikeSlamAttack);
+                switch (Random.Range(0, 3))
+                {
+                    case 0:
+                        attackQueue.Enqueue(Attacks.SpikeSlamAttack);
+                        break;
+
+                    case 1:
+                        attackQueue.Enqueue(Attacks.LeftClaw);
+                        break;
+
+                    case 2:
+                        attackQueue.Enqueue(Attacks.RightClaw);
+                        break;
+                }
                 break;
             case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
                 //("enemy(hurt) | player(critical) | energy(low) | distance(far)");
