@@ -84,6 +84,8 @@ public class CutsceneRebinding : MonoBehaviour
     {
         Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex)} )");
 
+        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0]._inputActionReference, 0)})");
+
         _completedRebind = true;
 
         _startedRebind = false;
@@ -118,7 +120,7 @@ public class CutsceneRebinding : MonoBehaviour
         ("Tab", "Tab", KeyCode.Tab),
         ("Backquote", "Grave", KeyCode.BackQuote),
         ("Backquote", "``", KeyCode.BackQuote),
-        ("Quote", "''", KeyCode.Quote),
+        ("Quote", "'", KeyCode.Quote),
         ("Quote", "Acute", KeyCode.Quote),
         ("Semicolon", ";", KeyCode.Semicolon),
         ("Comma", ",", KeyCode.Comma),
@@ -199,7 +201,7 @@ public class CutsceneRebinding : MonoBehaviour
         ("ScrollLock", "Scroll Lock", KeyCode.ScrollLock),
         ("Pause", "Break", KeyCode.Pause),
         ("NumpadEnter", "Num Enter", KeyCode.KeypadEnter),
-        ("NumpadDivide", "Num Divide", KeyCode.KeypadDivide),
+        ("NumpadDivide", "Num /", KeyCode.KeypadDivide),
         ("NumpadMultiply", "*", KeyCode.KeypadMultiply),
         ("NumpadPlus", "+", KeyCode.KeypadPlus),
         ("NumpadMinus", "-", KeyCode.KeypadMinus),
@@ -274,12 +276,13 @@ public class CutsceneRebinding : MonoBehaviour
                 {
                     if (Input.GetKey(pair.Item3))
                     {
+                        Debug.Log("A");
                         for (int i = 0; i < _bindedKeys.Count; i++)
                         {
                             if (_bindedKeys[i] == pair.Item2)
                             {
-                                Debug.Log("ALREADY BINDED");
                                 _pressingBindedKey = true;
+                                Debug.Log("RETURN");
                                 return;
                             }
                         }
@@ -288,30 +291,32 @@ public class CutsceneRebinding : MonoBehaviour
                         InputSystem.QueueStateEvent(_keyboard, _keyboardState);
                         _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
 
+                        _currentPressedKey = pair.Item2;
+
                         if (_currentPressedKey == "")
                         {
                             _currentPressedKey = pair.Item2;
                             _previousPressedKey = pair.Item2;
                             Debug.Log("FIRST TIME KEY PRESSED");
                         }
-                        if (_currentPressedKey != pair.Item2)
+                        if (_previousPressedKey != pair.Item2)
                         {
-                            // THIS CURRENTLY LOOPS NEED TO FIND A WAT TO MAKE IT NOT LOOP
                             Debug.Log($"NEW INPUT {pair.Item2}");
                             _newInput = true;
 
                             _previousPressedKey = _currentPressedKey;
-                            _currentPressedKey = pair.Item2;
+                            // _currentPressedKey = pair.Item2;
 
                             // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
-                            _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), pair.Item1));
-                            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                            // _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), pair.Item1));
+                            // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
 
-                            _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), pair.Item1));
-                            InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-                            // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
+                            StartNewRebind(_bindingIndex);
 
-                            // StartNewRebind(_bindingIndex); // MAYBE NEED TO CANCLE IF REBIND IS SAVED
+                            // _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), pair.Item1));
+                            // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                            // // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
+
                             break; // Currently for not checking more needs a bigger solution later
                         }
                     }
@@ -332,6 +337,7 @@ public class CutsceneRebinding : MonoBehaviour
             Debug.LogWarning("This key is already binded");
             return;
         }
+
         if (!_isRebinding && !_startedRebind)
         {
             _isRebinding = true;
@@ -347,6 +353,7 @@ public class CutsceneRebinding : MonoBehaviour
         Debug.Log("SAVE BINDING");
         KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex]._inputActionReference.action);
         _completedRebind = false;
+        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0]._inputActionReference, 0)})");
 
         _bindedKeys.Add(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
 

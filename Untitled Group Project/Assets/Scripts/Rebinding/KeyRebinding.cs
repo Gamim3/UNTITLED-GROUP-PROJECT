@@ -15,6 +15,8 @@ public class KeyRebinding : MonoBehaviour
     static List<string> _keyboardExcludeKeys = new();
     static List<string> _gamepadExcludeKeys = new();
 
+    static bool _stopRebind;
+
     private void OnEnable()
     {
         if (_playerInput == null)
@@ -40,7 +42,9 @@ public class KeyRebinding : MonoBehaviour
         if (listIndex == 0)
         {
             newInput = newInput.Replace("Digit", "");
-            newInput = $"<Keyboard>/{newInput}";
+            // newInput = $"<Keyboard>/{newInput}";
+            newInput = newInput.ToLower();
+            newInput = $"Key:/Keyboard/{newInput}";
             Debug.Log($"Add {newInput}");
             _keyboardExcludeKeys.Add(newInput);
         }
@@ -136,6 +140,10 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.OnComplete(operation =>
         {
+            if (_stopRebind)
+            {
+                rebind.Cancel();
+            }
             actionToRebind.Enable();
             operation.Dispose();
 
@@ -162,11 +170,23 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.WithCancelingThrough("<Keyboard>/Escape");
 
-        for (int i = 0; i < _keyboardExcludeKeys.Count; i++)
+        // rebind.OnMatchWaitForAnother(1f);
+
+        rebind.OnPotentialMatch(operation =>
         {
-            Debug.Log($"Canceling with {_keyboardExcludeKeys[i]}");
-            rebind.WithCancelingThrough(_keyboardExcludeKeys[i]);
-        }
+            string stupidShitShuddup = operation.selectedControl.ToString().Replace("Key:/Keyboard/", "");
+            Debug.Log("POTENTIAL MATCH: " + stupidShitShuddup);
+
+            for (int i = 0; i < _keyboardExcludeKeys.Count; i++)
+            {
+
+                if (stupidShitShuddup == _keyboardExcludeKeys[i])
+                {
+                    Debug.Log("Canceling Because input is already binded");
+                    rebind.Cancel();
+                }
+            }
+        });
 
         if (excludeMouse)
         {
@@ -193,8 +213,8 @@ public class KeyRebinding : MonoBehaviour
         }
         else if (action.bindings[actionIndex].isPartOfComposite)
         {
-            Debug.Log("IsPartOfComposite: " + actionIndex);
-            return GetPartOfCompositeButton(actionIndex, action);
+            Debug.Log("IsPartOfComposite: " + action.GetBindingDisplayString(actionIndex));
+            return action.GetBindingDisplayString(actionIndex);
         }
         Debug.Log(actionReference.action.name + " " + actionIndex);
         return action.GetBindingDisplayString(actionIndex);
