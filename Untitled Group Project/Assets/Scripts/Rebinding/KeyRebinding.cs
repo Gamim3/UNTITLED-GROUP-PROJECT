@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,9 @@ public class KeyRebinding : MonoBehaviour
     public static event Action<InputAction, int> rebindStarted;
     public static event Action rebindCanceled;
     public static event Action rebindComplete;
+
+    static List<string> _keyboardExcludeKeys = new();
+    static List<string> _gamepadExcludeKeys = new();
 
     private void OnEnable()
     {
@@ -28,6 +32,58 @@ public class KeyRebinding : MonoBehaviour
         if (inputActions == null)
         {
             inputActions = new();
+        }
+    }
+
+    public static void AddBindedInput(string newInput, int listIndex)
+    {
+        if (listIndex == 0)
+        {
+            newInput = newInput.Replace("Digit", "");
+            newInput = $"<Keyboard>/{newInput}";
+            Debug.Log($"Add {newInput}");
+            _keyboardExcludeKeys.Add(newInput);
+        }
+        else if (listIndex == 1)
+        {
+            _gamepadExcludeKeys.Add(newInput);
+        }
+    }
+
+    public static void RemoveBindedInput(string removeInput = "", int listIndex = -1)
+    {
+        if (removeInput == "")
+        {
+            if (listIndex == -1)
+            {
+                _keyboardExcludeKeys.Clear();
+                _gamepadExcludeKeys.Clear();
+            }
+            else if (listIndex == 0)
+            {
+                _keyboardExcludeKeys.Clear();
+            }
+            else if (listIndex == 1)
+            {
+                _gamepadExcludeKeys.Clear();
+            }
+        }
+        else
+        {
+            if (listIndex == -1)
+            {
+                _keyboardExcludeKeys.Clear();
+                _gamepadExcludeKeys.Clear();
+                Debug.LogWarning("Why give a string and not an index?");
+            }
+            else if (listIndex == 0)
+            {
+                _keyboardExcludeKeys.Remove(removeInput);
+            }
+            else if (listIndex == 1)
+            {
+                _gamepadExcludeKeys.Remove(removeInput);
+            }
         }
     }
 
@@ -73,6 +129,7 @@ public class KeyRebinding : MonoBehaviour
 
         actionToRebind.Disable();
 
+
         var rebind = actionToRebind.PerformInteractiveRebinding(actionIndex);
 
         rebind.WithBindingGroup("Gamepad");
@@ -96,13 +153,20 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.OnCancel(operation =>
         {
+            Debug.Log("CANCEL REBIND");
             actionToRebind.Enable();
             operation.Dispose();
 
             rebindCanceled?.Invoke();
         });
 
-        rebind.WithCancelingThrough("<Keyboard>/escape");
+        rebind.WithCancelingThrough("<Keyboard>/Escape");
+
+        for (int i = 0; i < _keyboardExcludeKeys.Count; i++)
+        {
+            Debug.Log($"Canceling with {_keyboardExcludeKeys[i]}");
+            rebind.WithCancelingThrough(_keyboardExcludeKeys[i]);
+        }
 
         if (excludeMouse)
         {

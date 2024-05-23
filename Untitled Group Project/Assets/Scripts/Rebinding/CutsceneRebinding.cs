@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
@@ -62,14 +63,16 @@ public class CutsceneRebinding : MonoBehaviour
 
     private void OnEnable()
     {
-        KeyRebinding.rebindComplete += CompleteRebind;
+        KeyRebinding.rebindComplete += OnCompleteRebind;
         KeyRebinding.rebindStarted += StartRebind;
+        KeyRebinding.rebindCanceled += OnCancelRebind;
     }
 
     private void OnDisable()
     {
-        KeyRebinding.rebindComplete -= CompleteRebind;
+        KeyRebinding.rebindComplete -= OnCompleteRebind;
         KeyRebinding.rebindStarted -= StartRebind;
+        KeyRebinding.rebindCanceled -= OnCancelRebind;
     }
 
     private void StartRebind(InputAction action, int arg2)
@@ -77,7 +80,7 @@ public class CutsceneRebinding : MonoBehaviour
         _startedRebind = true;
     }
 
-    void CompleteRebind()
+    void OnCompleteRebind()
     {
         Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex)} )");
 
@@ -90,6 +93,14 @@ public class CutsceneRebinding : MonoBehaviour
         _newInput = false;
 
         _currentKeyboardInputIndex = GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
+    }
+
+    void OnCancelRebind()
+    {
+        Debug.Log("TEST");
+        _isRebinding = false;
+        _startedRebind = false;
+        StartNewRebind(_bindingIndex);
     }
 
     private void Start()
@@ -356,10 +367,11 @@ public class CutsceneRebinding : MonoBehaviour
         _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
         InputSystem.QueueStateEvent(_keyboard, _keyboardState);
 
+        KeyRebinding.AddBindedInput(GetKeyboardItem1FromItem2(_currentPressedKey), 0);
+
         _currentKeyboardInputIndex = "";
         _currentPressedKey = "";
         _previousPressedKey = "";
-
 
         StartNewRebind(_bindingIndex);
     }
