@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8337791253728287947}
   m_Layer: 0
-  m_Name: Anvil With Tools
+  m_Name: Anvil with tools 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
