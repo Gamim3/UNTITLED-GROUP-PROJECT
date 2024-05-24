@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98f2d34cfd33c14394bd2c507c63dc5, type: 3}
   m_Name: Spike
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 2
   itemPrefab: {fileID: 4602210105317745087, guid: 413f5d713f7a1194ba9cde39feb3e391,
     type: 3}
   image: {fileID: 21300000, guid: ad8f1dacbddac894e94c06b63b5873f1, type: 3}
   maxStack: 16
-  itemIdSet: 0
+  itemIdSet: 1
