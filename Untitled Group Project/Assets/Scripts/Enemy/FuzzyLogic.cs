@@ -86,7 +86,7 @@ public class FuzzyLogic : MonoBehaviour
 
         int.TryParse(decimalText, out fuzzyValueDecimals);
 
-        SetCurves();
+        //SetCurves();
     }
 
     public void Update()
@@ -100,6 +100,7 @@ public class FuzzyLogic : MonoBehaviour
         fuzzyEnergy = new Vector3(Mathf.Round(lowEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(mediumEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(fullEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals);
     }
 
+#if UNITY_EDITOR
     public void SetCurves()
     {
         //Critical Enemy Curve
@@ -235,4 +236,5 @@ public class FuzzyLogic : MonoBehaviour
         fullEnergyCurve.preWrapMode = WrapMode.Clamp;
         fullEnergyCurve.postWrapMode = WrapMode.Clamp;
     }
+#endif
 }

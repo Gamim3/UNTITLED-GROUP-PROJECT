@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 1
+    supportSSR: 0
     supportSSRTransparent: 1
-    supportSSAO: 1
-    supportSSGI: 1
+    supportSSAO: 0
+    supportSSGI: 0
     supportSubsurfaceScattering: 1
     sssSampleBudget:
       m_Values: 140000002800000050000000
@@ -38,14 +38,14 @@ MonoBehaviour:
     customBufferFormat: 8
     supportedLitShaderMode: 2
     planarReflectionResolution:
-      m_Values: 000100000004000000080000
+      m_Values: 000100000004000000040000
       m_SchemaId:
         m_Id: With3Levels
     cubeReflectionResolution:
       m_Values: 800000000001000000020000
       m_SchemaId:
         m_Id: With3Levels
-    supportDecals: 1
+    supportDecals: 0
     supportDecalLayers: 0
     supportSurfaceGradient: 1
     decalNormalBufferHP: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
     supportProbeVolumeStreaming: 0
     probeVolumeSHBands: 1
     supportRayTracing: 1
-    supportedRayTracingMode: 3
+    supportedRayTracingMode: 1
     lightLoopSettings:
       cookieAtlasSize: 2048
       cookieFormat: 74
@@ -73,7 +73,7 @@ MonoBehaviour:
       maxEnvLightsOnScreen: 0
       reflectionCacheCompressed: 0
       reflectionProbeFormat: 74
-      reflectionProbeTexCacheSize: 4096
+      reflectionProbeTexCacheSize: 134218752
       reflectionProbeTexLastValidCubeMip: 3
       reflectionProbeTexLastValidPlanarMip: 0
       reflectionProbeDecreaseResToFit: 1
@@ -97,11 +97,11 @@ MonoBehaviour:
       shadowFilteringQuality: 1
       areaShadowFilteringQuality: 0
       punctualLightShadowAtlas:
-        shadowAtlasResolution: 4096
+        shadowAtlasResolution: 2048
         shadowAtlasDepthBits: 32
         useDynamicViewportRescale: 1
       areaLightShadowAtlas:
-        shadowAtlasResolution: 4096
+        shadowAtlasResolution: 2048
         shadowAtlasDepthBits: 32
         useDynamicViewportRescale: 1
       cachedPunctualLightShadowAtlas: 2048
@@ -127,18 +127,18 @@ MonoBehaviour:
       screenSpaceShadowBufferFormat: 48
     decalSettings:
       drawDistance: 1000
-      atlasWidth: 4096
-      atlasHeight: 4096
+      atlasWidth: 2048
+      atlasHeight: 2048
       perChannelMask: 0
     postProcessSettings:
       m_LutSize: 32
       lutFormat: 48
       bufferFormat: 74
     dynamicResolutionSettings:
-      enabled: 0
-      useMipBias: 0
-      enableDLSS: 0
-      DLSSPerfQualitySetting: 0
+      enabled: 1
+      useMipBias: 1
+      enableDLSS: 1
+      DLSSPerfQualitySetting: 3
       DLSSInjectionPoint: 0
       DLSSUseOptimalSettings: 1
       DLSSSharpness: 0.5
@@ -147,8 +147,8 @@ MonoBehaviour:
       maxPercentage: 100
       minPercentage: 100
       dynResType: 1
-      upsampleFilter: 1
-      forceResolution: 0
+      upsampleFilter: 5
+      forceResolution: 1
       forcedPercentage: 100
       lowResTransparencyMinimumThreshold: 0
       rayTracingHalfResThreshold: 50
