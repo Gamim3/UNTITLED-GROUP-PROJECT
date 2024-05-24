@@ -34,7 +34,11 @@ public class Enemy : Entity
     private Transform leftClawDest;
     private Transform rightClawDest;
 
+    private bool rotatingToPlayer;
+
     [NonSerialized] public bool detectedPlayer;
+
+    //verlaag variable spam
 
     [Header("AttackTimes")]
     [SerializeField] float engageTimer;
@@ -117,10 +121,21 @@ public class Enemy : Entity
                 rightClawAttackTimer -= Time.deltaTime;
                 break;
         }
+
+        if (rotatingToPlayer)
+        {
+            transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
+        }
+        else if(!rotatingToPlayer && disengaging)
+        {
+            transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
+        }
     }
 
     public void DetectPlayer()
     {
+        //betere DetectionSystem based on visual line of sight
+
         if(distance <= detectionRange)
         {
             detectedPlayer = true;
@@ -132,15 +147,25 @@ public class Enemy : Entity
         }
     }
 
+    public void RotateAwayFromPlayer()
+    {
+        Vector3 relativePos = playerPosition.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        transform.rotation = new Quaternion(transform.rotation.x, rotation.y +180, transform.rotation.z, transform.rotation.w);
+    }
+
     //Attacks
 
     public void Engage()
     {
-        if(engageTimer >= 0 && engaging)
+        rotatingToPlayer = true;
+
+        if (engageTimer >= 0 && engaging)
         {
             if (distance > 3.5f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, moveSpeed * Time.deltaTime / 10);
+                //vervang met navmesh
+                //transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, moveSpeed * Time.deltaTime / 10);
                 Exhaustion(exhaustionSpeed / 2);
             }
         }
@@ -153,6 +178,8 @@ public class Enemy : Entity
             {
                 brain.attackQueue.Dequeue();
             }
+
+            rotatingToPlayer = false;
         }
     }
 
@@ -160,7 +187,8 @@ public class Enemy : Entity
     {
         if (disengageTimer >= 0 && disengaging)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -moveSpeed * Time.deltaTime / 10);
+            //vervang met navmesh
+            //transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -moveSpeed * Time.deltaTime / 10);
             Exhaustion(exhaustionSpeed / 2);
         }
         else
@@ -197,10 +225,14 @@ public class Enemy : Entity
 
     public void SpikeThrow()
     {
+        rotatingToPlayer = true;
+
         if (throwingSpikeTimer >= 0 && throwingSpike)
         {
             Exhaustion(exhaustionSpeed * 1000);
 
+
+            //add visual line of sight
             GameObject thrownProjectile = Instantiate(projectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, parent);
 
             thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = projectileSpeed;
@@ -213,16 +245,17 @@ public class Enemy : Entity
             {
                 brain.attackQueue.Dequeue();
             }
+
+            rotatingToPlayer = false;
         }
     }
 
     public void LeftClawAttack()
     {
+        rotatingToPlayer = true;
+
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
-            Vector3 relativePos = playerPosition.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            transform.rotation = new Quaternion(transform.rotation.x, rotation.y, transform.rotation.z, transform.rotation.w);
             leftClaw.GetComponent<Collider>().enabled = true;
             leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, moveSpeed / 50);
         }
@@ -239,16 +272,17 @@ public class Enemy : Entity
                 leftClaw.GetComponent<Collider>().enabled = false;
                 brain.attackQueue.Dequeue();
             }
+
+            rotatingToPlayer = false;
         }
     }
 
     public void RightClawAttack()
     {
+        rotatingToPlayer = true;
+
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
-            Vector3 relativePos = playerPosition.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            transform.rotation = new Quaternion(transform.rotation.x, rotation.y, transform.rotation.z, transform.rotation.w);
             rightClaw.GetComponent<Collider>().enabled = true;
             rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, moveSpeed / 50);
         }
@@ -265,6 +299,8 @@ public class Enemy : Entity
                 rightClaw.GetComponent<Collider>().enabled = false;
                 brain.attackQueue.Dequeue();
             }
+
+            rotatingToPlayer = false;
         }
     }
 
