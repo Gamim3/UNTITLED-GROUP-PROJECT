@@ -48,6 +48,8 @@ public class CraftingManager : MonoBehaviour
         }
         if (recipe == null)
         {
+            Destroy(button.gameObject);
+            _currentRecipes.Remove(recipe);
             Debug.Log("No Recipe Selected");
             imageListTransform.gameObject.SetActive(false);
             selectedButtonObject = null;
@@ -105,18 +107,25 @@ public class CraftingManager : MonoBehaviour
         {
             if (allRecipes[r].itemToCraft.itemID == itemID)
             {
+                Debug.Log("Found Recipe For " + allRecipes[r].itemToCraft);
+                for (int i = 0; i < _currentRecipes.Count; i++)
+                {
+                    if (_currentRecipes[i] == null)
+                    {
+                        _currentRecipes.RemoveAt(i);
+                    }
+                    else if (_currentRecipes.Contains(allRecipes[r]))
+                    {
+                        Debug.LogError($"There is already a recipe for {allRecipes[r]}");
+                        return;
+                    }
+                    else
+                    {
+                        AddRecipe(allRecipes[r]);
+                        return;
+                    }
+                }
                 AddRecipe(allRecipes[r]);
-
-                if (_currentRecipes.Contains(allRecipes[r]))
-                {
-                    Debug.LogError($"There is already a recipe for {allRecipes[r]}");
-                    return;
-                }
-                else
-                {
-                    AddRecipe(allRecipes[r]);
-                    return;
-                }
             }
         }
 
@@ -125,9 +134,22 @@ public class CraftingManager : MonoBehaviour
 
     public void AddRecipe(Recipe recipe)
     {
+        if (_currentRecipes.Contains(recipe))
+        {
+            return;
+        }
+
         GameObject spawnedRecipe = Instantiate(itemPrefab, recipeListTransform);
         spawnedRecipe.GetComponent<CraftButton>().recipe = recipe;
         spawnedRecipe.GetComponent<CraftButton>().UpdateRecipeUI();
         _currentRecipes.Add(recipe);
+
+        for (int i = 0; i < _currentRecipes.Count; i++)
+        {
+            if (_currentRecipes[i] == null)
+            {
+                _currentRecipes.RemoveAt(i);
+            }
+        }
     }
 }
