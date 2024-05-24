@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,8 @@ public class CutsceneRebinding : MonoBehaviour
     private KeyboardState _keyboardState;
 
     [SerializeField] List<Keybind> _cutsceneActions;
+
+    [SerializeField] TMP_Text _uiRebindTutorialTxt;
 
     [SerializeField] bool _completedRebind;
     [SerializeField] bool _isRebinding;
@@ -36,15 +39,17 @@ public class CutsceneRebinding : MonoBehaviour
     [Serializable]
     public struct Keybind
     {
-        public InputActionReference _inputActionReference;
-        public int _actionIndex;
-        public bool _excludeMouse;
+        public InputActionReference inputActionReference;
+        public int actionIndex;
+        public bool excludeMouse;
+        public string tutorialtext;
 
-        public Keybind(InputActionReference inputActionReference, int actionIndex, bool excludeMouse)
+        public Keybind(InputActionReference inputActionReference, int actionIndex, bool excludeMouse, string tutorialtext)
         {
-            _inputActionReference = inputActionReference;
-            _actionIndex = actionIndex;
-            _excludeMouse = excludeMouse;
+            this.inputActionReference = inputActionReference;
+            this.actionIndex = actionIndex;
+            this.excludeMouse = excludeMouse;
+            this.tutorialtext = tutorialtext;
         }
     }
 
@@ -82,9 +87,9 @@ public class CutsceneRebinding : MonoBehaviour
 
     void OnCompleteRebind()
     {
-        Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex)} )");
+        Debug.Log($"Rebind has been completed with binding: ( {KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex)} )");
 
-        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0]._inputActionReference, 0)})");
+        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0].inputActionReference, 0)})");
 
         _completedRebind = true;
 
@@ -94,7 +99,8 @@ public class CutsceneRebinding : MonoBehaviour
 
         _newInput = false;
 
-        _currentKeyboardInputIndex = GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
+        Debug.Log($"_currentKeyboardInputIndex = {GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex))}");
+        _currentKeyboardInputIndex = GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex));
     }
 
     void OnCancelRebind()
@@ -109,6 +115,7 @@ public class CutsceneRebinding : MonoBehaviour
     {
         StartNewRebind(0);
 
+        _uiRebindTutorialTxt.text = _cutsceneActions[0].tutorialtext;
         // KeyRebinding.LoadBindingOverride("Move"); // TO LOAD 
     }
 
@@ -195,7 +202,7 @@ public class CutsceneRebinding : MonoBehaviour
         ("End", "End", KeyCode.End),
         ("Insert", "Insert", KeyCode.Insert),
         ("Delete", "Delete", KeyCode.Delete),
-        ("CapsLock", "CapsLock", KeyCode.CapsLock),
+        ("CapsLock", "Caps Lock", KeyCode.CapsLock),
         ("NumLock", "Num Lock", KeyCode.Numlock),
         ("PrintScreen", "Prnt Scrn", KeyCode.Print),
         ("ScrollLock", "Scroll Lock", KeyCode.ScrollLock),
@@ -270,57 +277,54 @@ public class CutsceneRebinding : MonoBehaviour
             // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
             // THIS NEEDS TO USE THE NEW ONES SO IT WORKS WITH THAT
 
-            if (!_newInput)
+            // if (!_newInput)
+            // {
+            foreach (var pair in stringPairs)
             {
-                foreach (var pair in stringPairs)
+                if (Input.GetKey(pair.Item3))
                 {
-                    if (Input.GetKey(pair.Item3))
+                    for (int i = 0; i < _bindedKeys.Count; i++)
                     {
-                        Debug.Log("A");
-                        for (int i = 0; i < _bindedKeys.Count; i++)
+                        if (_bindedKeys[i] == pair.Item2)
                         {
-                            if (_bindedKeys[i] == pair.Item2)
-                            {
-                                _pressingBindedKey = true;
-                                Debug.Log("RETURN");
-                                return;
-                            }
-                        }
-                        _pressingBindedKey = false;
-
-                        InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-                        _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
-
-                        _currentPressedKey = pair.Item2;
-
-                        if (_currentPressedKey == "")
-                        {
-                            _currentPressedKey = pair.Item2;
-                            _previousPressedKey = pair.Item2;
-                            Debug.Log("FIRST TIME KEY PRESSED");
-                        }
-                        if (_previousPressedKey != pair.Item2)
-                        {
-                            Debug.Log($"NEW INPUT {pair.Item2}");
-                            _newInput = true;
-
-                            _previousPressedKey = _currentPressedKey;
-                            // _currentPressedKey = pair.Item2;
-
-                            // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
-                            // _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), pair.Item1));
-                            // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-
-                            StartNewRebind(_bindingIndex);
-
-                            // _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), pair.Item1));
-                            // InputSystem.QueueStateEvent(_keyboard, _keyboardState);
-                            // // REBINDING NEEDS NEW INPUT SO WE SIMULATE A NEW ONE ( THE NEW INPUT THAT IS ALREADY BEING PRESSED CURRENTLY )
-
-                            break; // Currently for not checking more needs a bigger solution later
+                            _pressingBindedKey = true;
+                            Debug.Log("RETURN");
+                            return;
                         }
                     }
+
+                    _pressingBindedKey = false;
+
+                    InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                    _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
+
+
+                    if (_currentPressedKey == "")
+                    {
+                        _currentPressedKey = pair.Item2;
+                        _previousPressedKey = pair.Item2;
+                        Debug.Log("FIRST TIME KEY PRESSED");
+                    }
+                    if (_previousPressedKey != pair.Item2)
+                    {
+                        Debug.Log($"NEW INPUT {pair.Item2}");
+
+                        _previousPressedKey = _currentPressedKey;
+                        _currentPressedKey = pair.Item2;
+
+                        _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));
+                        InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+
+                        InputSystem.QueueStateEvent(_keyboard, _keyboardState);
+                        _keyboardState.Press((Key)System.Enum.Parse(typeof(Key), pair.Item1));
+
+                        StartNewRebind(_bindingIndex);
+
+                        break; // Currently for not checking more needs a bigger solution later
+                    }
+                    _currentPressedKey = pair.Item2;
                 }
+                // }
             }
         }
     }
@@ -344,18 +348,23 @@ public class CutsceneRebinding : MonoBehaviour
             _completedRebind = false;
             Debug.Log("REBIND");
 
-            KeyRebinding.StartRebind(_cutsceneActions[index]._inputActionReference, _cutsceneActions[index]._excludeMouse, _cutsceneActions[index]._actionIndex);
+            KeyRebinding.StartRebind(_cutsceneActions[index].inputActionReference, _cutsceneActions[index].excludeMouse, _cutsceneActions[index].actionIndex);
         }
     }
 
     public void SaveNewRebind()
     {
         Debug.Log("SAVE BINDING");
-        KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex]._inputActionReference.action);
-        _completedRebind = false;
-        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0]._inputActionReference, 0)})");
 
-        _bindedKeys.Add(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex]._inputActionReference, _cutsceneActions[_bindingIndex]._actionIndex));
+
+
+
+        KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex].inputActionReference.action);
+        _completedRebind = false;
+        Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0].inputActionReference, 0)})");
+
+        _bindedKeys.Add(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex));
+
 
         if (_bindingIndex < _movementPoints.Length)
         {
@@ -369,6 +378,17 @@ public class CutsceneRebinding : MonoBehaviour
         else
         {
             _bindingIndex++;
+        }
+
+
+        if (_cutsceneActions.Count > _bindingIndex)
+        {
+            _uiRebindTutorialTxt.text = _cutsceneActions[_bindingIndex].tutorialtext; // Fade in logix or somtehing
+            // Debug.LogError("SHOULD STOP OR SOMETHING"); 
+        }
+        else
+        {
+            _uiRebindTutorialTxt.text = "DONE :)";
         }
 
         _keyboardState.Release((Key)System.Enum.Parse(typeof(Key), _currentKeyboardInputIndex));

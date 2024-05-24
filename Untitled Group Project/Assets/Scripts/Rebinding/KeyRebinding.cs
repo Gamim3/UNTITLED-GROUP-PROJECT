@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,8 +15,6 @@ public class KeyRebinding : MonoBehaviour
 
     static List<string> _keyboardExcludeKeys = new();
     static List<string> _gamepadExcludeKeys = new();
-
-    static bool _stopRebind;
 
     private void OnEnable()
     {
@@ -43,8 +42,7 @@ public class KeyRebinding : MonoBehaviour
         {
             newInput = newInput.Replace("Digit", "");
             // newInput = $"<Keyboard>/{newInput}";
-            newInput = newInput.ToLower();
-            newInput = $"Key:/Keyboard/{newInput}";
+            newInput = newInput.FirstCharacterToLower();
             Debug.Log($"Add {newInput}");
             _keyboardExcludeKeys.Add(newInput);
         }
@@ -140,10 +138,6 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.OnComplete(operation =>
         {
-            if (_stopRebind)
-            {
-                rebind.Cancel();
-            }
             actionToRebind.Enable();
             operation.Dispose();
 
@@ -170,7 +164,7 @@ public class KeyRebinding : MonoBehaviour
 
         rebind.WithCancelingThrough("<Keyboard>/Escape");
 
-        // rebind.OnMatchWaitForAnother(1f);
+
 
         rebind.OnPotentialMatch(operation =>
         {
