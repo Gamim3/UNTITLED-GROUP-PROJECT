@@ -165,7 +165,7 @@ public class Enemy : Entity
             if (distance > 3.5f)
             {
                 //vervang met navmesh
-                //transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, moveSpeed * Time.deltaTime / 10);
+                transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, moveSpeed * Time.deltaTime / 10);
                 Exhaustion(exhaustionSpeed / 2);
             }
         }
@@ -188,7 +188,7 @@ public class Enemy : Entity
         if (disengageTimer >= 0 && disengaging)
         {
             //vervang met navmesh
-            //transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -moveSpeed * Time.deltaTime / 10);
+            transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -moveSpeed * Time.deltaTime / 10);
             Exhaustion(exhaustionSpeed / 2);
         }
         else
