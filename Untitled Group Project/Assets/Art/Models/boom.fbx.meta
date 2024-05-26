@@ -3,7 +3,17 @@ guid: ae48d11817e30ec43a25ecdb71f876f4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 8f734857203cfa842bf9a4ef524ecb2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stronk
+    second: {fileID: 2100000, guid: 555f8352e7e0f3b4f9e5f0daf7255895, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
