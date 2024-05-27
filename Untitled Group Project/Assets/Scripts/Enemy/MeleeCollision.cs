@@ -7,7 +7,7 @@ public class MeleeCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<Entity>().TakeDamage(10);
+            other.transform.parent.gameObject.GetComponent<Entity>().TakeDamage(10);
         }
     }
 }

@@ -1,10 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class FuzzyLogic : MonoBehaviour
 {
     [Header("FuzzyStats")]
+    public Vector3 fuzzyCustomEnemyHealth;
     public Vector3 fuzzyEnemyHealth;
     public Vector3 fuzzyPlayerHealth;
     public Vector3 fuzzyEnergy;
@@ -23,6 +25,8 @@ public class FuzzyLogic : MonoBehaviour
     [Header("FuzzyLogicSets")]
 
     [Header("EnemyHealthSet")]
+    [SerializeField] float CalculatedFloat;
+
     [SerializeField] float criticalHealthLimit;
 
     [SerializeField] float minHurtValue;
@@ -30,11 +34,6 @@ public class FuzzyLogic : MonoBehaviour
     [SerializeField] float maxHurtValue;
 
     [SerializeField] float beginHealthyValue;
-
-    [SerializeField] AnimationCurve criticalCurve;
-    [SerializeField] AnimationCurve hurtCurve;
-    [SerializeField] AnimationCurve healthyCurve;
-
 
     [Header("PlayerHealthSet")]
     [SerializeField] float playerCriticalHealthLimit;
@@ -45,22 +44,14 @@ public class FuzzyLogic : MonoBehaviour
 
     [SerializeField] float playerBeginHealthyValue;
 
-    [SerializeField] AnimationCurve playerCriticalCurve;
-    [SerializeField] AnimationCurve playerHurtCurve;
-    [SerializeField] AnimationCurve playerHealthyCurve;
-
     [Header("DistanceSet")]
     [SerializeField] float nearDistanceLimit;
 
-    [SerializeField] float minDistance;
+    [SerializeField] float minMiddleDistance;
     [SerializeField] float midMiddleDistance;
     [SerializeField] float maxMiddleDistance;
 
     [SerializeField] float beginFarDistance;
-
-    [SerializeField] AnimationCurve nearCurve;
-    [SerializeField] AnimationCurve middleCurve;
-    [SerializeField] AnimationCurve farCurve;
 
     [Header("EnergySet")]
     [SerializeField] float lowEnergyLimit;
@@ -85,156 +76,94 @@ public class FuzzyLogic : MonoBehaviour
         }
 
         int.TryParse(decimalText, out fuzzyValueDecimals);
-
-        //SetCurves();
     }
 
     public void Update()
     {
-        fuzzyEnemyHealth = new Vector3(Mathf.Round(criticalCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(hurtCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(healthyCurve.Evaluate(enemyHealth) * fuzzyValueDecimals) / fuzzyValueDecimals);
-
-        fuzzyPlayerHealth = new Vector3(Mathf.Round(playerCriticalCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(playerHurtCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(playerHealthyCurve.Evaluate(playerHealth) * fuzzyValueDecimals) / fuzzyValueDecimals);
-
-        fuzzyDistance = new Vector3(Mathf.Round(nearCurve.Evaluate(distance) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(middleCurve.Evaluate(distance) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(farCurve.Evaluate(distance) * fuzzyValueDecimals) / fuzzyValueDecimals);
-
         fuzzyEnergy = new Vector3(Mathf.Round(lowEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(mediumEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(fullEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals);
+
+        fuzzyEnemyHealth.x = GetDataFromGraph(1, criticalHealthLimit , enemyHealth);
+        fuzzyEnemyHealth.y = GetDataFromGraph(minHurtValue, fullHurt, maxHurtValue, enemyHealth);
+        fuzzyEnemyHealth.z = GetDataFromGraph(0, beginHealthyValue, enemyHealth);
+
+        fuzzyPlayerHealth.x = GetDataFromGraph(1, playerCriticalHealthLimit, playerHealth);
+        fuzzyPlayerHealth.y = GetDataFromGraph(playerMinHurtValue, playerFullHurt, playerMaxHurtValue, playerHealth);
+        fuzzyPlayerHealth.z = GetDataFromGraph(0, playerBeginHealthyValue, playerHealth);
+
+        fuzzyEnergy.x = GetDataFromGraph(1, lowEnergyLimit, energy);
+        fuzzyEnergy.y = GetDataFromGraph(minMiddleEnergy, midMiddleEnergy, maxMiddleEnergy, energy);
+        fuzzyEnergy.z = GetDataFromGraph(0, beginfullEnergy, energy);
+
+        fuzzyDistance.x = GetDataFromGraph(1, nearDistanceLimit, distance);
+        fuzzyDistance.y = GetDataFromGraph(minMiddleDistance, midMiddleDistance, maxMiddleDistance, distance);
+        fuzzyDistance.z = GetDataFromGraph(0, beginFarDistance, distance);
     }
 
-#if UNITY_EDITOR
-    public void SetCurves()
+    public float GetDataFromGraph(float beginFloat , float GraphPoint, float evaluationPoint)
     {
-        //Critical Enemy Curve
-        criticalCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(criticalHealthLimit, 0));
-
-        for (int i = 0; i < criticalCurve.length; i++)
+        if (evaluationPoint >= 0 && evaluationPoint <= GraphPoint && beginFloat == 1)
         {
-            AnimationUtility.SetKeyLeftTangentMode(criticalCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(criticalCurve, i, AnimationUtility.TangentMode.Linear);
+            Vector2 pointA = new Vector2(0, beginFloat);
+            Vector2 pointB = new Vector2(GraphPoint, 0);
+
+            float slope = (pointB.y - pointA.y) / (pointB.x - pointA.x);
+
+            float yIntercept = pointA.y - slope * pointA.x;
+
+            // Use the line equation y = mx + b to calculate the y value at x
+            float y = slope * evaluationPoint + yIntercept;
+
+            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
         }
-        criticalCurve.preWrapMode = WrapMode.Clamp;
-        criticalCurve.postWrapMode = WrapMode.Clamp;
-
-        //hurt Enemy Curve
-        hurtCurve = new AnimationCurve(new Keyframe(minHurtValue, 0), new Keyframe(fullHurt, 1), new Keyframe(maxHurtValue, 0));
-
-        for (int i = 0; i < hurtCurve.length; i++)
+        else if (evaluationPoint >= 0 && evaluationPoint >= GraphPoint && beginFloat == 0)
         {
-            AnimationUtility.SetKeyLeftTangentMode(hurtCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(hurtCurve, i, AnimationUtility.TangentMode.Linear);
+            Vector2 pointA = new Vector2(GraphPoint, 0);
+            Vector2 pointB = new Vector2(100, 1);
+
+            float slope = (pointB.y - pointA.y) / (pointB.x - pointA.x);
+
+            float yIntercept = pointA.y - slope * pointA.x;
+
+            // Use the line equation y = mx + b to calculate the y value at x
+            float y = slope * evaluationPoint + yIntercept;
+
+            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
         }
-        hurtCurve.preWrapMode = WrapMode.Clamp;
-        hurtCurve.postWrapMode = WrapMode.Clamp;
 
-        //Healthy Enemy Curve
-        healthyCurve = new AnimationCurve(new Keyframe(beginHealthyValue, 0), new Keyframe(100, 1));
-
-        for (int i = 0; i < healthyCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(healthyCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(healthyCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        healthyCurve.preWrapMode = WrapMode.Clamp;
-        healthyCurve.postWrapMode = WrapMode.Clamp;
-
-
-        //Critical player Curve
-        playerCriticalCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(playerCriticalHealthLimit, 0));
-
-        for (int i = 0; i < playerCriticalCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(playerCriticalCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(playerCriticalCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        playerCriticalCurve.preWrapMode = WrapMode.Clamp;
-        playerCriticalCurve.postWrapMode = WrapMode.Clamp;
-
-        //hurt player Curve
-        playerHurtCurve = new AnimationCurve(new Keyframe(playerMinHurtValue, 0), new Keyframe(playerFullHurt, 1), new Keyframe(playerMaxHurtValue, 0));
-
-        for (int i = 0; i < playerHurtCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(playerHurtCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(playerHurtCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        playerHurtCurve.preWrapMode = WrapMode.Clamp;
-        playerHurtCurve.postWrapMode = WrapMode.Clamp;
-
-        //Healthy player Curve
-        playerHealthyCurve = new AnimationCurve(new Keyframe(playerBeginHealthyValue, 0), new Keyframe(100, 1));
-
-        for (int i = 0; i < playerHealthyCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(playerHealthyCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(playerHealthyCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        playerHealthyCurve.preWrapMode = WrapMode.Clamp;
-        playerHealthyCurve.postWrapMode = WrapMode.Clamp;
-
-        //Near Curve
-        nearCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(nearDistanceLimit, 0));
-
-        for (int i = 0; i < nearCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(nearCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(nearCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        nearCurve.preWrapMode = WrapMode.Clamp;
-        nearCurve.postWrapMode = WrapMode.Clamp;
-
-        //Middle Curve
-        middleCurve = new AnimationCurve(new Keyframe(minDistance, 0), new Keyframe(midMiddleDistance, 1), new Keyframe(maxMiddleDistance, 0));
-
-        for (int i = 0; i < middleCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(middleCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(middleCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        middleCurve.preWrapMode = WrapMode.Clamp;
-        middleCurve.postWrapMode = WrapMode.Clamp;
-
-        //far Curve
-        farCurve = new AnimationCurve(new Keyframe(beginFarDistance, 0), new Keyframe(100, 1));
-
-        for (int i = 0; i < farCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(farCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(farCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        farCurve.preWrapMode = WrapMode.Clamp;
-        farCurve.postWrapMode = WrapMode.Clamp;
-
-        //low energy Curve
-        lowEnergyCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(lowEnergyLimit, 0));
-
-        for (int i = 0; i < lowEnergyCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(lowEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(lowEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        lowEnergyCurve.preWrapMode = WrapMode.Clamp;
-        lowEnergyCurve.postWrapMode = WrapMode.Clamp;
-
-        //medium energy Curve
-        mediumEnergyCurve = new AnimationCurve(new Keyframe(minMiddleEnergy, 0), new Keyframe(midMiddleEnergy, 1), new Keyframe(maxMiddleEnergy, 0));
-
-        for (int i = 0; i < mediumEnergyCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(mediumEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(mediumEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        mediumEnergyCurve.preWrapMode = WrapMode.Clamp;
-        mediumEnergyCurve.postWrapMode = WrapMode.Clamp;
-
-        //full energy Curve
-        fullEnergyCurve = new AnimationCurve(new Keyframe(beginfullEnergy, 0), new Keyframe(100, 1));
-
-        for (int i = 0; i < fullEnergyCurve.length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(fullEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(fullEnergyCurve, i, AnimationUtility.TangentMode.Linear);
-        }
-        fullEnergyCurve.preWrapMode = WrapMode.Clamp;
-        fullEnergyCurve.postWrapMode = WrapMode.Clamp;
+        return 0;
     }
-#endif
+
+    public float GetDataFromGraph(float GraphPointBegin, float GraphPointMiddle, float GraphPointEnd, float evaluationPoint)
+    {
+        if (evaluationPoint >= GraphPointBegin && evaluationPoint <= GraphPointMiddle)
+        {
+            Vector2 pointA = new Vector2(GraphPointBegin, 0);
+            Vector2 pointB = new Vector2(GraphPointMiddle, 1);
+
+            float slope = (pointB.y - pointA.y) / (pointB.x - pointA.x);
+
+            float yIntercept = pointA.y - slope * pointA.x;
+
+            // Use the line equation y = mx + b to calculate the y value at x
+            float y = slope * evaluationPoint + yIntercept;
+
+            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+        }
+        else if (evaluationPoint >= GraphPointMiddle && evaluationPoint <= GraphPointEnd)
+        {
+            Vector2 pointB = new Vector2(GraphPointMiddle, 1);
+            Vector2 pointA = new Vector2(GraphPointEnd, 0);
+
+            float slope = (pointB.y - pointA.y) / (pointB.x - pointA.x);
+
+            float yIntercept = pointA.y - slope * pointA.x;
+
+            // Use the line equation y = mx + b to calculate the y value at x
+            float y = slope * evaluationPoint + yIntercept;
+
+            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+        }
+
+            return 0;
+    }
 }
