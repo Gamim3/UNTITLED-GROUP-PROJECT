@@ -6484,6 +6484,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wanted 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6335134601746259004, guid: 3b2970bed5d11ac479cc2ee26fd86564,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 178.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335134601746259004, guid: 3b2970bed5d11ac479cc2ee26fd86564,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 6335134601746259004, guid: 3b2970bed5d11ac479cc2ee26fd86564,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
     - target: {fileID: 6806470544380440030, guid: 3b2970bed5d11ac479cc2ee26fd86564,
         type: 3}
       propertyPath: m_LocalPosition.x
