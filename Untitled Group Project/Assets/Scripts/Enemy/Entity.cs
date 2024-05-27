@@ -1,37 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] protected float healthPoints;
-    [SerializeField] protected float energy;
-    [SerializeField] protected float moveSpeed;
 
-    protected float maxHealth;
-    protected float maxEnergy;
+    [SerializeField] protected float _healthPoints;
+    [SerializeField] protected float _energy;
+    [SerializeField] protected float _moveSpeed;
+
+    protected float _maxHealth;
+    protected float _maxEnergy;
 
     public virtual void Start()
     {
-        maxHealth = healthPoints;
-        maxEnergy = energy;
+        _maxHealth = _healthPoints;
+        _maxEnergy = _energy;
     }
 
     public virtual void Update()
     {
-        if (healthPoints <= 0)
+        if (_healthPoints <= 0)
         {
             Destroy(gameObject);
         }
     }
 
-    public void Exhaustion(float Energy)
+    public virtual void Exhaustion(float Energy)
     {
-        energy -= (Energy / 50);
+        _energy -= (Energy / 50);
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
-        healthPoints -= damage;
+        _healthPoints -= damage;
     }
 }

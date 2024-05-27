@@ -22,7 +22,7 @@ public class Enemy : Entity
     [SerializeField] GameObject projectile;
     [SerializeField] Transform projectileSpawnPosition;
 
-    [Header ("Dependancy")]
+    [Header("Dependancy")]
     [SerializeField] EnemyBrain brain;
     [SerializeField] FuzzyLogic logic;
 
@@ -89,8 +89,8 @@ public class Enemy : Entity
 
         distance = Vector3.Distance(transform.position, playerPosition.position);
 
-        logic.enemyHealth = healthPoints / maxHealth * 100;
-        logic.energy = energy / maxEnergy * 100;
+        logic.enemyHealth = _healthPoints / _maxHealth * 100;
+        logic.energy = _energy / _maxEnergy * 100;
         logic.distance = distance;
 
         DetectPlayer();
@@ -126,7 +126,7 @@ public class Enemy : Entity
         {
             transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
         }
-        else if(!rotatingToPlayer && disengaging)
+        else if (!rotatingToPlayer && disengaging)
         {
             transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
         }
@@ -136,7 +136,7 @@ public class Enemy : Entity
     {
         //betere DetectionSystem based on visual line of sight
 
-        if(distance <= detectionRange)
+        if (distance <= detectionRange)
         {
             detectedPlayer = true;
         }
@@ -151,7 +151,7 @@ public class Enemy : Entity
     {
         Vector3 relativePos = playerPosition.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        transform.rotation = new Quaternion(transform.rotation.x, rotation.y +180, transform.rotation.z, transform.rotation.w);
+        transform.rotation = new Quaternion(transform.rotation.x, rotation.y + 180, transform.rotation.z, transform.rotation.w);
     }
 
     //Attacks
@@ -165,7 +165,7 @@ public class Enemy : Entity
             if (distance > 3.5f)
             {
                 //vervang met navmesh
-                transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, moveSpeed * Time.deltaTime / 10);
+                transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, _moveSpeed * Time.deltaTime / 10);
                 Exhaustion(exhaustionSpeed / 2);
             }
         }
@@ -188,15 +188,15 @@ public class Enemy : Entity
         if (disengageTimer >= 0 && disengaging)
         {
             //vervang met navmesh
-            transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -moveSpeed * Time.deltaTime / 10);
+            transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -_moveSpeed * Time.deltaTime / 10);
             Exhaustion(exhaustionSpeed / 2);
         }
         else
         {
             disengaging = false;
             disengageTimer = startDisengageTimer;
-            
-            if(brain.attackQueue.Peek() == Attacks.DisengageDash)
+
+            if (brain.attackQueue.Peek() == Attacks.DisengageDash)
             {
                 brain.attackQueue.Dequeue();
             }
@@ -211,7 +211,7 @@ public class Enemy : Entity
         }
         else
         {
-            energy = maxEnergy;
+            _energy = _maxEnergy;
 
             regainingEnergy = false;
             energyRegainTimer = startRegainEnergyTimer;
@@ -257,12 +257,12 @@ public class Enemy : Entity
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
             leftClaw.GetComponent<Collider>().enabled = true;
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, moveSpeed / 50);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, _moveSpeed / 50);
         }
         else
         {
             Exhaustion(exhaustionSpeed * 1000);
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, moveSpeed / 50);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, _moveSpeed / 50);
 
             leftClawAttack = false;
             leftClawAttackTimer = startLeftClawAttackTimer;
@@ -284,12 +284,12 @@ public class Enemy : Entity
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
             rightClaw.GetComponent<Collider>().enabled = true;
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, moveSpeed / 50);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, _moveSpeed / 50);
         }
         else
         {
             Exhaustion(exhaustionSpeed * 1000);
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, moveSpeed / 50);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, _moveSpeed / 50);
 
             rightClawAttack = false;
             rightClawAttackTimer = startRightClawAttackTimer;

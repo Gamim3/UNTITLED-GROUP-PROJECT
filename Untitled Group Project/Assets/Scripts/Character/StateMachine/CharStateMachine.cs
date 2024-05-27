@@ -265,10 +265,34 @@ public class CharStateMachine : Entity
 
     #endregion
 
+    #region MonoBehaviours
     private void Awake()
     {
-        // DontDestroyOnLoad(this); 
+        // DontDestroyOnLoad(this);
 
+        _states = new CharStateFactory(this);
+        _currentState = _states.Grounded();
+        _currentState.EnterState();
+
+        _playerAnimator.SetTrigger("Grounded");
+
+        _isGrounded = true;
+
+        MoveForce = DesiredMoveForce;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        _playerCam = FindObjectOfType<Camera>().transform;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+    }
+
+    private void OnEnable()
+    {
         playerInput.actions.FindAction("Move").started += OnMovement;
         playerInput.actions.FindAction("Move").performed += OnMovement;
         playerInput.actions.FindAction("Move").canceled += OnMovement;
@@ -288,21 +312,29 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Attack2").started += OnAttack2;
         playerInput.actions.FindAction("Attack2").performed += OnAttack2;
         playerInput.actions.FindAction("Attack2").canceled += OnAttack2;
+    }
 
-        _states = new CharStateFactory(this);
-        _currentState = _states.Grounded();
-        _currentState.EnterState();
+    private void OnDisable()
+    {
+        playerInput.actions.FindAction("Move").started -= OnMovement;
+        playerInput.actions.FindAction("Move").performed -= OnMovement;
+        playerInput.actions.FindAction("Move").canceled -= OnMovement;
 
-        _playerAnimator.SetTrigger("Grounded");
+        playerInput.actions.FindAction("Jump").started -= OnJump;
+        playerInput.actions.FindAction("Jump").performed -= OnJump;
+        playerInput.actions.FindAction("Jump").canceled -= OnJump;
 
-        _isGrounded = true;
+        playerInput.actions.FindAction("Run").started -= OnRun;
+        playerInput.actions.FindAction("Run").performed -= OnRun;
+        playerInput.actions.FindAction("Run").canceled -= OnRun;
 
-        MoveForce = DesiredMoveForce;
+        playerInput.actions.FindAction("Attack1").started -= OnAttack1;
+        playerInput.actions.FindAction("Attack1").performed -= OnAttack1;
+        playerInput.actions.FindAction("Attack1").canceled -= OnAttack1;
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        _playerCam = FindObjectOfType<Camera>().transform;
+        playerInput.actions.FindAction("Attack2").started -= OnAttack2;
+        playerInput.actions.FindAction("Attack2").performed -= OnAttack2;
+        playerInput.actions.FindAction("Attack2").canceled -= OnAttack2;
     }
 
     public override void Update()
@@ -348,8 +380,6 @@ public class CharStateMachine : Entity
 
         LastDesiredMoveForce = DesiredMoveForce;
     }
-
-    #region MonoBehaviours
 
     private void FixedUpdate()
     {
@@ -533,15 +563,15 @@ public class CharStateMachine : Entity
 
     #region Entity
 
-    // public override TakeDamage(float damage)
-    // {
-    //     healthPoints -= damage;
-    // }
+    public override void TakeDamage(float damage)
+    {
+        _healthPoints -= damage;
+    }
 
-    // public void Exhaustion(float Energy)
-    // {
-    //     energy -= (Energy / 50);
-    // }
+    public override void Exhaustion(float Energy)
+    {
+        _energy -= (Energy / 50);
+    }
 
     #endregion
 }
