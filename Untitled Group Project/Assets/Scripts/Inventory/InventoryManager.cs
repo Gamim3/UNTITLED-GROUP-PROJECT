@@ -37,6 +37,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool canCheckInventoryQuest;
 
+    public event ItemRecieved OnItemRecieved;
+
     private void Awake()
     {
         if (Instance != null)
@@ -50,6 +52,8 @@ public class InventoryManager : MonoBehaviour
 
         // player = FindObjectOfType<CharStateMachine>().gameObject;
     }
+
+    public delegate void ItemRecieved();
 
     private void Start()
     {
@@ -136,12 +140,13 @@ public class InventoryManager : MonoBehaviour
                     UpdateItemsInfoList();
 
                     itemInSlot.RefreshCount();
-
+                    OnItemRecieved.Invoke();
                     return true;
                 }
                 itemInSlot.count += amount;
                 itemInSlot.RefreshCount();
                 UpdateItemsInfoList();
+                OnItemRecieved.Invoke();
 
                 return true;
             }
@@ -164,9 +169,11 @@ public class InventoryManager : MonoBehaviour
                     AddItem(itemId, extra);
                     UpdateItemsInfoList();
 
+                    OnItemRecieved.Invoke();
                     return true;
                 }
                 SpawnNewItem(itemId, amount, slot);
+                OnItemRecieved.Invoke();
                 return true;
             }
         }

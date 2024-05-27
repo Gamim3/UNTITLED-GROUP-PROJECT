@@ -22,6 +22,8 @@ public class GameData
     public int xp;
     public int xpGoal;
 
+    public int questIndex;
+
     public GameData()
     {
         cubePos = Vector3.zero;
@@ -38,6 +40,8 @@ public class GameData
         xp = 0;
         xpGoal = 0;
         level = 0;
+
+        questIndex = 0;
 
     }
 }

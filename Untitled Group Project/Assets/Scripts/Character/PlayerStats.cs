@@ -48,6 +48,11 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         level++;
     }
 
+    public void AddXp(int xpToGet)
+    {
+        xp += xpToGet;
+    }
+
     public void LoadData(GameData data)
     {
         xp = data.xp;
