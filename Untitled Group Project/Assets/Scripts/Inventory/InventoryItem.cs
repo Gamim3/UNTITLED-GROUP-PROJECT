@@ -15,6 +15,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Item item;
     public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+    [SerializeField] Transform _rootTransform;
 
     public bool isDragging;
 
@@ -27,6 +28,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private void Start()
     {
         inventoryManager = InventoryManager.Instance;
+        _rootTransform = inventoryManager.rootTransform;
     }
 
     public void InitializeItem(Item newItem, int amount)
@@ -62,7 +64,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         slot.SetInventoryItem(null);
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
+        transform.SetParent(_rootTransform);
         transform.position = new Vector3(transform.position.x, transform.position.y, -15);
         isDragging = true;
         InventoryManager.Instance.heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();

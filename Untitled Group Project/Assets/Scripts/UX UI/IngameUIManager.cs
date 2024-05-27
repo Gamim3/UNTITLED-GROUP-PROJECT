@@ -29,7 +29,7 @@ public class IngameUIManager : MonoBehaviour
             inventroyPanel.SetActive(!inventroyPanel.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
         {
             if (Physics.Raycast(playerRaycastPos.position, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
             {

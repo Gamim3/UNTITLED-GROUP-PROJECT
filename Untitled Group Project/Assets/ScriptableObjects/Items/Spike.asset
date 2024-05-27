@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spike
   m_EditorClassIdentifier: 
   itemID: 2
-  itemPrefab: {fileID: 4602210105317745087, guid: 413f5d713f7a1194ba9cde39feb3e391,
+  itemPrefab: {fileID: 8636176690337232932, guid: 9bcad50a35ba8aa4b9b15b678f8b137f,
     type: 3}
   image: {fileID: 21300000, guid: ad8f1dacbddac894e94c06b63b5873f1, type: 3}
   maxStack: 16

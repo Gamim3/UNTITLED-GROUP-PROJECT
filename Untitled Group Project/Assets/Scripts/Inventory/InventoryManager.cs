@@ -12,6 +12,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Transform _slotParent;
     public List<InventorySlot> inventorySlots = new();
 
+    public Transform rootTransform;
+
     [SerializeField] GameObject _inventoryItemPrefab;
     public GameObject InventoryItemPrefab { get { return _inventoryItemPrefab; } }
 
