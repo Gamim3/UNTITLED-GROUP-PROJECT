@@ -9,9 +9,12 @@ public class CharGroundedState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsGroundedState = true;
+
         Ctx.MoveMultiplier = 1f;
         Ctx.ForceSlowDownRate = 5;
-        Ctx.IsAired = false;
+        Ctx.IsAirborneState = false;
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
         Ctx.IsJumpTime = Ctx.MaxJumpTime;
         Ctx.JumpMent = new Vector3(0, 1, 0);
@@ -24,7 +27,10 @@ public class CharGroundedState : CharBaseState
         }
     }
 
-    public override void ExitState() { }
+    public override void ExitState()
+    {
+        Ctx.IsGroundedState = false;
+    }
 
     #region MonoBehaveiours
 

@@ -10,9 +10,9 @@ public class CharRunState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log(" ENTER RUN ");
+        InitializeSubState();
 
-
+        Ctx.IsRunState = true;
 
         Ctx.DesiredMoveForce = Ctx.RunSpeed;
 
@@ -21,12 +21,11 @@ public class CharRunState : CharBaseState
             Ctx.MoveForce = Ctx.RunSpeed;
         }
 
-        InitializeSubState();
     }
 
     public override void ExitState()
     {
-
+        Ctx.IsRunState = false;
     }
 
     public override void UpdateState()

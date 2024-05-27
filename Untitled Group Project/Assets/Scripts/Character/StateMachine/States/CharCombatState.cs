@@ -10,11 +10,13 @@ public class CharCombatState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsCombatState = true;
     }
 
     public override void ExitState()
     {
-
+        Ctx.IsCombatState = false;
     }
 
     public override void UpdateState()

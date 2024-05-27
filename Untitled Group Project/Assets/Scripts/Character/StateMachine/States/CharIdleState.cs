@@ -7,12 +7,16 @@ public class CharIdleState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsIdleState = true;
     }
 
-    public override void ExitState() { }
+    public override void ExitState()
+    {
+        Ctx.IsIdleState = false;
+    }
 
 
-    #region MonoBehaveiours
 
     public override void UpdateState()
     {
@@ -21,19 +25,17 @@ public class CharIdleState : CharBaseState
 
     public override void FixedUpdateState() { }
 
-    #endregion
-
     public override void InitializeSubState() { }
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsMoveAction)
-        {
-            SwitchState(Factory.Walking());
-        }
         if (Ctx.IsMoveAction && Ctx.IsRunAction)
         {
             SwitchState(Factory.Running());
+        }
+        else if (Ctx.IsMoveAction)
+        {
+            SwitchState(Factory.Walking());
         }
     }
 }

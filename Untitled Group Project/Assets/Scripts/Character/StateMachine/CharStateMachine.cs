@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -176,6 +177,14 @@ public class CharStateMachine : Entity
     public bool IsAttack2Action
     { get { return _isAttack2Action; } }
 
+    [SerializeField] bool _isTargetingAction;
+    public bool IsTargetingAction
+    { get { return _isTargetingState; } }
+
+    [SerializeField] bool _isDashingAction;
+    public bool IsDashingAction
+    { get { return _isDashingAction; } }
+
     #endregion
 
     [Header("Settings")]
@@ -226,13 +235,65 @@ public class CharStateMachine : Entity
     [Header("States")]
     #region States
 
-    [SerializeField] bool _isAired;
-    public bool IsAired
-    { get { return _isAired; } set { _isAired = value; } }
+    #region UltraStates
 
-    [SerializeField] bool _isJumping;
-    public bool IsJumping
-    { get { return _isJumping; } set { _isJumping = value; } }
+    [SerializeField] bool _isCombatState;
+    public bool IsCombatState
+    { get { return _isCombatState; } set { _isCombatState = value; } }
+
+    #endregion
+
+    #region SuperStates
+
+    [SerializeField] bool _isTargetingState;
+    public bool IsTargetingState
+    { get { return _isTargetingState; } set { _isTargetingState = value; } }
+
+    [SerializeField] bool _isFreeLookState;
+    public bool IsFreeLookState
+    { get { return _isFreeLookState; } set { _isFreeLookState = value; } }
+
+    #endregion
+
+    #region MediumStates
+
+    [SerializeField] bool _isGroundedState;
+    public bool IsGroundedState
+    { get { return _isGroundedState; } set { _isGroundedState = value; } }
+
+    [SerializeField] bool _isAirborneState;
+    public bool IsAirborneState
+    { get { return _isAirborneState; } set { _isAirborneState = value; } }
+
+    [SerializeField] bool _isSlopedState;
+    public bool IsSlopedState
+    { get { return _isSlopedState; } set { _isSlopedState = value; } }
+
+    #endregion
+
+    #region SubState
+
+    [SerializeField] bool _isIdleState;
+    public bool IsIdleState
+    { get { return _isIdleState; } set { _isIdleState = value; } }
+
+    [SerializeField] bool _isWalkState;
+    public bool IsWalkState
+    { get { return _isWalkState; } set { _isWalkState = value; } }
+
+    [SerializeField] bool _isRunState;
+    public bool IsRunState
+    { get { return _isRunState; } set { _isRunState = value; } }
+
+    [SerializeField] bool _isJumpingState;
+    public bool IsJumpingState
+    { get { return _isJumpingState; } set { _isJumpingState = value; } }
+
+    [SerializeField] bool _isDashingState;
+    public bool IsDashingState
+    { get { return _isDashingState; } set { _isDashingState = value; } }
+
+    #endregion
 
     #endregion
 
@@ -266,6 +327,7 @@ public class CharStateMachine : Entity
     #endregion
 
     #region MonoBehaviours
+
     private void Awake()
     {
         // DontDestroyOnLoad(this);
@@ -312,6 +374,14 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Attack2").started += OnAttack2;
         playerInput.actions.FindAction("Attack2").performed += OnAttack2;
         playerInput.actions.FindAction("Attack2").canceled += OnAttack2;
+
+        playerInput.actions.FindAction("Target").started += OnTarget;
+        playerInput.actions.FindAction("Target").performed += OnTarget;
+        playerInput.actions.FindAction("Target").canceled += OnTarget;
+
+        playerInput.actions.FindAction("Dash").started += OnDash;
+        playerInput.actions.FindAction("Dash").performed += OnDash;
+        playerInput.actions.FindAction("Dash").canceled += OnDash;
     }
 
     private void OnDisable()
@@ -335,6 +405,14 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Attack2").started -= OnAttack2;
         playerInput.actions.FindAction("Attack2").performed -= OnAttack2;
         playerInput.actions.FindAction("Attack2").canceled -= OnAttack2;
+
+        playerInput.actions.FindAction("Target").started -= OnTarget;
+        playerInput.actions.FindAction("Target").performed -= OnTarget;
+        playerInput.actions.FindAction("Target").canceled -= OnTarget;
+
+        playerInput.actions.FindAction("Dash").started -= OnDash;
+        playerInput.actions.FindAction("Dash").performed -= OnDash;
+        playerInput.actions.FindAction("Dash").canceled -= OnDash;
     }
 
     public override void Update()
@@ -423,6 +501,16 @@ public class CharStateMachine : Entity
         _isAttack2Action = context.ReadValueAsButton();
     }
 
+    void OnTarget(InputAction.CallbackContext context)
+    {
+        _isTargetingState = context.ReadValueAsButton();
+    }
+
+    void OnDash(InputAction.CallbackContext context)
+    {
+        _isDashingAction = context.ReadValueAsButton();
+    }
+
     #endregion
 
     #region STUFF
@@ -474,6 +562,11 @@ public class CharStateMachine : Entity
     {
         Debug.DrawRay(this.transform.position, Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized);
         return Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized;
+    }
+
+    public Vector3 GetTargetMoveDirection(Vector3 direction)
+    {
+        return Vector3.zero;
     }
 
     #endregion

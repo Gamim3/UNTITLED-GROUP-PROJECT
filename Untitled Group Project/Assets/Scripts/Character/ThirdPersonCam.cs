@@ -63,13 +63,13 @@ public class ThirdPersonCam : MonoBehaviour
         currentCameraRotation = transform.rotation;
         float rotationChange = Quaternion.Angle(currentCameraRotation, previousCameraRotation);
 
-        if (_stateMachine.IsAired && rotationChange > _rotationThreshold)
+        if (_stateMachine.IsAirborneState && rotationChange > _rotationThreshold)
         {
             Quaternion lookRotation = Quaternion.LookRotation(viewDir, Vector3.up);
             _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
             previousCameraRotation = currentCameraRotation;
         }
-        else if (inputDir != Vector3.zero && !_stateMachine.IsAired)
+        else if (inputDir != Vector3.zero && !_stateMachine.IsAirborneState)
         {
 
 

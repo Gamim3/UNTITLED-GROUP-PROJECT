@@ -98,6 +98,15 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""43805b4a-f129-4d62-8806-81cd198a39c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -606,6 +615,39 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""action"": ""Target"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64468061-0afb-4c2b-93b7-47879041fc23"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse;Controller"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41cc385e-3319-4a77-aca2-5713a2f0bf36"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cb8714a-b9c6-44f0-b285-8e7d0ce9b7cc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -650,6 +692,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         m_Game_Attack1 = m_Game.FindAction("Attack1", throwIfNotFound: true);
         m_Game_Attack2 = m_Game.FindAction("Attack2", throwIfNotFound: true);
         m_Game_Target = m_Game.FindAction("Target", throwIfNotFound: true);
+        m_Game_Dash = m_Game.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -719,6 +762,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Attack1;
     private readonly InputAction m_Game_Attack2;
     private readonly InputAction m_Game_Target;
+    private readonly InputAction m_Game_Dash;
     public struct GameActions
     {
         private @NewControls m_Wrapper;
@@ -731,6 +775,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         public InputAction @Attack1 => m_Wrapper.m_Game_Attack1;
         public InputAction @Attack2 => m_Wrapper.m_Game_Attack2;
         public InputAction @Target => m_Wrapper.m_Game_Target;
+        public InputAction @Dash => m_Wrapper.m_Game_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -764,6 +809,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Target.started += instance.OnTarget;
             @Target.performed += instance.OnTarget;
             @Target.canceled += instance.OnTarget;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -792,6 +840,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Target.started -= instance.OnTarget;
             @Target.performed -= instance.OnTarget;
             @Target.canceled -= instance.OnTarget;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -837,5 +888,6 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         void OnAttack1(InputAction.CallbackContext context);
         void OnAttack2(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }

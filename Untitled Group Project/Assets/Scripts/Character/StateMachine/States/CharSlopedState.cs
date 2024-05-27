@@ -10,6 +10,9 @@ public class CharSlopedState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsSlopedState = true;
+
         Ctx.PlayerRigidBody.useGravity = false;
 
         Ctx.JumpMent = new Vector3(0, 1, 0);
@@ -17,6 +20,8 @@ public class CharSlopedState : CharBaseState
 
     public override void ExitState()
     {
+        Ctx.IsSlopedState = false;
+
         Ctx.PlayerRigidBody.useGravity = true;
     }
 

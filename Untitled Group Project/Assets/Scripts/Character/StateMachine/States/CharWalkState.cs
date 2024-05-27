@@ -9,18 +9,18 @@ public class CharWalkState : CharBaseState
 
     public override void EnterState()
     {
+        InitializeSubState();
+
+        Ctx.IsWalkState = true;
+
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
 
-
         Ctx.MoveForce = Ctx.WalkSpeed;
-
-
-        InitializeSubState();
     }
 
     public override void ExitState()
     {
-
+        Ctx.IsWalkState = false;
     }
 
     public override void UpdateState()

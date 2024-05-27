@@ -11,7 +11,8 @@ public class CharJumpState : CharBaseState
     {
         InitializeSubState();
 
-        Ctx.IsJumping = true;
+        Ctx.IsJumpingState = true;
+
         Ctx.IsExitingSlope = true;
 
         HandleJump();
@@ -19,7 +20,7 @@ public class CharJumpState : CharBaseState
 
     public override void ExitState()
     {
-        Ctx.IsJumping = false;
+        Ctx.IsJumpingState = false;
         Ctx.IsForced = false;
         Ctx.IsExitingSlope = false;
     }

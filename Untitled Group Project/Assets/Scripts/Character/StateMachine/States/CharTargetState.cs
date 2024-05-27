@@ -12,11 +12,13 @@ public class CharTargetState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsTargetingState = true;
     }
 
     public override void ExitState()
     {
-
+        Ctx.IsTargetingState = false;
     }
 
     public override void UpdateState()

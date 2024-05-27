@@ -10,14 +10,16 @@ public class CharAirborneState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
-        Ctx.IsAired = true;
+
+        Ctx.IsAirborneState = true;
+
         Ctx.MoveMultiplier = Ctx.AirSpeed;
         Ctx.ForceSlowDownRate = 1;
     }
 
     public override void ExitState()
     {
-        Ctx.IsAired = false;
+        Ctx.IsAirborneState = false;
     }
 
     #region MonoBehaveiours

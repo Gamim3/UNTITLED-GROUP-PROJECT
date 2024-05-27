@@ -12,11 +12,13 @@ public class CharFreeLookState : CharBaseState
     public override void EnterState()
     {
         InitializeSubState();
+
+        Ctx.IsFreeLookState = true;
     }
 
     public override void ExitState()
     {
-
+        Ctx.IsFreeLookState = false;
     }
 
     public override void UpdateState()
