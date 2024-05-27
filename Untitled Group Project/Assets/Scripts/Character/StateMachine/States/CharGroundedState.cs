@@ -12,15 +12,15 @@ public class CharGroundedState : CharBaseState
         Ctx.MoveMultiplier = 1f;
         Ctx.ForceSlowDownRate = 5;
         Ctx.IsAired = false;
-        Ctx.DesiredMoveForce = Ctx.MoveSpeed;
+        Ctx.DesiredMoveForce = Ctx.WalkSpeed;
         Ctx.IsJumpTime = Ctx.MaxJumpTime;
         Ctx.JumpMent = new Vector3(0, 1, 0);
 
         Ctx.JumpAmount = 1; // idk yet
 
-        if (Ctx.MoveForce < Ctx.MoveSpeed)
+        if (Ctx.MoveForce < Ctx.WalkSpeed)
         {
-            Ctx.MoveForce = Ctx.MoveSpeed;
+            Ctx.MoveForce = Ctx.WalkSpeed;
         }
     }
 

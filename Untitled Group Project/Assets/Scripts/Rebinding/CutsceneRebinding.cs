@@ -20,8 +20,6 @@ public class CutsceneRebinding : MonoBehaviour
     [SerializeField] bool _isRebinding;
     [SerializeField] bool _startedRebind;
 
-    [SerializeField] bool _newInput;
-
     [SerializeField] int _bindingIndex;
 
     [SerializeField] string _lastPressedKey;
@@ -96,8 +94,6 @@ public class CutsceneRebinding : MonoBehaviour
         _startedRebind = false;
 
         _isRebinding = false;
-
-        _newInput = false;
 
         Debug.Log($"_currentKeyboardInputIndex = {GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex))}");
         _currentKeyboardInputIndex = GetKeyboardItem1FromItem2(KeyRebinding.GetBindingName(_cutsceneActions[_bindingIndex].inputActionReference, _cutsceneActions[_bindingIndex].actionIndex));

@@ -31,5 +31,9 @@ public class CharIdleState : CharBaseState
         {
             SwitchState(Factory.Walking());
         }
+        if (Ctx.IsMoveAction && Ctx.IsRunAction)
+        {
+            SwitchState(Factory.Running());
+        }
     }
 }

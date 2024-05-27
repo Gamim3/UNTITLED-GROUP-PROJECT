@@ -2,16 +2,19 @@ using System.Collections.Generic;
 
 enum CharStates
 {
+    COMBAT,
+
+    TARGET,
+    FREELOOK,
+
     GROUNDED,
     AIRBORNE,
     SLOPED,
-    WALKING,
-    JUMPING,
-    IDLE,
 
-    // ULTRA,
-    // SUPER,
-    // SUB,
+    WALKING,
+    RUNNING,
+    JUMPING,
+    IDLING,
 }
 
 public class CharStateFactory
@@ -22,42 +25,80 @@ public class CharStateFactory
     public CharStateFactory(CharStateMachine currentContext)
     {
         _context = currentContext;
+        _states[CharStates.COMBAT] = new CharCombatState(_context, this);
+
+        _states[CharStates.TARGET] = new CharTargetState(_context, this);
+        _states[CharStates.FREELOOK] = new CharFreeLookState(_context, this);
+
         _states[CharStates.GROUNDED] = new CharGroundedState(_context, this);
-        _states[CharStates.WALKING] = new CharWalkState(_context, this);
         _states[CharStates.SLOPED] = new CharSlopedState(_context, this);
-        _states[CharStates.JUMPING] = new CharJumpState(_context, this);
         _states[CharStates.AIRBORNE] = new CharAirborneState(_context, this);
-        _states[CharStates.IDLE] = new CharIdleState(_context, this);
+
+        _states[CharStates.WALKING] = new CharWalkState(_context, this);
+        _states[CharStates.RUNNING] = new CharRunState(_context, this);
+        _states[CharStates.JUMPING] = new CharJumpState(_context, this);
+        _states[CharStates.IDLING] = new CharIdleState(_context, this);
 
         // _states[CharStates.ULTRA] = new TestUltraState(_context, this);
         // _states[CharStates.SUPER] = new TestSuperState(_context, this);
         // _states[CharStates.SUB] = new TestSubState(_context, this);
     }
 
+    #region UltraStates
+
+    public CharBaseState Combat()
+    {
+        return _states[CharStates.COMBAT];
+    }
+    #endregion
+
+    #region SuperStates
+
+    public CharBaseState Target()
+    {
+        return _states[CharStates.TARGET];
+    }
+    public CharBaseState FreeLook()
+    {
+        return _states[CharStates.FREELOOK];
+    }
+    #endregion
+
+    #region MediumStates
+
     public CharBaseState Grounded()
     {
         return _states[CharStates.GROUNDED];
-    }
-    public CharBaseState Walking()
-    {
-        return _states[CharStates.WALKING];
-    }
-    public CharBaseState Sloped()
-    {
-        return _states[CharStates.SLOPED];
-    }
-    public CharBaseState Jumping()
-    {
-        return _states[CharStates.JUMPING];
     }
     public CharBaseState Airborne()
     {
         return _states[CharStates.AIRBORNE];
     }
+    public CharBaseState Sloped()
+    {
+        return _states[CharStates.SLOPED];
+    }
+    #endregion
+
+    #region SubStates
+
+    public CharBaseState Walking()
+    {
+        return _states[CharStates.WALKING];
+    }
+    public CharBaseState Running()
+    {
+        return _states[CharStates.RUNNING];
+    }
+    public CharBaseState Jumping()
+    {
+        return _states[CharStates.JUMPING];
+    }
     public CharBaseState Idle()
     {
-        return _states[CharStates.IDLE];
+        return _states[CharStates.IDLING];
     }
+    #endregion
 
     // public CharBaseState Ultra()
     // {

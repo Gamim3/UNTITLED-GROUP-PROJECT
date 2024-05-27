@@ -163,14 +163,39 @@ public class CharStateMachine : MonoBehaviour
     public bool IsJumpAction
     { get { return _isJumpAction; } }
 
+    [SerializeField] bool _isRunAction;
+    public bool IsRunAction
+    { get { return _isRunAction; } set { _isRunAction = value; } }
+
+    [SerializeField] bool _isAttack1Action;
+    public bool IsAttack1Action
+    { get { return _isAttack1Action; } }
+
+    [SerializeField] bool _isAttack2Action;
+    public bool IsAttack2Action
+    { get { return _isAttack2Action; } }
+
+    #endregion
+
+    [Header("Settings")]
+    #region Settings
+
+    [SerializeField] bool _toggleRun;
+    public bool ToggleRun
+    { get { return ToggleRun1; } }
+
     #endregion
 
     [Header("Speeds")]
     #region Speeds
 
-    [SerializeField] float _moveSpeed;
-    public float MoveSpeed
-    { get { return _moveSpeed; } }
+    [SerializeField] float _walkSpeed;
+    public float WalkSpeed
+    { get { return _walkSpeed; } }
+
+    [SerializeField] float _runSpeed;
+    public float RunSpeed
+    { get { return _runSpeed; } }
 
     [SerializeField] float _airSpeed;
     public float AirSpeed
@@ -232,13 +257,16 @@ public class CharStateMachine : MonoBehaviour
         set { _hasDied = value; }
     }
 
+    public bool ToggleRun1 { get => _toggleRun; set => _toggleRun = value; }
+    public bool ToggleRun2 { get => _toggleRun; set => _toggleRun = value; }
+
     #endregion
 
     #endregion
 
     private void Awake()
     {
-        // DontDestroyOnLoad(this);
+        // DontDestroyOnLoad(this); 
 
         playerInput.actions.FindAction("Move").started += OnMovement;
         playerInput.actions.FindAction("Move").performed += OnMovement;
@@ -248,9 +276,23 @@ public class CharStateMachine : MonoBehaviour
         playerInput.actions.FindAction("Jump").performed += OnJump;
         playerInput.actions.FindAction("Jump").canceled += OnJump;
 
+        playerInput.actions.FindAction("Run").started += OnRun;
+        playerInput.actions.FindAction("Run").performed += OnRun;
+        playerInput.actions.FindAction("Run").canceled += OnRun;
+
+        playerInput.actions.FindAction("Attack1").started += OnAttack1;
+        playerInput.actions.FindAction("Attack1").performed += OnAttack1;
+        playerInput.actions.FindAction("Attack1").canceled += OnAttack1;
+
+        playerInput.actions.FindAction("Attack2").started += OnAttack2;
+        playerInput.actions.FindAction("Attack2").performed += OnAttack2;
+        playerInput.actions.FindAction("Attack2").canceled += OnAttack2;
+
         _states = new CharStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
+
+        _playerAnimator.SetTrigger("Grounded");
 
         _isGrounded = true;
 
@@ -266,12 +308,12 @@ public class CharStateMachine : MonoBehaviour
     {
         _movementSpeed = PlayerRigidBody.velocity.magnitude;
 
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log(_currentState.ToString());
         }
 
-        CurrentMovement = (Orientation.forward * CurrentMovementInput.y).normalized + (Orientation.right * CurrentMovementInput.x).normalized;
+        CurrentMovement = (Orientation.forward * CurrentMovementInput.y) + (Orientation.right * CurrentMovementInput.x); // NORMALIZE MAYBE?
 
         _currentState.UpdateStates();
 
@@ -324,6 +366,28 @@ public class CharStateMachine : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         _isJumpAction = context.ReadValueAsButton();
+    }
+
+    void OnRun(InputAction.CallbackContext context)
+    {
+        if (ToggleRun1 && context.ReadValueAsButton() == true)
+        {
+            _isRunAction = true;
+        }
+        else if (!ToggleRun1)
+        {
+            _isRunAction = context.ReadValueAsButton();
+        }
+    }
+
+    void OnAttack1(InputAction.CallbackContext context)
+    {
+        _isAttack1Action = context.ReadValueAsButton();
+    }
+
+    void OnAttack2(InputAction.CallbackContext context)
+    {
+        _isAttack2Action = context.ReadValueAsButton();
     }
 
     #endregion

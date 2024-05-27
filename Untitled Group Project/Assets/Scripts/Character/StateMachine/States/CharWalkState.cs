@@ -4,11 +4,17 @@ public class CharWalkState : CharBaseState
 {
     public CharWalkState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
-        // IsRootState = true; // HOW TO MAKE WORK?
+        // IsRootState = true; // HOW TO MAKE WORK? // idk man ._.
     }
 
     public override void EnterState()
     {
+        Ctx.DesiredMoveForce = Ctx.WalkSpeed;
+
+
+        Ctx.MoveForce = Ctx.WalkSpeed;
+
+
         InitializeSubState();
     }
 
@@ -19,6 +25,9 @@ public class CharWalkState : CharBaseState
 
     public override void UpdateState()
     {
+        Ctx.PlayerAnimator.SetFloat("MovementX", Ctx.CurrentMovementInput.x);
+        Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
+
         CheckSwitchStates();
     }
 
@@ -32,6 +41,10 @@ public class CharWalkState : CharBaseState
         if (!Ctx.IsMoveAction)
         {
             SwitchState(Factory.Idle());
+        }
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction)
+        {
+            SwitchState(Factory.Running());
         }
     }
 
