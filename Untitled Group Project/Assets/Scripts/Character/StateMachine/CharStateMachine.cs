@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements.Experimental;
 
 public class CharStateMachine : Entity
 {
-    //CLEAN UP CODE
     #region Variables
 
     [Header("Refrences")]
@@ -25,6 +29,14 @@ public class CharStateMachine : Entity
     [SerializeField] Transform _playerCam;
     public Transform PlayerCam
     { get { return _playerCam; } }
+
+    [SerializeField] Transform _camHolder;
+    public Transform CamHolder
+    { get { return _camHolder; } }
+
+    [SerializeField] CinemachineVirtualCamera _virtualCam;
+    public CinemachineVirtualCamera VirtualCam
+    { get { return _virtualCam; } }
 
     [SerializeField] private Transform _orientation;
     public Transform Orientation
@@ -154,6 +166,60 @@ public class CharStateMachine : Entity
 
     #endregion
 
+    [Header("Camera")]
+    #region Camera
+
+    [SerializeField] Transform _camFollow;
+    public Transform CamFollow
+    { get { return _camFollow; } set { _camFollow = value; } }
+
+    [SerializeField] Transform _camLookAt;
+    public Transform CamLookAt
+    { get { return _camLookAt; } set { _camLookAt = value; } }
+
+    [SerializeField] float _playerRotationSpeed;
+    public float PlayerRotationSpeed
+    { get { return _playerRotationSpeed; } }
+
+    [SerializeField] float _rotationThreshold;
+    public float RotationThreshold
+    { get { return _rotationThreshold; } }
+
+    Quaternion _currentCamRotation;
+    public Quaternion CurrentCamRotation
+    { get { return _currentCamRotation; } set { _currentCamRotation = value; } }
+
+    Quaternion _previousCamRotation;
+    public Quaternion PreviousCamRotation
+    { get { return _previousCamRotation; } set { _previousCamRotation = value; } }
+
+    #endregion
+
+    [Header("Targeting")]
+    #region Targeting
+
+    [SerializeField] float _targetRadius;
+    public float TargetRadius
+    { get { return _targetRadius; } }
+
+    [SerializeField] LayerMask _targetMask;
+    public LayerMask TargetMask
+    { get { return _targetMask; } }
+
+    [SerializeField] List<Transform> _targetsInRange = new();
+    public List<Transform> TargetsInRange
+    { get { return _targetsInRange; } }
+
+    [SerializeField] List<Transform> _targetsVisible;
+    public List<Transform> TargetsVisible
+    { get { return _targetsVisible; } }
+
+    [SerializeField] Transform _nextTarget;
+    public Transform NextTarget
+    { get { return _nextTarget; } }
+
+    #endregion
+
     [Header("Inputs")]
     #region Inputs
 
@@ -194,6 +260,34 @@ public class CharStateMachine : Entity
     public bool ToggleRun
     { get { return ToggleRun1; } }
 
+    [SerializeField] float _camSensitivity;
+    public float CamSensitivity
+    { get { return _camSensitivity; } }
+
+    [SerializeField] bool _isCamAcceleration;
+    public bool IsCamAcceleration
+    { get { return _isCamAcceleration; } }
+
+    [SerializeField] float _camAcceleration;
+    public float CamAcceleration
+    { get { return _camAcceleration; } }
+
+    [SerializeField] CinemachineCameraOffset _camOffset;
+    public CinemachineCameraOffset CamOffset
+    { get { return _camOffset; } }
+
+    [SerializeField] float _camOffsetX;
+    public float CamOffsetX
+    { get { return _camOffsetX; } }
+
+    [SerializeField] float _camOffsetY;
+    public float CamOffsetY
+    { get { return _camOffsetY; } }
+
+    [SerializeField] float _camOffsetZ;
+    public float CamOffsetZ
+    { get { return _camOffsetZ; } }
+
     #endregion
 
     [Header("Speeds")]
@@ -213,8 +307,8 @@ public class CharStateMachine : Entity
 
     #endregion
 
-    [Header("Speed Multipliers")]
-    #region Speed Multipliers
+    [Header("Multipliers")]
+    #region Multipliers
 
     [SerializeField] float _speedIncreaseMultiplier;
     public float SpeedIncreaseMultiplier
@@ -331,6 +425,7 @@ public class CharStateMachine : Entity
     private void Awake()
     {
         // DontDestroyOnLoad(this);
+        _healthPoints = 100;
 
         _states = new CharStateFactory(this);
         _currentState = _states.Grounded();
@@ -423,7 +518,8 @@ public class CharStateMachine : Entity
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log(_currentState.ToString());
+            // Debug.Log(_currentState.ToString());
+            GetViableTarget();
         }
 
         CurrentMovement = (Orientation.forward * CurrentMovementInput.y) + (Orientation.right * CurrentMovementInput.x); // NORMALIZE MAYBE?
@@ -513,7 +609,7 @@ public class CharStateMachine : Entity
 
     #endregion
 
-    #region STUFF
+    #region Checks
 
     private bool CheckGrounded()
     {
@@ -564,12 +660,62 @@ public class CharStateMachine : Entity
         return Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized;
     }
 
-    public Vector3 GetTargetMoveDirection(Vector3 direction)
+    public Transform GetViableTarget()
     {
-        return Vector3.zero;
+        Collider[] allColliders = Physics.OverlapSphere(transform.position, _targetRadius, _targetMask);
+
+        if (allColliders.Length >= 0)
+        {
+            _targetsInRange.Clear();
+            _targetsVisible.Clear();
+        }
+
+        foreach (Collider collider in allColliders)
+        {
+            _targetsInRange.Add(collider.transform);
+        }
+
+        if (_targetsInRange.Count == 0)
+        {
+            Debug.Log("Checked for target but there were no targets in range");
+            return null;
+        }
+
+        foreach (Transform target in _targetsInRange)
+        {
+            if (target.GetComponent<Renderer>().isVisible)
+            {
+                _targetsVisible.Add(target);
+            }
+        }
+
+        if (_targetsVisible.Count == 0)
+        {
+            Debug.Log($"Checked for visible targets but there were no targets in visible, there are {_targetsInRange.Count} targets in range");
+            return null;
+        }
+
+        var dot = -2f;
+        Transform closest = null;
+
+        foreach (Transform visible in _targetsVisible)
+        {
+            Vector3 localPoint = _playerCam.GetComponent<Camera>().transform.InverseTransformPoint(visible.transform.position).normalized;
+            float newDot = Vector3.Dot(localPoint, _playerCam.forward);
+            if (newDot > dot)
+            {
+                dot = newDot;
+                closest = visible;
+            }
+        }
+
+        Debug.Log($"Found new target: {closest.name}");
+        return closest;
     }
 
     #endregion
+
+    #region Speed
 
     public void HandleStrafeSpeed()
     {
@@ -654,6 +800,8 @@ public class CharStateMachine : Entity
         MoveForce = DesiredMoveForce;
     }
 
+    #endregion
+
     #region Entity
 
     public override void TakeDamage(float damage)
@@ -667,4 +815,12 @@ public class CharStateMachine : Entity
     }
 
     #endregion
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _targetRadius);
+    }
+
 }
