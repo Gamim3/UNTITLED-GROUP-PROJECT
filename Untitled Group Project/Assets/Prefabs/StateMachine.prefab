@@ -115,7 +115,12 @@ MonoBehaviour:
   _playerHeight: 2
   _isMoveAction: 0
   _isJumpAction: 0
-  _moveSpeed: 7
+  _isRunAction: 0
+  _isAttack1Action: 0
+  _isAttack2Action: 0
+  _toggleRun: 0
+  _walkSpeed: 1.4
+  _runSpeed: 8
   _airSpeed: 0.5
   _speedIncreaseMultiplier: 1.25
   _moveMultiplier: 0
@@ -197,6 +202,7 @@ GameObject:
   - component: {fileID: 402877061371547527}
   - component: {fileID: 4311435802149124151}
   - component: {fileID: 6711244995347219863}
+  - component: {fileID: 4992468518524992427}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Player
@@ -236,7 +242,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5084649862138811404}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -294,6 +300,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4992468518524992427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084649862138811404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5fc7d498f78f44392d43d8a27f21f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 0
+  energy: 0
+  moveSpeed: 0
+  logic: {fileID: 0}
 --- !u!1 &8656774591268254232
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2413418503771753379
 Transform:
   m_ObjectHideFlags: 0
@@ -714,7 +736,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b5f0a41089bf35244a56b5c7340672c4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
