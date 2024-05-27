@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharStateMachine : MonoBehaviour
+public class CharStateMachine : Entity
 {
     //CLEAN UP CODE
     #region Variables
@@ -75,18 +75,19 @@ public class CharStateMachine : MonoBehaviour
 
     #endregion
 
-    [Header("Stamina")]
+    [Header("Stamina")]    // Inherits Energy From Entity so it should not need its own stamina
     #region Stamina
 
-    [SerializeField] float _stamina;
-    public float Stamina
-    { get { return _stamina; } set { _stamina = value; } }
 
-    [SerializeField] float _maxStamina;
-    public float MaxStamina
-    { get { return _maxStamina; } }
+    // [SerializeField] float _stamina;
+    // public float Stamina
+    // { get { return _stamina; } set { _stamina = value; } }
 
-    [SerializeField] float _staminaDecreaseMultiplier;
+    // [SerializeField] float _maxStamina;
+    // public float MaxStamina
+    // { get { return _maxStamina; } }
+
+    // [SerializeField] float _staminaDecreaseMultiplier;
 
     #endregion
 
@@ -304,8 +305,10 @@ public class CharStateMachine : MonoBehaviour
         _playerCam = FindObjectOfType<Camera>().transform;
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+
         _movementSpeed = PlayerRigidBody.velocity.magnitude;
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -528,4 +531,17 @@ public class CharStateMachine : MonoBehaviour
         MoveForce = DesiredMoveForce;
     }
 
+    #region Entity
+
+    // public override TakeDamage(float damage)
+    // {
+    //     healthPoints -= damage;
+    // }
+
+    // public void Exhaustion(float Energy)
+    // {
+    //     energy -= (Energy / 50);
+    // }
+
+    #endregion
 }

@@ -19,7 +19,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Update()
     {
-        if(healthPoints <= 0)
+        if (healthPoints <= 0)
         {
             Destroy(gameObject);
         }

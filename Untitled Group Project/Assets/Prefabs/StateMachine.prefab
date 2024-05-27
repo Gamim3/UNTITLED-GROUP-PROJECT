@@ -81,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ecea499971cba40b90130bc4439144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPoints: 0
+  energy: 0
+  moveSpeed: 0
   playerInput: {fileID: 7120629029091282}
   _playerObj: {fileID: 6470602492927477769}
   _playerAnimator: {fileID: 9220521713210226788}
@@ -94,9 +97,6 @@ MonoBehaviour:
   _moveForce: 0
   _desiredMoveForce: 0
   _lastDesiredMoveForce: 0
-  _stamina: 0
-  _maxStamina: 0
-  _staminaDecreaseMultiplier: 0
   _jumpAmount: 0
   _jumpForce: 8
   _jumpMent: {x: 0, y: 0, z: 0}
@@ -202,7 +202,6 @@ GameObject:
   - component: {fileID: 402877061371547527}
   - component: {fileID: 4311435802149124151}
   - component: {fileID: 6711244995347219863}
-  - component: {fileID: 4992468518524992427}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Player
@@ -300,22 +299,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4992468518524992427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5084649862138811404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d5fc7d498f78f44392d43d8a27f21f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoints: 0
-  energy: 0
-  moveSpeed: 0
-  logic: {fileID: 0}
 --- !u!1 &8656774591268254232
 GameObject:
   m_ObjectHideFlags: 0
