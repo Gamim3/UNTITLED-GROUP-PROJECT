@@ -2,6 +2,10 @@ using System.Diagnostics;
 
 public abstract class CharBaseState
 {
+    protected string _stateName = "";
+    protected string StateName
+    { set { _stateName = value; } }
+
     protected bool _isRootState = false;
     protected bool IsRootState
     {

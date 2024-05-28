@@ -4,7 +4,7 @@ public class CharWalkState : CharBaseState
 {
     public CharWalkState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
-        // IsRootState = true; // HOW TO MAKE WORK? // idk man ._.
+        StateName = "Walk";
     }
 
     public override void EnterState()
@@ -12,6 +12,8 @@ public class CharWalkState : CharBaseState
         InitializeSubState();
 
         Ctx.IsWalkState = true;
+
+        Debug.Log("Walk Enter");
 
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
 
@@ -42,16 +44,18 @@ public class CharWalkState : CharBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Running());
         }
+        // IDK IF DASH IS ROOT STATE OR NOT
+        // else if (Ctx.IsDashAction)
+        // {
+        //     SetSubState(Factory.Dashing());
+        // }
     }
 
-    public override void InitializeSubState()
-    {
-
-    }
+    public override void InitializeSubState() { }
 
     void WalkMovement()
     {

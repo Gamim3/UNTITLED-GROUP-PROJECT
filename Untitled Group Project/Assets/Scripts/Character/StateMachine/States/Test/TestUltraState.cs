@@ -4,7 +4,7 @@ public class TestUltraState : CharBaseState
 {
     public TestUltraState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
-        IsRootState = true;
+        IsSuperState = true;
     }
 
     public override void EnterState()

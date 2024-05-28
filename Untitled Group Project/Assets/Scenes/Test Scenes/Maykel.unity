@@ -225,6 +225,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &635404054 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1765681959301161703, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 1274270827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &748571045 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3988029935433150852, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 1274270827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &749003857
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,8 +554,13 @@ PrefabInstance:
     - target: {fileID: 5320829852073633952, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5450075096526561528, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 635404054}
     - target: {fileID: 5958935281679079504, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
       propertyPath: m_TransparentLayers.m_Bits
@@ -606,9 +623,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
+      propertyPath: _camHolder
+      value: 
+      objectReference: {fileID: 748571045}
+    - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
+      propertyPath: _camOffset
+      value: 
+      objectReference: {fileID: 1631045473}
+    - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
       propertyPath: _moveSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
+      propertyPath: _playerCam
+      value: 
+      objectReference: {fileID: 1548295699}
     - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
       propertyPath: _targetTag
@@ -624,6 +656,11 @@ PrefabInstance:
       propertyPath: _walkSpeed
       value: 1.4
       objectReference: {fileID: 0}
+    - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
+      propertyPath: _virtualCam
+      value: 
+      objectReference: {fileID: 1631045476}
     - target: {fileID: 8818973655703061079, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
       propertyPath: _healthPoints
@@ -1054,6 +1091,12 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
+--- !u!20 &1548295699 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6037329053399567748, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 1274270827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1575704244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1267,6 +1310,18 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0}
   m_ApplyAfter: 1
   m_PreserveComposition: 0
+--- !u!114 &1631045476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5450075096526561528, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 1274270827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631045468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1708801789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,8 +1381,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

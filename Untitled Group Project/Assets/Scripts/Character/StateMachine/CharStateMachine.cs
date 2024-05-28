@@ -26,8 +26,8 @@ public class CharStateMachine : Entity
     public Animator PlayerAnimator
     { get { return _playerAnimator; } }
 
-    [SerializeField] Transform _playerCam;
-    public Transform PlayerCam
+    [SerializeField] Camera _playerCam;
+    public Camera PlayerCam
     { get { return _playerCam; } }
 
     [SerializeField] Transform _camHolder;
@@ -36,7 +36,7 @@ public class CharStateMachine : Entity
 
     [SerializeField] CinemachineVirtualCamera _virtualCam;
     public CinemachineVirtualCamera VirtualCam
-    { get { return _virtualCam; } }
+    { get { return _virtualCam; } set { _virtualCam = value; } }
 
     [SerializeField] private Transform _orientation;
     public Transform Orientation
@@ -247,9 +247,9 @@ public class CharStateMachine : Entity
     public bool IsTargetingAction
     { get { return _isTargetingState; } }
 
-    [SerializeField] bool _isDashingAction;
-    public bool IsDashingAction
-    { get { return _isDashingAction; } }
+    [SerializeField] bool _isDashAction;
+    public bool IsDashAction
+    { get { return _isDashAction; } }
 
     #endregion
 
@@ -428,8 +428,9 @@ public class CharStateMachine : Entity
         _healthPoints = 100;
 
         _states = new CharStateFactory(this);
-        _currentState = _states.Grounded();
+        _currentState = _states.Combat();
         _currentState.EnterState();
+
 
         _playerAnimator.SetTrigger("Grounded");
 
@@ -440,7 +441,7 @@ public class CharStateMachine : Entity
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        _playerCam = FindObjectOfType<Camera>().transform;
+        _playerCam = FindObjectOfType<Camera>();
     }
 
     public override void Start()
@@ -513,18 +514,24 @@ public class CharStateMachine : Entity
     public override void Update()
     {
         base.Update();
+        _currentState.UpdateStates();
 
         _movementSpeed = PlayerRigidBody.velocity.magnitude;
 
         if (Input.GetKeyDown(KeyCode.P))
         {
             // Debug.Log(_currentState.ToString());
-            GetViableTarget();
+
+            _playerObj.forward = GetViableTarget().position;
+        }
+
+        if (_nextTarget != null)
+        {
+            _playerObj.forward = _nextTarget.position;
         }
 
         CurrentMovement = (Orientation.forward * CurrentMovementInput.y) + (Orientation.right * CurrentMovementInput.x); // NORMALIZE MAYBE?
 
-        _currentState.UpdateStates();
 
         IsGrounded = CheckGrounded();
 
@@ -604,7 +611,7 @@ public class CharStateMachine : Entity
 
     void OnDash(InputAction.CallbackContext context)
     {
-        _isDashingAction = context.ReadValueAsButton();
+        _isDashAction = context.ReadValueAsButton();
     }
 
     #endregion
@@ -695,22 +702,36 @@ public class CharStateMachine : Entity
             return null;
         }
 
-        var dot = -2f;
-        Transform closest = null;
+        Transform closestTarget = null;
+        float minimalDistance = Mathf.Infinity;
+        Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) / 2;
 
-        foreach (Transform visible in _targetsVisible)
+        for (int targetIndex = 0; targetIndex < _targetsVisible.Count; targetIndex++)
         {
-            Vector3 localPoint = _playerCam.GetComponent<Camera>().transform.InverseTransformPoint(visible.transform.position).normalized;
-            float newDot = Vector3.Dot(localPoint, _playerCam.forward);
-            if (newDot > dot)
+            Transform target = _targetsVisible[targetIndex];
+            Vector3 TargetScreenPoint = _playerCam.WorldToScreenPoint(target.transform.position);
+
+            // Only calculate the distance with an enemy if it is located within the screen bounds
+            if (TargetScreenPoint.x > 0 && TargetScreenPoint.x < Screen.width && TargetScreenPoint.y > 0 && TargetScreenPoint.y < Screen.height)
             {
-                dot = newDot;
-                closest = visible;
+                float distance = Vector2.Distance(TargetScreenPoint, screenCenter);
+
+                if (distance < minimalDistance)
+                {
+                    minimalDistance = distance;
+                    closestTarget = target;
+                }
             }
         }
 
-        Debug.Log($"Found new target: {closest.name}");
-        return closest;
+        if (closestTarget == null)
+        {
+            Debug.Log($"No target found on screen");
+            return null;
+        }
+
+        Debug.Log($"Found new target: {closestTarget.name}");
+        return closestTarget;
     }
 
     #endregion

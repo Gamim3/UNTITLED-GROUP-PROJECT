@@ -6,7 +6,9 @@ public class CharTargetState : CharBaseState
 {
     public CharTargetState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
-        IsRootState = true; // idk
+        StateName = "Target";
+
+        IsRootState = true;
     }
 
     public override void EnterState()
@@ -33,11 +35,30 @@ public class CharTargetState : CharBaseState
 
     public override void InitializeSubState()
     {
-
+        if (Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        {
+            SetSubState(Factory.Grounded());
+        }
+        else if (Ctx.IsSloped)
+        {
+            SetSubState(Factory.Sloped());
+        }
+        else if (!Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        {
+            SetSubState(Factory.Airborne());
+        }
+        else if (Ctx.IsJumpAction && Ctx.IsGrounded || Ctx.IsJumpAction && Ctx.IsSloped)
+        {
+            SetSubState(Factory.Jumping());
+        }
     }
 
     public override void CheckSwitchStates()
     {
-
+        // IDK YET
+        // if (Ctx.IsTargetingAction)
+        // {
+        //     SwitchState(Factory.FreeLook());
+        // }
     }
 }

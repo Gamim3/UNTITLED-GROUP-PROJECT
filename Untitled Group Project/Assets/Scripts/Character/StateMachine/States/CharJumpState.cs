@@ -4,6 +4,8 @@ public class CharJumpState : CharBaseState
 {
     public CharJumpState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
+        StateName = "Jump";
+
         IsRootState = true;
     }
 
@@ -37,14 +39,45 @@ public class CharJumpState : CharBaseState
 
     #endregion
 
-    public override void InitializeSubState() { }
+    public override void InitializeSubState()
+    {
+        if (!Ctx.IsMoveAction)
+        {
+            SetSubState(Factory.Idle());
+        }
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
+        {
+            SetSubState(Factory.Walking());
+        }
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        {
+            SetSubState(Factory.Running());
+        }
+        else if (Ctx.IsDashAction)
+        {
+            // DASH STATE
+            // SetSubState(Factory.Dash()); 
+        }
+    }
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsGrounded)
+        if (Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
         {
             SwitchState(Factory.Grounded());
         }
+        else if (Ctx.IsSloped)
+        {
+            SwitchState(Factory.Sloped());
+        }
+        else if (!Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        {
+            SwitchState(Factory.Airborne());
+        }
+        // else if (Ctx.IsJumpAction && Ctx.IsGrounded || Ctx.IsJumpAction && Ctx.IsSloped) // Maybe for double jump check if has jumps left
+        // {
+        //     SwitchState(Factory.Jumping());
+        // }
     }
 
     void HandleJump()

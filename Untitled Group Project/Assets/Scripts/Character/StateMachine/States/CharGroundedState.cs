@@ -3,11 +3,15 @@ public class CharGroundedState : CharBaseState
 {
     public CharGroundedState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
+        StateName = "Grounded";
+
         IsRootState = true;
     }
 
     public override void EnterState()
     {
+        Debug.Log("Enter Grounded");
+
         InitializeSubState();
 
         Ctx.IsGroundedState = true;
@@ -29,6 +33,8 @@ public class CharGroundedState : CharBaseState
 
     public override void ExitState()
     {
+        Debug.Log("Exit Grounded");
+
         Ctx.IsGroundedState = false;
     }
 
@@ -36,12 +42,16 @@ public class CharGroundedState : CharBaseState
 
     public override void UpdateState()
     {
+        Debug.Log("Update Grounded");
+
         Ctx.Movement = Ctx.CurrentMovement.normalized;
+
+        CheckSwitchStates();
     }
 
     public override void FixedUpdateState()
     {
-        CheckSwitchStates();
+
     }
 
     #endregion
@@ -52,15 +62,32 @@ public class CharGroundedState : CharBaseState
         {
             SetSubState(Factory.Idle());
         }
-        if (Ctx.IsMoveAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
         {
             SetSubState(Factory.Walking());
+        }
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        {
+            SetSubState(Factory.Running());
+        }
+        else if (Ctx.IsDashAction)
+        {
+            // DASH STATE
+            // SetSubState(Factory.Dash()); 
         }
     }
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsJumpAction)
+        if (Ctx.IsSloped)
+        {
+            SwitchState(Factory.Sloped());
+        }
+        else if (!Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        {
+            SwitchState(Factory.Airborne());
+        }
+        else if (Ctx.IsJumpAction && Ctx.IsGrounded || Ctx.IsJumpAction && Ctx.IsSloped)
         {
             SwitchState(Factory.Jumping());
         }

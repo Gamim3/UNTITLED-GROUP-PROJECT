@@ -4,7 +4,7 @@ public class CharRunState : CharBaseState
 {
     public CharRunState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
-        // IsRootState = true; // HOW TO MAKE WORK?
+        StateName = "Run";
     }
 
 
@@ -47,16 +47,18 @@ public class CharRunState : CharBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Walking());
         }
+        // IDK IF DASH IS ROOT STATE OR NOT
+        // else if (Ctx.IsDashAction)
+        // {
+        //     SetSubState(Factory.Dashing());
+        // }
     }
 
-    public override void InitializeSubState()
-    {
-
-    }
+    public override void InitializeSubState() { }
 
     void RunMovement()
     {

@@ -4,11 +4,15 @@ public class CharCombatState : CharBaseState
 {
     public CharCombatState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
+        StateName = "Combat";
+
         IsRootState = true;
     }
 
     public override void EnterState()
     {
+        Debug.Log("Enter Combat");
+
         InitializeSubState();
 
         Ctx.IsCombatState = true;
@@ -21,6 +25,8 @@ public class CharCombatState : CharBaseState
 
     public override void UpdateState()
     {
+        Debug.Log("Update Combat");
+
         CheckSwitchStates();
     }
 
@@ -31,7 +37,14 @@ public class CharCombatState : CharBaseState
 
     public override void InitializeSubState()
     {
-
+        if (!Ctx.IsTargetingAction)
+        {
+            SetSuperState(Factory.FreeLook());
+        }
+        else if (Ctx.IsTargetingAction)
+        {
+            SetSuperState(Factory.Target());
+        }
     }
 
     public override void CheckSwitchStates()
