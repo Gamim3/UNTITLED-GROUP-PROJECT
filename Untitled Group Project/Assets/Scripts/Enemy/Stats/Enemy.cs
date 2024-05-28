@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using static EnemyBrain;
 
 public class Enemy : Entity
@@ -8,6 +10,7 @@ public class Enemy : Entity
     [SerializeField] EnemyType enemyType;
 
     [SerializeField] float exhaustionSpeed;
+    [SerializeField] float meleeRange;
     [SerializeField] float projectileSpeed;
     [SerializeField] float projectileDamage;
 
@@ -18,15 +21,17 @@ public class Enemy : Entity
     public float radius;
     [Range(0, 360)]
     public float angle;
-    public float delay = 0.2f;
+    [SerializeField] float delay = 0.2f;
 
     public GameObject player;
 
-    public LayerMask targetMask;
-    public LayerMask obstructionMask;
+    [SerializeField] LayerMask targetMask;
+    [SerializeField] LayerMask obstructionMask;
 
     [NonSerialized] public bool playerInSight;
 
+    [Header("Movement")]
+    private NavMeshAgent agent;
 
     [Header("RangedAttackRequirements")]
     [SerializeField] Transform parent;
@@ -45,8 +50,6 @@ public class Enemy : Entity
     private GameObject rightClaw;
     private Transform leftClawDest;
     private Transform rightClawDest;
-
-    private bool rotatingToPlayer;
 
     //verlaag variable spam
 
@@ -82,6 +85,9 @@ public class Enemy : Entity
         {
             questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
+
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = _moveSpeed;
 
         leftClaw = GameObject.Find("TempLeftClaw");
         rightClaw = GameObject.Find("TempRightClaw");
@@ -154,29 +160,20 @@ public class Enemy : Entity
                 rightClawAttackTimer -= Time.deltaTime;
                 break;
         }
-
-        if (rotatingToPlayer)
-        {
-            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-        }
-        else if (!rotatingToPlayer && disengaging)
-        {
-            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-        }
     }
 
     //Attacks
 
     public void Engage()
     {
-        rotatingToPlayer = true;
-
         if (engageTimer >= 0 && engaging)
         {
             if (distance > 3.5f)
             {
-                //vervang met navmesh
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _moveSpeed * Time.deltaTime / 10);
+                Vector3 directionToPlayer = transform.position - player.transform.position;
+                Vector3 meleeDistance = player.transform.position + directionToPlayer.normalized * meleeRange;
+
+                agent.destination = meleeDistance;
                 Exhaustion(exhaustionSpeed / 2);
             }
         }
@@ -189,8 +186,6 @@ public class Enemy : Entity
             {
                 brain.attackQueue.Dequeue();
             }
-
-            rotatingToPlayer = false;
         }
     }
 
@@ -198,9 +193,13 @@ public class Enemy : Entity
     {
         if (disengageTimer >= 0 && disengaging)
         {
-            //vervang met navmesh
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, -_moveSpeed * Time.deltaTime / 10);
-            Exhaustion(exhaustionSpeed / 2);
+            Vector3 directionToPlayer = transform.position - player.transform.position;
+
+            Vector3 newPosition = transform.position + directionToPlayer;
+
+            agent.SetDestination(newPosition);
+
+            Exhaustion(exhaustionSpeed / 4);
         }
         else
         {
@@ -236,8 +235,6 @@ public class Enemy : Entity
 
     public void SpikeThrow()
     {
-        rotatingToPlayer = true;
-
         if (throwingSpikeTimer >= 0 && throwingSpike)
         {
             Exhaustion(exhaustionSpeed * 1000);
@@ -256,15 +253,11 @@ public class Enemy : Entity
             {
                 brain.attackQueue.Dequeue();
             }
-
-            rotatingToPlayer = false;
         }
     }
 
     public void LeftClawAttack()
     {
-        rotatingToPlayer = true;
-
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
             leftClaw.GetComponent<Collider>().enabled = true;
@@ -283,15 +276,11 @@ public class Enemy : Entity
                 leftClaw.GetComponent<Collider>().enabled = false;
                 brain.attackQueue.Dequeue();
             }
-
-            rotatingToPlayer = false;
         }
     }
 
     public void RightClawAttack()
     {
-        rotatingToPlayer = true;
-
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
             rightClaw.GetComponent<Collider>().enabled = true;
@@ -310,8 +299,6 @@ public class Enemy : Entity
                 rightClaw.GetComponent<Collider>().enabled = false;
                 brain.attackQueue.Dequeue();
             }
-
-            rotatingToPlayer = false;
         }
     }
 
