@@ -7,6 +7,8 @@ using static EnemyBrain;
 
 public class Enemy : Entity
 {
+    [SerializeField] float attackSpeed;
+
     [SerializeField] EnemyType enemyType;
 
     [SerializeField] float exhaustionSpeed;
@@ -43,6 +45,9 @@ public class Enemy : Entity
     [SerializeField] FuzzyLogic logic;
     [SerializeField] QuestManager questManager;
 
+    private float startSpeed;
+
+    //alles hieronder is temporary en word verwijderd wanneer animations er in zitten
     [Header("TempMelee")]
     private Transform startLeftClaw;
     private Transform startRightClaw;
@@ -50,8 +55,6 @@ public class Enemy : Entity
     private GameObject rightClaw;
     private Transform leftClawDest;
     private Transform rightClawDest;
-
-    //verlaag variable spam
 
     [Header("AttackTimes")]
     [SerializeField] float engageTimer;
@@ -88,7 +91,9 @@ public class Enemy : Entity
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = _moveSpeed;
+        startSpeed = _moveSpeed;
 
+        //temporary word verwijderd wanneer animations er in zitten
         leftClaw = GameObject.Find("TempLeftClaw");
         rightClaw = GameObject.Find("TempRightClaw");
         leftClawDest = GameObject.Find("TempLeftClawDest").transform;
@@ -98,6 +103,7 @@ public class Enemy : Entity
 
         base.Start();
 
+        //temporary word verwijderd wanneer animations er in zitten
         startEngageTimer = engageTimer;
         startDisengageTimer = disengageTimer;
         startRegainEnergyTimer = energyRegainTimer;
@@ -237,7 +243,9 @@ public class Enemy : Entity
     {
         if (throwingSpikeTimer >= 0 && throwingSpike)
         {
-            Exhaustion(exhaustionSpeed * 1000);
+            transform.LookAt(player.transform);
+
+            Exhaustion(exhaustionSpeed * 750);
 
 
             //add visual line of sight
@@ -261,12 +269,12 @@ public class Enemy : Entity
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
             leftClaw.GetComponent<Collider>().enabled = true;
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, _moveSpeed / 50);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, attackSpeed);
         }
         else
         {
             Exhaustion(exhaustionSpeed * 1000);
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, _moveSpeed / 50);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, attackSpeed);
 
             leftClawAttack = false;
             leftClawAttackTimer = startLeftClawAttackTimer;
@@ -284,12 +292,12 @@ public class Enemy : Entity
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
             rightClaw.GetComponent<Collider>().enabled = true;
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, _moveSpeed / 50);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, attackSpeed);
         }
         else
         {
             Exhaustion(exhaustionSpeed * 1000);
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, _moveSpeed / 50);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, attackSpeed);
 
             rightClawAttack = false;
             rightClawAttackTimer = startRightClawAttackTimer;
