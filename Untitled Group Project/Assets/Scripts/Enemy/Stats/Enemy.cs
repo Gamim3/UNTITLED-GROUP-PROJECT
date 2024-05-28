@@ -15,9 +15,21 @@ public class Enemy : Entity
     [SerializeField] float projectileDamage;
 
     [Header("Distanc/Detection")]
-    [SerializeField] Transform playerPosition;
-    [SerializeField] float detectionRange;
     [SerializeField] float distance;
+    
+    [Range(0, 100)]
+    public float radius;
+    [Range(0, 360)]
+    public float angle;
+    public float delay = 0.2f;
+
+    public GameObject player;
+
+    public LayerMask targetMask;
+    public LayerMask obstructionMask;
+
+    [NonSerialized] public bool playerInSight;
+
 
     [Header("RangedAttackRequirements")]
     [SerializeField] Transform parent;
@@ -38,8 +50,6 @@ public class Enemy : Entity
     private Transform rightClawDest;
 
     private bool rotatingToPlayer;
-
-    [NonSerialized] public bool detectedPlayer;
 
     //verlaag variable spam
 
@@ -69,6 +79,8 @@ public class Enemy : Entity
 
     public override void Start()
     {
+        StartCoroutine(FieldOfViewRoutine());
+
         if(GameObject.Find("QuestManager") != null)
         {
             questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
@@ -108,13 +120,16 @@ public class Enemy : Entity
             Destroy(gameObject);
         }
 
-        distance = Vector3.Distance(transform.position, playerPosition.position);
+        distance = Vector3.Distance(transform.position, player.transform.position);
 
         logic.enemyHealth = _healthPoints / _maxHealth * 100;
         logic.energy = _energy / _maxEnergy * 100;
         logic.distance = distance;
 
-        DetectPlayer();
+        if (!playerInSight)
+        {
+            brain.attackQueue.Clear();
+        }
 
         switch (engaging)
         {
@@ -145,34 +160,12 @@ public class Enemy : Entity
 
         if (rotatingToPlayer)
         {
-            transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
+            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         }
         else if (!rotatingToPlayer && disengaging)
         {
-            transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
+            transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         }
-    }
-
-    public void DetectPlayer()
-    {
-        //betere DetectionSystem based on visual line of sight
-
-        if (distance <= detectionRange)
-        {
-            detectedPlayer = true;
-        }
-        else
-        {
-            detectedPlayer = false;
-            brain.attackQueue.Clear();
-        }
-    }
-
-    public void RotateAwayFromPlayer()
-    {
-        Vector3 relativePos = playerPosition.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        transform.rotation = new Quaternion(transform.rotation.x, rotation.y + 180, transform.rotation.z, transform.rotation.w);
     }
 
     //Attacks
@@ -186,7 +179,7 @@ public class Enemy : Entity
             if (distance > 3.5f)
             {
                 //vervang met navmesh
-                transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, _moveSpeed * Time.deltaTime / 10);
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, _moveSpeed * Time.deltaTime / 10);
                 Exhaustion(exhaustionSpeed / 2);
             }
         }
@@ -209,7 +202,7 @@ public class Enemy : Entity
         if (disengageTimer >= 0 && disengaging)
         {
             //vervang met navmesh
-            transform.position = Vector3.MoveTowards(transform.position, playerPosition.position, -_moveSpeed * Time.deltaTime / 10);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, -_moveSpeed * Time.deltaTime / 10);
             Exhaustion(exhaustionSpeed / 2);
         }
         else
@@ -322,6 +315,48 @@ public class Enemy : Entity
             }
 
             rotatingToPlayer = false;
+        }
+    }
+
+    private IEnumerator FieldOfViewRoutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(delay);
+
+        while (true)
+        {
+            yield return wait;
+            FieldOfViewCheck();
+        }
+    }
+
+    private void FieldOfViewCheck()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+
+        if(rangeChecks.Length != 0)
+        {
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+            {
+                if(!Physics.Raycast(transform.position, directionToTarget, distance, obstructionMask))
+                {
+                    playerInSight = true;
+                }
+                else
+                {
+                    playerInSight = false;
+                }
+            }
+            else
+            {
+                playerInSight = false;
+            }
+        }
+        else if (playerInSight)
+        {
+            playerInSight = false;
         }
     }
 

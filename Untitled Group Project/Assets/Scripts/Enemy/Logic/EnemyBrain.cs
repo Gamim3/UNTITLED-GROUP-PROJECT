@@ -45,7 +45,7 @@ public class EnemyBrain : MonoBehaviour
             attackQueue.Clear();
         }
 
-        if (enemy.detectedPlayer && attackQueue.Count != 0)
+        if (enemy.playerInSight && attackQueue.Count != 0)
         {
             switch (attackQueue.Peek())
             {
