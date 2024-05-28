@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static EnemyBrain;
 
@@ -9,14 +7,13 @@ public class Enemy : Entity
 {
     [SerializeField] EnemyType enemyType;
 
-    [Header("Stats")]
     [SerializeField] float exhaustionSpeed;
     [SerializeField] float projectileSpeed;
     [SerializeField] float projectileDamage;
 
     [Header("Distanc/Detection")]
     [SerializeField] float distance;
-    
+
     [Range(0, 100)]
     public float radius;
     [Range(0, 360)]
@@ -81,7 +78,7 @@ public class Enemy : Entity
     {
         StartCoroutine(FieldOfViewRoutine());
 
-        if(GameObject.Find("QuestManager") != null)
+        if (GameObject.Find("QuestManager") != null)
         {
             questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
@@ -109,7 +106,7 @@ public class Enemy : Entity
 
         if (_healthPoints <= 0)
         {
-            if(questManager != null)
+            if (questManager != null)
             {
                 if (questManager.activeQuest.enemyToHunt == enemyType)
                 {
@@ -333,14 +330,14 @@ public class Enemy : Entity
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
-        if(rangeChecks.Length != 0)
+        if (rangeChecks.Length != 0)
         {
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
-                if(!Physics.Raycast(transform.position, directionToTarget, distance, obstructionMask))
+                if (!Physics.Raycast(transform.position, directionToTarget, distance, obstructionMask))
                 {
                     playerInSight = true;
                 }
