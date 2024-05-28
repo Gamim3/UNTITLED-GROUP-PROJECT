@@ -114,7 +114,7 @@ MonoBehaviour:
     - sceneGUID: 86e5f19cdc2bf984195d3b8025371cde
       profile: {fileID: 11400000, guid: 1b7fd317dc9b8be4f95da8d1b8e2e313, type: 2}
     - sceneGUID: 473afef7d12baa941ade2ccd3612578a
-      profile: {fileID: 11400000, guid: 1b7fd317dc9b8be4f95da8d1b8e2e313, type: 2}
+      profile: {fileID: 11400000, guid: 857c23241b0cc584a977c3dfa2edcf4d, type: 2}
     serializedBakeSettings:
     - sceneGUID: 946561f4a349e5a40899a90c1f39e8d8
       settings:
@@ -189,11 +189,8 @@ MonoBehaviour:
             serializedVersion: 2
             m_Bits: 4294967291
     serializedBakingSets:
-    - name: New Baking Set
+    - name: EnemyMap
       sceneGUIDs:
-      - 946561f4a349e5a40899a90c1f39e8d8
-      - 491c20f6bee586c4ba2e079fb65a5e95
-      - 86e5f19cdc2bf984195d3b8025371cde
       - 473afef7d12baa941ade2ccd3612578a
       settings:
         m_Version: 1
@@ -212,7 +209,7 @@ MonoBehaviour:
           collisionMask:
             serializedVersion: 2
             m_Bits: 4294967291
-      profile: {fileID: 11400000, guid: 1b7fd317dc9b8be4f95da8d1b8e2e313, type: 2}
+      profile: {fileID: 11400000, guid: 857c23241b0cc584a977c3dfa2edcf4d, type: 2}
       lightingScenarios:
       - Default
     m_LightingScenario: Default

@@ -69,6 +69,11 @@ public class Enemy : Entity
 
     public override void Start()
     {
+        if(GameObject.Find("QuestManager") != null)
+        {
+            questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
+        }
+
         leftClaw = GameObject.Find("TempLeftClaw");
         rightClaw = GameObject.Find("TempRightClaw");
         leftClawDest = GameObject.Find("TempLeftClawDest").transform;
@@ -92,12 +97,15 @@ public class Enemy : Entity
 
         if (_healthPoints <= 0)
         {
-            Destroy(gameObject);
-
-            if(questManager.activeQuest.enemyToHunt == enemyType)
+            if(questManager != null)
             {
-                questManager.TypeCheck();
+                if (questManager.activeQuest.enemyToHunt == enemyType)
+                {
+                    questManager.TypeCheck();
+                }
             }
+
+            Destroy(gameObject);
         }
 
         distance = Vector3.Distance(transform.position, playerPosition.position);

@@ -62,10 +62,6 @@ public class FuzzyLogic : MonoBehaviour
 
     [SerializeField] float beginfullEnergy;
 
-    [SerializeField] AnimationCurve lowEnergyCurve;
-    [SerializeField] AnimationCurve mediumEnergyCurve;
-    [SerializeField] AnimationCurve fullEnergyCurve;
-
     public void Start()
     {
         decimalText = "1";
@@ -80,8 +76,7 @@ public class FuzzyLogic : MonoBehaviour
 
     public void Update()
     {
-        fuzzyEnergy = new Vector3(Mathf.Round(lowEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(mediumEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals, Mathf.Round(fullEnergyCurve.Evaluate(energy) * fuzzyValueDecimals) / fuzzyValueDecimals);
-
+        //moet nog verbeteren
         fuzzyEnemyHealth.x = GetDataFromGraph(1, criticalHealthLimit , enemyHealth);
         fuzzyEnemyHealth.y = GetDataFromGraph(minHurtValue, fullHurt, maxHurtValue, enemyHealth);
         fuzzyEnemyHealth.z = GetDataFromGraph(0, beginHealthyValue, enemyHealth);
