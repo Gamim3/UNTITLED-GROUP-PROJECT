@@ -5,11 +5,12 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 5
-    smallestHole: 0.25
+    smallestOccluder: 0.5
+    smallestHole: 0.1
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 473afef7d12baa941ade2ccd3612578a
+  m_OcclusionCullingData: {fileID: 36300000, guid: 346e914753146db4583b0455805ef9eb,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -38,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 890.18567, g: 749.2647, b: 673.2979, a: 1}
+  m_IndirectSpecularColor: {r: 890.944, g: 749.6622, b: 673.1309, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -287,6 +288,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StateMachine
       objectReference: {fileID: 0}
+    - target: {fileID: 4547224868983015340, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7641258588740311177, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -534,24 +540,6 @@ MonoBehaviour:
   midMiddleDistance: 15
   maxMiddleDistance: 30
   beginFarDistance: 45
-  nearCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  middleCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  farCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   lowEnergyLimit: 30
   minMiddleEnergy: 25
   midMiddleEnergy: 50
@@ -1003,7 +991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
   priority: 1
-  blendDistance: 30.7
+  blendDistance: 32
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 714851cef148a4b419deae8f65cd88dd, type: 2}
 --- !u!135 &972023674
