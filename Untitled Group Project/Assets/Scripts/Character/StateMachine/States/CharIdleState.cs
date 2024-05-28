@@ -45,7 +45,8 @@ public class CharIdleState : CharBaseState
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        // else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction) if not root
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction)
         {
             SwitchState(Factory.Running());
         }

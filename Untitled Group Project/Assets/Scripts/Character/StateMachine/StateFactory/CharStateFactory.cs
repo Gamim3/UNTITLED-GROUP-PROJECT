@@ -43,8 +43,6 @@ public class CharStateFactory
         _states[CharStates.RUNNING] = new CharRunState(_context, this);
         _states[CharStates.DASHING] = new CharDashState(_context, this);
 
-        _states[CharStates.TEST] = new TestState(_context, this);
-
         // _states[CharStates.ULTRA] = new TestUltraState(_context, this);
         // _states[CharStates.SUPER] = new TestSuperState(_context, this);
         // _states[CharStates.SUB] = new TestSubState(_context, this);
