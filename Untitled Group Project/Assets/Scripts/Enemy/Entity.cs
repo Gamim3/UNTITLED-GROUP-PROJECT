@@ -21,10 +21,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Update()
     {
-        if (_healthPoints <= 0)
-        {
-            Destroy(gameObject);
-        }
+
     }
 
     public virtual void Exhaustion(float Energy)

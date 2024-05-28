@@ -7,6 +7,8 @@ using static EnemyBrain;
 
 public class Enemy : Entity
 {
+    [SerializeField] EnemyType enemyType;
+
     [Header("Stats")]
     [SerializeField] float exhaustionSpeed;
     [SerializeField] float projectileSpeed;
@@ -25,6 +27,7 @@ public class Enemy : Entity
     [Header("Dependancy")]
     [SerializeField] EnemyBrain brain;
     [SerializeField] FuzzyLogic logic;
+    [SerializeField] QuestManager questManager;
 
     [Header("TempMelee")]
     private Transform startLeftClaw;
@@ -86,6 +89,16 @@ public class Enemy : Entity
     public override void Update()
     {
         base.Update();
+
+        if (_healthPoints <= 0)
+        {
+            Destroy(gameObject);
+
+            if(questManager.activeQuest.enemyToHunt == enemyType)
+            {
+                questManager.TypeCheck();
+            }
+        }
 
         distance = Vector3.Distance(transform.position, playerPosition.position);
 
@@ -302,6 +315,11 @@ public class Enemy : Entity
 
             rotatingToPlayer = false;
         }
+    }
+
+    public enum EnemyType
+    {
+        SpikeBear
     }
 
 }

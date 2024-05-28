@@ -61,7 +61,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    void TypeCheck()
+    public void TypeCheck()
     {
         AddQuestAmount(activeQuest.questType);
     }

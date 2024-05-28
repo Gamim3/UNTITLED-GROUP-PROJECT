@@ -25,7 +25,7 @@ public class Quest : ScriptableObject
     [Tooltip("Leave Empty If Not A Collect Quest")]
     public Item itemToCollect;
     [Tooltip("Leave Empty If Any Enemy Can Complete Quest")]
-    public Enemy enemyToKill;
+    public Enemy.EnemyType enemyToHunt;
 
     [Header("Reward")]
     public int xpReward;
