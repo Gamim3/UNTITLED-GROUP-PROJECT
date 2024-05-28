@@ -17,6 +17,16 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     public event XpChanged OnXpGained;
 
+
+
+    private void Start()
+    {
+        if (xpGoal == 0)
+        {
+            xpGoal = tutorialXpGoal;
+        }
+    }
+
     void Update()
     {
         if (level == 0)
@@ -53,12 +63,13 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public void AddXp(int xpToGet)
     {
         xp += xpToGet;
-        OnXpGained.Invoke();
+        OnXpGained.Invoke(xpToGet);
     }
-    public delegate void XpChanged();
+    public delegate void XpChanged(int xpAmount);
 
     public void LoadData(GameData data)
     {
+        Debug.Log($"Data XP Goal == {data.xpGoal}");
         xp = data.xp;
         level = data.level;
 

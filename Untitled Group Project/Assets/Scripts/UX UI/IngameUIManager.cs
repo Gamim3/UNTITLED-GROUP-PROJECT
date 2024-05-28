@@ -22,6 +22,7 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] Transform _xpBar;
     [SerializeField] Image _xpSliderImage;
     [SerializeField] TMP_Text _xpSliderText;
+    [SerializeField] TMP_Text _levelText;
 
     PlayerStats _playerStats;
 
@@ -46,6 +47,7 @@ public class IngameUIManager : MonoBehaviour
             _xpSliderImage.fillAmount = 0;
         }
         _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
+        _levelText.text = _playerStats.level.ToString();
     }
 
     // Update is called once per frame
@@ -98,15 +100,29 @@ public class IngameUIManager : MonoBehaviour
         }
     }
 
-    void OnXpGained()
+    void OnXpGained(int xpAmount)
     {
         _xpBar.GetComponent<Animator>().SetTrigger("Trigger");
+
+
         if (_playerStats.xp != 0)
-            _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+            StartCoroutine(XpSlider(xpAmount));
         else
         {
             _xpSliderImage.fillAmount = 0;
         }
         _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
+        _levelText.text = _playerStats.level.ToString();
+    }
+
+    IEnumerator XpSlider(int xpAmount)
+    {
+        yield return new WaitForSeconds(0.005f);
+
+        if (_xpSliderImage.fillAmount < _playerStats.xp / _playerStats.xpGoal)
+        {
+            _xpSliderImage.fillAmount += xpAmount / 100;
+            StartCoroutine(XpSlider(xpAmount));
+        }
     }
 }

@@ -13,7 +13,6 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     public int currentCompletionAmount;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +23,6 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
-        //Subscribe To Kill Event
         //Subscribe To Hit Event
         InventoryManager.Instance.OnItemRecieved += TypeCheck;
     }
@@ -88,9 +86,12 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
         // activeQuest.completed = true; //Uncomment When Building Or Testing Saving
 
-        activeQuest = activeQuest.nextQuest;
-        _questIndex = activeQuest.questId;
-        currentCompletionAmount = 0;
+        if (activeQuest.nextQuest)
+        {
+            activeQuest = activeQuest.nextQuest;
+            _questIndex = activeQuest.questId;
+            currentCompletionAmount = 0;
+        }
     }
 
     public void LoadData(GameData data)
