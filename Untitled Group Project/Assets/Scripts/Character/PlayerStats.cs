@@ -15,6 +15,8 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public float xpGoalIncrement = 1.5f;
     [SerializeField] Recipe[] _recipeToUnlock;
 
+    public event XpChanged OnXpGained;
+
     void Update()
     {
         if (level == 0)
@@ -40,7 +42,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         {
             xpGoal = (int)(xpGoal * xpGoalIncrement);
         }
-        if (_recipeToUnlock.Length >= level && _recipeToUnlock[level] != null)
+        if (_recipeToUnlock.Length > level && _recipeToUnlock[level] != null)
         {
             CraftingManager.Instance.AddRecipe(_recipeToUnlock[level]);
         }
@@ -51,7 +53,9 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public void AddXp(int xpToGet)
     {
         xp += xpToGet;
+        OnXpGained.Invoke();
     }
+    public delegate void XpChanged();
 
     public void LoadData(GameData data)
     {
@@ -74,4 +78,5 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.xpGoal = xpGoal;
         data.level = level;
     }
+
 }

@@ -15,11 +15,11 @@ MonoBehaviour:
   questType: 1
   questName: First Hunt
   questDescription: Hunt and kill your first monster
-  questId: 0
+  questId: 1
   nextQuest: {fileID: 0}
   questGoalAmount: 1
   itemToCollect: {fileID: 0}
-  enemyToKill: {fileID: 0}
+  enemyToHunt: 0
   xpReward: 200
   recipeToUnlock: {fileID: 0}
   itemToGet:

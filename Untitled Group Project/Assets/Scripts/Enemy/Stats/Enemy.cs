@@ -359,7 +359,8 @@ public class Enemy : Entity
 
     public enum EnemyType
     {
-        SpikeBear
+        ANY,
+        SPIKEBEAR
     }
 
 }

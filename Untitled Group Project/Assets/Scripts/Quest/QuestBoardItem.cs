@@ -15,25 +15,22 @@ public class QuestBoardItem : MonoBehaviour
 
     public bool completed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
         completed = quest.completed;
-
     }
 
     public void InitiateBoardItem(Quest newQuest)
     {
         quest = newQuest;
-        _questTitle.text = quest.questName;
-        _questDescription.text = quest.questDescription;
+        if (quest)
+        {
+            _questTitle.text = quest.questName;
+            _questDescription.text = quest.questDescription;
 
-        _xpReward.text = $"XP Reward:\n{quest.xpReward}";
+            _xpReward.text = $"XP Reward:\n{quest.xpReward}";
+        }
     }
 }

@@ -24,7 +24,7 @@ public class Quest : ScriptableObject
 
     [Tooltip("Leave Empty If Not A Collect Quest")]
     public Item itemToCollect;
-    [Tooltip("Leave Empty If Any Enemy Can Complete Quest")]
+    [Tooltip("Any Will Complete The Quest For Any Monster. Select A Specific Monster To Only Listen For That Monster")]
     public Enemy.EnemyType enemyToHunt;
 
     [Header("Reward")]

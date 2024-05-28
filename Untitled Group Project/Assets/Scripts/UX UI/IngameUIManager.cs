@@ -1,20 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngameUIManager : MonoBehaviour
 {
-    public GameObject inventroyPanel;
-    public GameObject craftingPanel;
+    [Header("Panels")]
+    public GameObject inventoryCanvas;
+    public GameObject craftingCanvas;
 
+    [SerializeField] GameObject _devPanel;
+    bool _openedWithCrafting;
+
+    //Debug Raycast, Replace With Actual Player Raycast
     public Transform playerRaycastPos;
-
     public LayerMask interactableLayers;
 
+
+    [Header("XP")]
+    [SerializeField] Transform _xpBar;
+    [SerializeField] Image _xpSliderImage;
+    [SerializeField] TMP_Text _xpSliderText;
+
+    PlayerStats _playerStats;
+
+    private void OnEnable()
+    {
+        _playerStats = FindObjectOfType<PlayerStats>();
+        _playerStats.OnXpGained += OnXpGained;
+    }
+
+    private void OnDisable()
+    {
+        _playerStats.OnXpGained -= OnXpGained;
+    }
     // Start is called before the first frame update
     void Start()
     {
-
+        _xpSliderImage = _xpBar.GetChild(2).GetComponent<Image>();
+        if (_playerStats.xp != 0)
+            _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+        else
+        {
+            _xpSliderImage.fillAmount = 0;
+        }
+        _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
     }
 
     // Update is called once per frame
@@ -22,11 +53,7 @@ public class IngameUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (craftingPanel.activeSelf && inventroyPanel.activeSelf)
-            {
-                craftingPanel.SetActive(false);
-            }
-            inventroyPanel.SetActive(!inventroyPanel.activeSelf);
+            ToggleInventory();
         }
 
         if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
@@ -35,13 +62,51 @@ public class IngameUIManager : MonoBehaviour
             {
                 if (hit.transform.tag == "Crafting")
                 {
-                    craftingPanel.SetActive(!craftingPanel.activeSelf);
-                    if (!inventroyPanel.activeSelf)
-                    {
-                        inventroyPanel.SetActive(true);
-                    }
+                    ToggleCrafting();
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (_devPanel)
+                _devPanel.SetActive(!_devPanel.activeSelf);
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        if (craftingCanvas.activeSelf && inventoryCanvas.activeSelf)
+        {
+            craftingCanvas.GetComponent<Canvas>().enabled = false;
+        }
+        inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
+    }
+
+    public void ToggleCrafting()
+    {
+        craftingCanvas.GetComponent<Canvas>().enabled = !craftingCanvas.GetComponent<Canvas>().enabled;
+        if (!inventoryCanvas.GetComponent<Canvas>().enabled)
+        {
+            inventoryCanvas.GetComponent<Canvas>().enabled = true;
+            _openedWithCrafting = true;
+        }
+        else if (_openedWithCrafting)
+        {
+            inventoryCanvas.GetComponent<Canvas>().enabled = false;
+            _openedWithCrafting = false;
+        }
+    }
+
+    void OnXpGained()
+    {
+        _xpBar.GetComponent<Animator>().SetTrigger("Trigger");
+        if (_playerStats.xp != 0)
+            _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+        else
+        {
+            _xpSliderImage.fillAmount = 0;
+        }
+        _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
     }
 }

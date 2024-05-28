@@ -18,6 +18,8 @@ public class QuestManager : MonoBehaviour, IDataPersistence
     void Start()
     {
         _playerStats = FindObjectOfType<PlayerStats>();
+
+        activeQuest = _allQuests[_questIndex];
     }
 
     private void OnEnable()
@@ -61,12 +63,17 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void DebugAddQuestAmount()
+    {
+        currentCompletionAmount++;
+    }
+
     public void TypeCheck()
     {
         AddQuestAmount(activeQuest.questType);
     }
 
-    void StartNewQuest()
+    public void StartNewQuest()
     {
         _playerStats.AddXp(activeQuest.xpReward);
 
@@ -79,7 +86,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             CraftingManager.Instance.AddRecipe(activeQuest.recipeToUnlock);
         }
 
-        activeQuest.completed = true;
+        // activeQuest.completed = true; //Uncomment When Building Or Testing Saving
 
         activeQuest = activeQuest.nextQuest;
         _questIndex = activeQuest.questId;
