@@ -13,15 +13,22 @@ public class Entity : MonoBehaviour
     protected float _maxHealth;
     protected float _maxEnergy;
 
+    [NonSerialized] FuzzyLogic _logic;
+
     public virtual void Start()
     {
         _maxHealth = _healthPoints;
         _maxEnergy = _energy;
+
+        _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
     }
 
     public virtual void Update()
     {
-
+        if(GetComponent<CharStateMachine>() != null)
+        {
+            _logic.playerHealth = _healthPoints / _maxHealth * 100;
+        }
     }
 
     public virtual void Exhaustion(float Energy)

@@ -6,29 +6,29 @@ using Random = UnityEngine.Random;
 
 public class EnemyBrain : MonoBehaviour
 {
-    [SerializeField] FuzzyLogic fuzzyLogic;
-    [SerializeField] int DecisionTime;
+    [SerializeField] FuzzyLogic _fuzzyLogic;
+    [SerializeField] int _decisionTime;
 
-    Vector3 playerHealthData;
-    Vector3 enemyHealthData;
-    Vector3 energyData;
-    Vector3 distanceData;
+    Vector3 _playerHealthData;
+    Vector3 _enemyHealthData;
+    Vector3 _energyData;
+    Vector3 _distanceData;
 
     public Queue<Attacks> attackQueue;
 
-    [SerializeField] Attacks[] notImplementedAttacks;
+    [SerializeField] Attacks[] _notImplementedAttacks;
     [SerializeField] Attacks[] attacksCurrentlyInQueue;
 
-    [NonSerialized] EnemyHealth enemyHealth;
-    [NonSerialized] PlayerHealth playerHealth;
-    [NonSerialized] Energy energy;
-    [NonSerialized] Distance distance;
+    [NonSerialized] EnemyHealth _enemyHealth;
+    [NonSerialized] PlayerHealth _playerHealth;
+    [NonSerialized] Energy _energy;
+    [NonSerialized] Distance _distance;
 
-    [NonSerialized] Enemy enemy;
+    [NonSerialized] Enemy _enemy;
 
     public void Start()
     {
-        enemy = GetComponent<Enemy>();
+        _enemy = GetComponent<Enemy>();
 
         attackQueue = new Queue<Attacks>();
 
@@ -45,41 +45,41 @@ public class EnemyBrain : MonoBehaviour
             attackQueue.Clear();
         }
 
-        if (enemy.playerInSight && attackQueue.Count != 0)
+        if (_enemy.playerInSight && attackQueue.Count != 0)
         {
             switch (attackQueue.Peek())
             {
                 case Attacks attack when attack == Attacks.Engage:
-                    enemy.engaging = true;
-                    enemy.Engage();
+                    _enemy.engaging = true;
+                    _enemy.Engage();
                     break;
                 case Attacks attack when attack == Attacks.DisengageDash:
-                    enemy.disengaging = true;
-                    enemy.Disengage();
+                    _enemy.disengaging = true;
+                    _enemy.Disengage();
                     break;
                 case Attacks attack when attack == Attacks.RegainEnergy:
-                    enemy.regainingEnergy = true;
-                    enemy.RegainEnergy();
+                    _enemy.regainingEnergy = true;
+                    _enemy.RegainEnergy();
                     break;
                 case Attacks attack when attack == Attacks.SpikeThrow:
-                    enemy.throwingSpike = true;
-                    enemy.SpikeThrow();
+                    _enemy.throwingSpike = true;
+                    _enemy.SpikeThrow();
                     break;
                 case Attacks attack when attack == Attacks.LeftClaw:
-                    enemy.leftClawAttack = true;
-                    enemy.LeftClawAttack();
+                    _enemy.leftClawAttack = true;
+                    _enemy.LeftClawAttack();
                     break;
                 case Attacks attack when attack == Attacks.RightClaw:
-                    enemy.rightClawAttack = true;
-                    enemy.RightClawAttack();
+                    _enemy.rightClawAttack = true;
+                    _enemy.RightClawAttack();
                     break;
             }
 
-            for (int i = 0; i < notImplementedAttacks.Length; i++)
+            for (int i = 0; i < _notImplementedAttacks.Length; i++)
             {
                 if (attackQueue.Count != 0)
                 {
-                    if (attackQueue.Peek() == notImplementedAttacks[i])
+                    if (attackQueue.Peek() == _notImplementedAttacks[i])
                     {
                         attackQueue.Clear();
                     }
@@ -90,7 +90,7 @@ public class EnemyBrain : MonoBehaviour
 
     public IEnumerator Think()
     {
-        yield return new WaitForSeconds(DecisionTime);
+        yield return new WaitForSeconds(_decisionTime);
 
         MakeDesicion();
 
@@ -99,25 +99,25 @@ public class EnemyBrain : MonoBehaviour
 
     public void MakeDesicion()
     {
-        float enemyHealthState = Mathf.Max(enemyHealthData.x, Mathf.Max(enemyHealthData.y, enemyHealthData.z));
-        float playerHealthState = Mathf.Max(playerHealthData.x, Mathf.Max(playerHealthData.y, playerHealthData.z));
-        float energyState = Mathf.Max(energyData.x, Mathf.Max(energyData.y, energyData.z));
-        float distanceState = Mathf.Max(distanceData.x, Mathf.Max(distanceData.y, distanceData.z));
+        float enemyHealthState = Mathf.Max(_enemyHealthData.x, Mathf.Max(_enemyHealthData.y, _enemyHealthData.z));
+        float playerHealthState = Mathf.Max(_playerHealthData.x, Mathf.Max(_playerHealthData.y, _playerHealthData.z));
+        float energyState = Mathf.Max(_energyData.x, Mathf.Max(_energyData.y, _energyData.z));
+        float distanceState = Mathf.Max(_distanceData.x, Mathf.Max(_distanceData.y, _distanceData.z));
 
         ConvertToReadableEnum(enemyHealthState, playerHealthState, energyState, distanceState);
 
         // Switch case based on the highest value
-        switch (enemyHealth)
+        switch (_enemyHealth)
         {
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(Healthy) | player(Healthy) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(Healthy) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(Healthy) | player(Healthy) | energy(full) | distance(close)");
                 switch (Random.Range(0, 3))
                 {
@@ -134,15 +134,15 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(Healthy) | player(Healthy) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -155,19 +155,19 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(Healthy) | player(Healthy) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(Healthy) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(Healthy) | player(Healthy) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(Healthy) | player(hurt) | energy(full) | distance(far)");
                 switch (Random.Range(0, 3))
                 {
@@ -184,11 +184,11 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(hurt) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(Healthy) | player(hurt) | energy(full) | distance(close)");
                 switch (Random.Range(0, 3))
                 {
@@ -205,7 +205,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(Healthy) | player(hurt) | energy(medium) | distance(far)");
                 switch (Random.Range(0, 2))
                 {
@@ -218,11 +218,11 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(hurt) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(Healthy) | player(hurt) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -235,27 +235,27 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(Healthy) | player(hurt) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(hurt) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(Healthy) | player(hurt) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(Healthy) | player(critical) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(critical) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(Healthy) | player(critical) | energy(full) | distance(close)");
                 switch (Random.Range(0, 4))
                 {
@@ -276,15 +276,15 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(Healthy) | player(critical) | energy(medium) | distance(far)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(critical) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(Healthy) | player(critical) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -297,27 +297,27 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(Healthy) | player(critical) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(critical) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Healthy && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(Healthy) | player(critical) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(hurt) | player(Healthy) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(hurt) | player(Healthy) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(hurt) | player(Healthy) | energy(full) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -330,7 +330,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(hurt) | player(Healthy) | energy(medium) | distance(far)");
                 switch (Random.Range(0, 2))
                 {
@@ -343,11 +343,11 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(hurt) | player(Healthy) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(hurt) | player(Healthy) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -360,11 +360,11 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(hurt) | player(Healthy) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(hurt) | player(Healthy) | energy(low) | distance(middle)");
                 switch (Random.Range(0, 2))
                 {
@@ -377,19 +377,19 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(hurt) | player(Healthy) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(hurt) | player(hurt) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(hurt) | player(hurt) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(hurt) | player(hurt) | energy(full) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -402,7 +402,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(hurt) | player(hurt) | energy(medium) | distance(far)");
                 switch (Random.Range(0, 2))
                 {
@@ -415,7 +415,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(hurt) | player(hurt) | energy(medium) | distance(middle)");
                 switch (Random.Range(0, 2))
                 {
@@ -428,7 +428,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(hurt) | player(hurt) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -441,27 +441,27 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(hurt) | player(hurt) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(hurt) | player(hurt) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(hurt) | player(hurt) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(hurt) | player(critical) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(hurt) | player(critical) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.Engage);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(hurt) | player(critical) | energy(full) | distance(close)");
                 switch (Random.Range(0, 4))
                 {
@@ -482,11 +482,11 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(hurt) | player(critical) | energy(medium) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(hurt) | player(critical) | energy(medium) | distance(middle)");
                 switch (Random.Range(0, 2))
                 {
@@ -499,7 +499,7 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(hurt) | player(critical) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 3))
                 {
@@ -516,71 +516,71 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(hurt) | player(critical) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(hurt) | player(critical) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Hurt && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Hurt && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(hurt) | player(critical) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(critical) | player(Healthy) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(critical) | player(Healthy) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(critical) | player(Healthy) | energy(full) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(critical) | player(Healthy) | energy(medium) | distance(far)")
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(critical) | player(Healthy) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(critical) | player(Healthy) | energy(medium) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(critical) | player(Healthy) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(critical) | player(Healthy) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Healthy && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Healthy && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(critical) | player(Healthy) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(critical) | player(hurt) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(critical) | player(hurt) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(critical) | player(hurt) | energy(full) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(critical) | player(hurt) | energy(medium) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(critical) | player(hurt) | energy(medium) | distance(middle)");
                 switch (Random.Range(0, 2))
                 {
@@ -593,31 +593,31 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(critical) | player(hurt) | energy(medium) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(critical) | player(hurt) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(critical) | player(hurt) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Hurt && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Hurt && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(critical) | player(hurt) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Far:
                 //("enemy(critical) | player(critical) | energy(full) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(critical) | player(critical) | energy(full) | distance(middle)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.High && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.High && _distance == Distance.Close:
                 //("enemy(critical) | player(critical) | energy(full) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -630,15 +630,15 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Far:
                 //("enemy(critical) | player(critical) | energy(medium) | distance(far)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Medium:
                 //("enemy(critical) | player(critical) | energy(medium) | distance(middle)");
                 attackQueue.Enqueue(Attacks.SpikeThrow);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Medium && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Medium && _distance == Distance.Close:
                 //("enemy(critical) | player(critical) | energy(medium) | distance(close)");
                 switch (Random.Range(0, 2))
                 {
@@ -651,15 +651,15 @@ public class EnemyBrain : MonoBehaviour
                         break;
                 }
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Far:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Far:
                 //("enemy(critical) | player(critical) | energy(low) | distance(far)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Medium:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Medium:
                 //("enemy(critical) | player(critical) | energy(low) | distance(middle)");
                 attackQueue.Enqueue(Attacks.RegainEnergy);
                 break;
-            case EnemyHealth state when state == EnemyHealth.Critical && playerHealth == PlayerHealth.Critical && energy == Energy.Low && distance == Distance.Close:
+            case EnemyHealth state when state == EnemyHealth.Critical && _playerHealth == PlayerHealth.Critical && _energy == Energy.Low && _distance == Distance.Close:
                 //("enemy(critical) | player(critical) | energy(low) | distance(close)");
                 attackQueue.Enqueue(Attacks.DisengageDash);
                 break;
@@ -675,63 +675,63 @@ public class EnemyBrain : MonoBehaviour
     {
         switch (enemyHealthState)
         {
-            case float state when state == enemyHealthData.z:
-                enemyHealth = EnemyHealth.Healthy;
+            case float state when state == _enemyHealthData.z:
+                _enemyHealth = EnemyHealth.Healthy;
                 break;
-            case float state when state == enemyHealthData.y:
-                enemyHealth = EnemyHealth.Hurt;
+            case float state when state == _enemyHealthData.y:
+                _enemyHealth = EnemyHealth.Hurt;
                 break;
-            case float state when state == enemyHealthData.x:
-                enemyHealth = EnemyHealth.Critical;
+            case float state when state == _enemyHealthData.x:
+                _enemyHealth = EnemyHealth.Critical;
                 break;
         }
 
         switch (playerHealthState)
         {
-            case float state when state == playerHealthData.z:
-                playerHealth = PlayerHealth.Healthy;
+            case float state when state == _playerHealthData.z:
+                _playerHealth = PlayerHealth.Healthy;
                 break;
-            case float state when state == playerHealthData.y:
-                playerHealth = PlayerHealth.Hurt;
+            case float state when state == _playerHealthData.y:
+                _playerHealth = PlayerHealth.Hurt;
                 break;
-            case float state when state == playerHealthData.x:
-                playerHealth = PlayerHealth.Critical;
+            case float state when state == _playerHealthData.x:
+                _playerHealth = PlayerHealth.Critical;
                 break;
         }
 
         switch (energyState)
         {
-            case float state when state == energyData.z:
-                energy = Energy.High;
+            case float state when state == _energyData.z:
+                _energy = Energy.High;
                 break;
-            case float state when state == energyData.y:
-                energy = Energy.Medium;
+            case float state when state == _energyData.y:
+                _energy = Energy.Medium;
                 break;
-            case float state when state == energyData.x:
-                energy = Energy.Low;
+            case float state when state == _energyData.x:
+                _energy = Energy.Low;
                 break;
         }
 
         switch (distanceState)
         {
-            case float state when state == distanceData.z:
-                distance = Distance.Far;
+            case float state when state == _distanceData.z:
+                _distance = Distance.Far;
                 break;
-            case float state when state == distanceData.y:
-                distance = Distance.Medium;
+            case float state when state == _distanceData.y:
+                _distance = Distance.Medium;
                 break;
-            case float state when state == distanceData.x:
-                distance = Distance.Close;
+            case float state when state == _distanceData.x:
+                _distance = Distance.Close;
                 break;
         }
     }
 
     public void GetFuzzyData()
     {
-        playerHealthData = fuzzyLogic.fuzzyPlayerHealth;
-        enemyHealthData = fuzzyLogic.fuzzyEnemyHealth;
-        energyData = fuzzyLogic.fuzzyEnergy;
-        distanceData = fuzzyLogic.fuzzyDistance;
+        _playerHealthData = _fuzzyLogic.fuzzyPlayerHealth;
+        _enemyHealthData = _fuzzyLogic.fuzzyEnemyHealth;
+        _energyData = _fuzzyLogic.fuzzyEnergy;
+        _distanceData = _fuzzyLogic.fuzzyDistance;
     }
 
     public enum Attacks

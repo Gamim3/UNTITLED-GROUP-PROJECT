@@ -7,43 +7,43 @@ using static EnemyBrain;
 
 public class Enemy : Entity
 {
-    [SerializeField] float attackSpeed;
+    [SerializeField] float _attackSpeed;
 
-    [SerializeField] EnemyType enemyType;
+    [SerializeField] EnemyType _enemyType;
 
-    [SerializeField] float exhaustionSpeed;
-    [SerializeField] float meleeRange;
-    [SerializeField] float projectileSpeed;
-    [SerializeField] float projectileDamage;
+    [SerializeField] float _exhaustionSpeed;
+    [SerializeField] float _meleeRange;
+    [SerializeField] float _projectileSpeed;
+    [SerializeField] float _projectileDamage;
 
     [Header("Distanc/Detection")]
-    [SerializeField] float distance;
+    [SerializeField] float _distance;
 
     [Range(0, 100)]
     public float radius;
     [Range(0, 360)]
     public float angle;
-    [SerializeField] float delay = 0.2f;
+    [SerializeField] float _delay = 0.2f;
 
     public GameObject player;
 
-    [SerializeField] LayerMask targetMask;
-    [SerializeField] LayerMask obstructionMask;
+    [SerializeField] LayerMask _targetMask;
+    [SerializeField] LayerMask _obstructionMask;
 
     [NonSerialized] public bool playerInSight;
 
     [Header("Movement")]
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
 
     [Header("RangedAttackRequirements")]
-    [SerializeField] Transform parent;
-    [SerializeField] GameObject projectile;
-    [SerializeField] Transform projectileSpawnPosition;
+    [SerializeField] Transform _parent;
+    [SerializeField] GameObject _projectile;
+    [SerializeField] Transform _projectileSpawnPosition;
 
     [Header("Dependancy")]
-    [SerializeField] EnemyBrain brain;
-    [SerializeField] FuzzyLogic logic;
-    [SerializeField] QuestManager questManager;
+    [SerializeField] EnemyBrain _brain;
+    [SerializeField] FuzzyLogic _logic;
+    [SerializeField] QuestManager _questManager;
 
     private float startSpeed;
 
@@ -86,11 +86,11 @@ public class Enemy : Entity
 
         if (GameObject.Find("QuestManager") != null)
         {
-            questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
+            _questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
 
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = _moveSpeed;
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _moveSpeed;
         startSpeed = _moveSpeed;
 
         //temporary word verwijderd wanneer animations er in zitten
@@ -118,13 +118,13 @@ public class Enemy : Entity
 
         if (_healthPoints <= 0)
         {
-            if (questManager != null)
+            if (_questManager != null)
             {
-                for (int i = 0; i < questManager.activeQuests.Count; i++)
+                for (int i = 0; i < _questManager.activeQuests.Count; i++)
                 {
-                    if (questManager.activeQuests[i].enemyToHunt == enemyType || questManager.activeQuests[i].enemyToHunt == EnemyType.ANY)
+                    if (_questManager.activeQuests[i].enemyToHunt == _enemyType || _questManager.activeQuests[i].enemyToHunt == EnemyType.ANY)
                     {
-                        questManager.TypeCheck(questManager.activeQuests[i].questId);
+                        _questManager.TypeCheck(_questManager.activeQuests[i].questId);
                     }
                 }
             }
@@ -132,15 +132,15 @@ public class Enemy : Entity
             Destroy(gameObject);
         }
 
-        distance = Vector3.Distance(transform.position, player.transform.position);
+        _distance = Vector3.Distance(transform.position, player.transform.position);
 
-        logic.enemyHealth = _healthPoints / _maxHealth * 100;
-        logic.energy = _energy / _maxEnergy * 100;
-        logic.distance = distance;
+        _logic.enemyHealth = _healthPoints / _maxHealth * 100;
+        _logic.energy = _energy / _maxEnergy * 100;
+        _logic.distance = _distance;
 
         if (!playerInSight)
         {
-            brain.attackQueue.Clear();
+            _brain.attackQueue.Clear();
         }
 
         switch (engaging)
@@ -177,13 +177,13 @@ public class Enemy : Entity
     {
         if (engageTimer >= 0 && engaging)
         {
-            if (distance > 3.5f)
+            if (_distance > 3.5f)
             {
                 Vector3 directionToPlayer = transform.position - player.transform.position;
-                Vector3 meleeDistance = player.transform.position + directionToPlayer.normalized * meleeRange;
+                Vector3 meleeDistance = player.transform.position + directionToPlayer.normalized * _meleeRange;
 
-                agent.destination = meleeDistance;
-                Exhaustion(exhaustionSpeed / 2);
+                _agent.destination = meleeDistance;
+                Exhaustion(_exhaustionSpeed / 2);
             }
         }
         else
@@ -191,9 +191,9 @@ public class Enemy : Entity
             engaging = false;
             engageTimer = startEngageTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.Engage)
+            if (_brain.attackQueue.Peek() == Attacks.Engage)
             {
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
@@ -206,18 +206,18 @@ public class Enemy : Entity
 
             Vector3 newPosition = transform.position + directionToPlayer;
 
-            agent.SetDestination(newPosition);
+            _agent.SetDestination(newPosition);
 
-            Exhaustion(exhaustionSpeed / 4);
+            Exhaustion(_exhaustionSpeed / 4);
         }
         else
         {
             disengaging = false;
             disengageTimer = startDisengageTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.DisengageDash)
+            if (_brain.attackQueue.Peek() == Attacks.DisengageDash)
             {
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
@@ -235,9 +235,9 @@ public class Enemy : Entity
             regainingEnergy = false;
             energyRegainTimer = startRegainEnergyTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.RegainEnergy)
+            if (_brain.attackQueue.Peek() == Attacks.RegainEnergy)
             {
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
@@ -248,21 +248,21 @@ public class Enemy : Entity
         {
             transform.LookAt(player.transform);
 
-            Exhaustion(exhaustionSpeed * 750);
+            Exhaustion(_exhaustionSpeed * 750);
 
 
             //add visual line of sight
-            GameObject thrownProjectile = Instantiate(projectile, projectileSpawnPosition.position, projectileSpawnPosition.rotation, parent);
+            GameObject thrownProjectile = Instantiate(_projectile, _projectileSpawnPosition.position, _projectileSpawnPosition.rotation, _parent);
 
-            thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = projectileSpeed;
-            thrownProjectile.GetComponent<EnemyProjectile>().projectileDamage = projectileDamage;
+            thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = _projectileSpeed;
+            thrownProjectile.GetComponent<EnemyProjectile>().projectileDamage = _projectileDamage;
 
             throwingSpike = false;
             throwingSpikeTimer = startThrowingSpikeTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.SpikeThrow)
+            if (_brain.attackQueue.Peek() == Attacks.SpikeThrow)
             {
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
@@ -272,20 +272,20 @@ public class Enemy : Entity
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
             leftClaw.GetComponent<Collider>().enabled = true;
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, attackSpeed);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, leftClawDest.position, _attackSpeed);
         }
         else
         {
-            Exhaustion(exhaustionSpeed * 1000);
-            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, attackSpeed);
+            Exhaustion(_exhaustionSpeed * 1000);
+            leftClaw.transform.position = Vector3.MoveTowards(leftClaw.transform.position, startLeftClaw.position, _attackSpeed);
 
             leftClawAttack = false;
             leftClawAttackTimer = startLeftClawAttackTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.LeftClaw)
+            if (_brain.attackQueue.Peek() == Attacks.LeftClaw)
             {
                 leftClaw.GetComponent<Collider>().enabled = false;
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
@@ -295,27 +295,27 @@ public class Enemy : Entity
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
             rightClaw.GetComponent<Collider>().enabled = true;
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, attackSpeed);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, rightClawDest.position, _attackSpeed);
         }
         else
         {
-            Exhaustion(exhaustionSpeed * 1000);
-            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, attackSpeed);
+            Exhaustion(_exhaustionSpeed * 1000);
+            rightClaw.transform.position = Vector3.MoveTowards(rightClaw.transform.position, startRightClaw.position, _attackSpeed);
 
             rightClawAttack = false;
             rightClawAttackTimer = startRightClawAttackTimer;
 
-            if (brain.attackQueue.Peek() == Attacks.RightClaw)
+            if (_brain.attackQueue.Peek() == Attacks.RightClaw)
             {
                 rightClaw.GetComponent<Collider>().enabled = false;
-                brain.attackQueue.Dequeue();
+                _brain.attackQueue.Dequeue();
             }
         }
     }
 
     private IEnumerator FieldOfViewRoutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(delay);
+        WaitForSeconds wait = new WaitForSeconds(_delay);
 
         while (true)
         {
@@ -326,7 +326,7 @@ public class Enemy : Entity
 
     private void FieldOfViewCheck()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, _targetMask);
 
         if (rangeChecks.Length != 0)
         {
@@ -335,7 +335,7 @@ public class Enemy : Entity
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
-                if (!Physics.Raycast(transform.position, directionToTarget, distance, obstructionMask))
+                if (!Physics.Raycast(transform.position, directionToTarget, _distance, _obstructionMask))
                 {
                     playerInSight = true;
                 }

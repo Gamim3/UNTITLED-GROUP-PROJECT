@@ -6,7 +6,6 @@ using UnityEngine;
 public class FuzzyLogic : MonoBehaviour
 {
     [Header("FuzzyStats")]
-    public Vector3 fuzzyCustomEnemyHealth;
     public Vector3 fuzzyEnemyHealth;
     public Vector3 fuzzyPlayerHealth;
     public Vector3 fuzzyEnergy;
@@ -19,79 +18,77 @@ public class FuzzyLogic : MonoBehaviour
     public float distance;
 
     [Header("FuzzyficationSettings")]
-    [SerializeField] int fuzzyValueDecimals;
-    [NonSerialized] string decimalText;
+    [SerializeField] int _fuzzyValueDecimals;
+    [NonSerialized] string _decimalText;
 
     [Header("FuzzyLogicSets")]
 
     [Header("EnemyHealthSet")]
-    [SerializeField] float CalculatedFloat;
+    [SerializeField] float _criticalHealthLimit;
 
-    [SerializeField] float criticalHealthLimit;
+    [SerializeField] float _minHurtValue;
+    [SerializeField] float _fullHurt;
+    [SerializeField] float _maxHurtValue;
 
-    [SerializeField] float minHurtValue;
-    [SerializeField] float fullHurt;
-    [SerializeField] float maxHurtValue;
-
-    [SerializeField] float beginHealthyValue;
+    [SerializeField] float _beginHealthyValue;
 
     [Header("PlayerHealthSet")]
-    [SerializeField] float playerCriticalHealthLimit;
+    [SerializeField] float _playerCriticalHealthLimit;
 
-    [SerializeField] float playerMinHurtValue;
-    [SerializeField] float playerFullHurt;
-    [SerializeField] float playerMaxHurtValue;
+    [SerializeField] float _playerMinHurtValue;
+    [SerializeField] float _playerFullHurt;
+    [SerializeField] float _playerMaxHurtValue;
 
-    [SerializeField] float playerBeginHealthyValue;
+    [SerializeField] float _playerBeginHealthyValue;
 
     [Header("DistanceSet")]
-    [SerializeField] float nearDistanceLimit;
+    [SerializeField] float _nearDistanceLimit;
 
-    [SerializeField] float minMiddleDistance;
-    [SerializeField] float midMiddleDistance;
-    [SerializeField] float maxMiddleDistance;
+    [SerializeField] float _minMiddleDistance;
+    [SerializeField] float _midMiddleDistance;
+    [SerializeField] float _maxMiddleDistance;
 
-    [SerializeField] float beginFarDistance;
+    [SerializeField] float _beginFarDistance;
 
     [Header("EnergySet")]
-    [SerializeField] float lowEnergyLimit;
+    [SerializeField] float _lowEnergyLimit;
 
-    [SerializeField] float minMiddleEnergy;
-    [SerializeField] float midMiddleEnergy;
-    [SerializeField] float maxMiddleEnergy;
+    [SerializeField] float _minMiddleEnergy;
+    [SerializeField] float _midMiddleEnergy;
+    [SerializeField] float _maxMiddleEnergy;
 
-    [SerializeField] float beginfullEnergy;
+    [SerializeField] float _beginfullEnergy;
 
     public void Start()
     {
-        decimalText = "1";
+        _decimalText = "1";
 
-        for (int i = 0; i < fuzzyValueDecimals; i++)
+        for (int i = 0; i < _fuzzyValueDecimals; i++)
         {
-            decimalText += "0";
+            _decimalText += "0";
         }
 
-        int.TryParse(decimalText, out fuzzyValueDecimals);
+        int.TryParse(_decimalText, out _fuzzyValueDecimals);
     }
 
     public void Update()
     {
         //moet nog verbeteren
-        fuzzyEnemyHealth.x = GetDataFromGraph(1, criticalHealthLimit , enemyHealth);
-        fuzzyEnemyHealth.y = GetDataFromGraph(minHurtValue, fullHurt, maxHurtValue, enemyHealth);
-        fuzzyEnemyHealth.z = GetDataFromGraph(0, beginHealthyValue, enemyHealth);
+        fuzzyEnemyHealth.x = GetDataFromGraph(1, _criticalHealthLimit , enemyHealth);
+        fuzzyEnemyHealth.y = GetDataFromGraph(_minHurtValue, _fullHurt, _maxHurtValue, enemyHealth);
+        fuzzyEnemyHealth.z = GetDataFromGraph(0, _beginHealthyValue, enemyHealth);
 
-        fuzzyPlayerHealth.x = GetDataFromGraph(1, playerCriticalHealthLimit, playerHealth);
-        fuzzyPlayerHealth.y = GetDataFromGraph(playerMinHurtValue, playerFullHurt, playerMaxHurtValue, playerHealth);
-        fuzzyPlayerHealth.z = GetDataFromGraph(0, playerBeginHealthyValue, playerHealth);
+        fuzzyPlayerHealth.x = GetDataFromGraph(1, _playerCriticalHealthLimit, playerHealth);
+        fuzzyPlayerHealth.y = GetDataFromGraph(_playerMinHurtValue, _playerFullHurt, _playerMaxHurtValue, playerHealth);
+        fuzzyPlayerHealth.z = GetDataFromGraph(0, _playerBeginHealthyValue, playerHealth);
 
-        fuzzyEnergy.x = GetDataFromGraph(1, lowEnergyLimit, energy);
-        fuzzyEnergy.y = GetDataFromGraph(minMiddleEnergy, midMiddleEnergy, maxMiddleEnergy, energy);
-        fuzzyEnergy.z = GetDataFromGraph(0, beginfullEnergy, energy);
+        fuzzyEnergy.x = GetDataFromGraph(1, _lowEnergyLimit, energy);
+        fuzzyEnergy.y = GetDataFromGraph(_minMiddleEnergy, _midMiddleEnergy, _maxMiddleEnergy, energy);
+        fuzzyEnergy.z = GetDataFromGraph(0, _beginfullEnergy, energy);
 
-        fuzzyDistance.x = GetDataFromGraph(1, nearDistanceLimit, distance);
-        fuzzyDistance.y = GetDataFromGraph(minMiddleDistance, midMiddleDistance, maxMiddleDistance, distance);
-        fuzzyDistance.z = GetDataFromGraph(0, beginFarDistance, distance);
+        fuzzyDistance.x = GetDataFromGraph(1, _nearDistanceLimit, distance);
+        fuzzyDistance.y = GetDataFromGraph(_minMiddleDistance, _midMiddleDistance, _maxMiddleDistance, distance);
+        fuzzyDistance.z = GetDataFromGraph(0, _beginFarDistance, distance);
     }
 
     public float GetDataFromGraph(float beginFloat , float GraphPoint, float evaluationPoint)
@@ -108,7 +105,7 @@ public class FuzzyLogic : MonoBehaviour
             // Use the line equation y = mx + b to calculate the y value at x
             float y = slope * evaluationPoint + yIntercept;
 
-            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+            return Mathf.Round((y * _fuzzyValueDecimals)) / _fuzzyValueDecimals;
         }
         else if (evaluationPoint >= 0 && evaluationPoint >= GraphPoint && beginFloat == 0)
         {
@@ -122,7 +119,7 @@ public class FuzzyLogic : MonoBehaviour
             // Use the line equation y = mx + b to calculate the y value at x
             float y = slope * evaluationPoint + yIntercept;
 
-            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+            return Mathf.Round((y * _fuzzyValueDecimals)) / _fuzzyValueDecimals;
         }
 
         return 0;
@@ -142,7 +139,7 @@ public class FuzzyLogic : MonoBehaviour
             // Use the line equation y = mx + b to calculate the y value at x
             float y = slope * evaluationPoint + yIntercept;
 
-            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+            return Mathf.Round((y * _fuzzyValueDecimals)) / _fuzzyValueDecimals;
         }
         else if (evaluationPoint >= GraphPointMiddle && evaluationPoint <= GraphPointEnd)
         {
@@ -156,7 +153,7 @@ public class FuzzyLogic : MonoBehaviour
             // Use the line equation y = mx + b to calculate the y value at x
             float y = slope * evaluationPoint + yIntercept;
 
-            return Mathf.Round((y * fuzzyValueDecimals)) / fuzzyValueDecimals;
+            return Mathf.Round((y * _fuzzyValueDecimals)) / _fuzzyValueDecimals;
         }
 
             return 0;
