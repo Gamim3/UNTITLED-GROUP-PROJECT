@@ -44,6 +44,8 @@ public class DataPersistenceManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         this._dataHandler = new FileDataHandler(Application.persistentDataPath, _saveDataName, _useEncryption, _maxAutoSaves);
+
+        LoadGame(_saveFileName, _saveDataName);
     }
 
     private void OnEnable()
