@@ -414,19 +414,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 439634889408778508}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
-        m_MethodName: StartNewQuest
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3228268225786991333
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5544629855211021120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1494,6 +1482,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4168244350718315476, guid: b5b7043b935207043801434d9de77876,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7074091680855902437}
+    - target: {fileID: 4168244350718315476, guid: b5b7043b935207043801434d9de77876,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
@@ -1556,7 +1549,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rectTransform
       value: 
-      objectReference: {fileID: 9146701826234706474}
+      objectReference: {fileID: 7861768046641317579}
     - target: {fileID: 4532737459827145712, guid: b5b7043b935207043801434d9de77876,
         type: 3}
       propertyPath: rootTransform
@@ -1566,7 +1559,7 @@ PrefabInstance:
         type: 3}
       propertyPath: graphicRaycasters.Array.data[0]
       value: 
-      objectReference: {fileID: 8424424150230036144}
+      objectReference: {fileID: 8781291445485282432}
     - target: {fileID: 4554395408688137569, guid: b5b7043b935207043801434d9de77876,
         type: 3}
       propertyPath: m_RaycastTarget
@@ -2571,7 +2564,7 @@ PrefabInstance:
     - target: {fileID: 3088854621047188255, guid: 76486641b325f4f4ab6a0b2780abb322,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 14342.615
+      value: 34832.06
       objectReference: {fileID: 0}
     - target: {fileID: 3251525502058731592, guid: 76486641b325f4f4ab6a0b2780abb322,
         type: 3}

@@ -30,6 +30,7 @@ public class QuestBoardItem : MonoBehaviour
             if (!completed)
             {
                 completed = _questManager.CheckForCompletion(quest.questId);
+                _claimButton.interactable = false;
             }
             else
             {

@@ -22,7 +22,9 @@ public class GameData
     public int xp;
     public int xpGoal;
 
+    [Header("Quest")]
     public int[] questIds;
+    public int[] completionAmounts;
 
     public GameData()
     {
@@ -41,9 +43,13 @@ public class GameData
         xpGoal = 0;
         level = 0;
 
+        questIds = new int[4];
+        completionAmounts = new int[4];
+
         for (int i = 0; i < questIds.Length; i++)
         {
             questIds[i] = 0;
+            completionAmounts[i] = 0;
         }
     }
 }

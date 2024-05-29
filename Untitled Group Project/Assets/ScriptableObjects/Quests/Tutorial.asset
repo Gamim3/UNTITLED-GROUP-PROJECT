@@ -15,14 +15,14 @@ MonoBehaviour:
   questType: 2
   questName: Dummy Practice
   questDescription: Hit the training dummy 10 times!
-  questId: 0
-  nextQuest: {fileID: 11400000, guid: 7641f2a0dce8ba0449e79bfda6e0eb9e, type: 2}
+  questId: 1
   questGoalAmount: 10
-  itemToCollect: {fileID: 0}
+  itemToCollect:
+    item: {fileID: 0}
+    amount: 0
   enemyToHunt: 0
   xpReward: 100
   recipeToUnlock: {fileID: 11400000, guid: 19b63518b21393d4db2e1846efd93617, type: 2}
   itemToGet:
     item: {fileID: 0}
     amount: 0
-  completed: 0

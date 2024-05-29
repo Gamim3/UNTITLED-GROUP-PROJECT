@@ -36,6 +36,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         for (int i = 0; i < _activeQuestIds.Count; i++)
         {
             activeQuests.Add(GetQuestById(_activeQuestIds[i]));
+            AddQuestBoardItem(activeQuests[i]);
         }
     }
 
@@ -58,13 +59,13 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             activeQuests.Add(GetRandomQuest());
         }
 
-        for (int i = 0; i < activeQuests.Count; i++)
-        {
-            if (CheckForCompletion(activeQuests[i].questId))
-            {
-                CompleteQuest(activeQuests[i].questId);
-            }
-        }
+        // for (int i = 0; i < activeQuests.Count; i++)
+        // {
+        //     if (CheckForCompletion(activeQuests[i].questId))
+        //     {
+        //          CompleteQuest(activeQuests[i].questId);
+        //     }
+        // }
     }
 
     public bool CheckForCompletion(int id)
@@ -81,7 +82,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         {
             if (activeQuests[i] == quest)
             {
-                if (completionAmount[id] >= activeQuests[id].questGoalAmount)
+                if (completionAmount[i] >= quest.questGoalAmount)
                 {
                     return true;
                 }
@@ -158,10 +159,19 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             CraftingManager.Instance.AddRecipe(questToComplete.recipeToUnlock);
         }
 
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            if (activeQuests[i] == questToComplete)
+            {
+                completionAmount.RemoveAt(i);
+            }
+        }
         activeQuests.Remove(questToComplete);
         _activeQuestIds.Remove(questToComplete.questId);
 
-        int randomQuestAmount = Random.Range(0, 4 - activeQuests.Count);
+
+        int randomQuestAmount = Random.Range(1, 5 - activeQuests.Count);
+        Debug.Log($"Random Quest Amount: " + randomQuestAmount);
 
         for (int i = 0; i < randomQuestAmount; i++)
         {
@@ -180,6 +190,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         Quest randomQuest = _allQuests[Random.Range(0, _allQuests.Length)];
 
         AddQuestBoardItem(randomQuest);
+        completionAmount.Add(0);
         _activeQuestIds.Add(randomQuest.questId);
         return randomQuest;
     }
@@ -218,14 +229,22 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        Debug.Log("LOADING QUESTMANAGER");
         for (int i = 0; i < data.questIds.Length; i++)
         {
-            _activeQuestIds.Add(data.questIds[i]);
+            if (data.questIds[i] > 0)
+            {
+                _activeQuestIds.Add(data.questIds[i]);
+                completionAmount.Add(data.completionAmounts[i]);
+            }
         }
     }
 
     public void SaveData(GameData data)
     {
+        Debug.Log("SAVING QUESTMANAGER");
+
         data.questIds = _activeQuestIds.ToArray();
+        data.completionAmounts = completionAmount.ToArray();
     }
 }

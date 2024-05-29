@@ -67,24 +67,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void ChangeSelectedSlot(int newSlot)
-    {
-        if (_selectedSlot == newSlot)
-        {
-            inventorySlots[_selectedSlot].Deselect();
-            _selectedSlot = -1;
-            return;
-        }
-
-        if (_selectedSlot >= 0)
-        {
-            inventorySlots[_selectedSlot].Deselect();
-        }
-
-        inventorySlots[newSlot].Select();
-        _selectedSlot = newSlot;
-    }
-
     public Item GetSelectedItem()
     {
         if (_selectedSlot > -1)
