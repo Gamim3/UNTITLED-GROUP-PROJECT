@@ -45,6 +45,8 @@ public class DataPersistenceManager : MonoBehaviour
 
         this._dataHandler = new FileDataHandler(Application.persistentDataPath, _saveDataName, _useEncryption, _maxAutoSaves);
 
+        this._dataPersistenceObjects = FindAllDataPersistenceObjects();
+
         LoadGame(_saveFileName, _saveDataName);
     }
 
