@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements.Experimental;
 
 public class CharStateMachine : Entity
 {
@@ -446,7 +442,7 @@ public class CharStateMachine : Entity
 
     public override void Start()
     {
-        base.Start();
+
     }
 
     private void OnEnable()
@@ -513,7 +509,7 @@ public class CharStateMachine : Entity
 
     public override void Update()
     {
-        base.Update();
+        // base.Update();
         _currentState.UpdateStates();
 
         _movementSpeed = PlayerRigidBody.velocity.magnitude;
@@ -606,7 +602,7 @@ public class CharStateMachine : Entity
 
     void OnTarget(InputAction.CallbackContext context)
     {
-        _isTargetingState = context.ReadValueAsButton();
+        _isTargetingAction = context.ReadValueAsButton();
     }
 
     void OnDash(InputAction.CallbackContext context)
@@ -837,11 +833,9 @@ public class CharStateMachine : Entity
 
     #endregion
 
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _targetRadius);
     }
-
 }

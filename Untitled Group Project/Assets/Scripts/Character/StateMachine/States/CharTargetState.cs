@@ -8,7 +8,7 @@ public class CharTargetState : CharBaseState
     {
         StateName = "Target";
 
-        IsRootState = true;
+        // IsRootState = true;
     }
 
     public override void EnterState()
@@ -56,9 +56,9 @@ public class CharTargetState : CharBaseState
     public override void CheckSwitchStates()
     {
         // IDK YET
-        // if (Ctx.IsTargetingAction)
-        // {
-        //     SwitchState(Factory.FreeLook());
-        // }
+        if (Ctx.IsTargetingAction)
+        {
+            SwitchState(Factory.FreeLook());
+        }
     }
 }

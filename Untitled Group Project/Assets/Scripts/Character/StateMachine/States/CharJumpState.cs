@@ -6,7 +6,7 @@ public class CharJumpState : CharBaseState
     {
         StateName = "Jump";
 
-        IsRootState = true;
+        // IsRootState = true;
     }
 
     public override void EnterState()

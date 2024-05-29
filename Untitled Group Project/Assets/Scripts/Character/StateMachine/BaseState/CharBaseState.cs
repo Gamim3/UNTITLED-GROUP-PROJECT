@@ -57,11 +57,9 @@ public abstract class CharBaseState
     public void UpdateStates()
     {
         UpdateState();
-        Debug.Log($"{this._stateName} is updating");
 
         if (_currentSubState != null)
         {
-            Debug.Log($"updating {_currentSubState._stateName} from {this._stateName}");
             this._currentSubState.UpdateStates();
         }
     }

@@ -5,7 +5,7 @@ public class CharGroundedState : CharBaseState
     {
         StateName = "Grounded";
 
-        IsRootState = true;
+        // IsRootState = true;
     }
 
     public override void EnterState()

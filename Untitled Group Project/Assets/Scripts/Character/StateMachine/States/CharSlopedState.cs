@@ -6,7 +6,7 @@ public class CharSlopedState : CharBaseState
     {
         _stateName = "Sloped";
 
-        IsRootState = true;
+        // IsRootState = true;
     }
 
     public override void EnterState()

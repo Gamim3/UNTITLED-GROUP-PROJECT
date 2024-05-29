@@ -27,6 +27,32 @@ public class CharCombatState : CharBaseState
     {
         Debug.Log("Update Combat");
 
+        // Ctx.PlayerAnimator.GetCurrentAnimatorClipInfo(0).
+
+        // CHECK IF STILL ATTACK ANIMATION
+        if (Ctx.IsAirborneState)
+        {
+            if (Ctx.IsAttack1Action)
+            {
+                Ctx.PlayerAnimator.SetInteger("NormalAttack", 2);
+            }
+            else
+            {
+                Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
+            }
+        }
+        else
+        {
+            if (Ctx.IsAttack1Action)
+            {
+                Ctx.PlayerAnimator.SetInteger("NormalAttack", 4);
+            }
+            else
+            {
+                Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
+            }
+        }
+
         CheckSwitchStates();
     }
 

@@ -27,15 +27,10 @@ public class CharIdleState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update Idle");
-
         CheckSwitchStates();
     }
 
-    public override void FixedUpdateState()
-    {
-        Debug.Log("Fixed Idle");
-    }
+    public override void FixedUpdateState() { }
 
     public override void InitializeSubState() { }
 

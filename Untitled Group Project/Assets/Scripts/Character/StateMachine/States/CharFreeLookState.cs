@@ -8,7 +8,7 @@ public class CharFreeLookState : CharBaseState
     {
         StateName = "FreeLook";
 
-        IsRootState = true; // idk
+        // IsRootState = true; // idk
     }
 
     public override void EnterState()
@@ -60,9 +60,9 @@ public class CharFreeLookState : CharBaseState
     public override void CheckSwitchStates()
     {
         // IDK YET
-        // if (Ctx.IsTargetingAction)
-        // {
-        //     SwitchState(Factory.Target());
-        // }
+        if (Ctx.IsTargetingAction)
+        {
+            SwitchState(Factory.Target());
+        }
     }
 }

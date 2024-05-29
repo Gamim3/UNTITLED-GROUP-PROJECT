@@ -6,7 +6,7 @@ public class CharAirborneState : CharBaseState
     {
         StateName = "Airborne";
 
-        IsRootState = true;
+        // IsRootState = true;
     }
 
     public override void EnterState()

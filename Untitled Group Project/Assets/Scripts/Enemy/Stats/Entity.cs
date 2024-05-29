@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Update()
     {
-        if(GetComponent<CharStateMachine>() != null)
+        if (GetComponent<CharStateMachine>() != null)
         {
             _logic.playerHealth = _healthPoints / _maxHealth * 100;
         }
