@@ -356,12 +356,12 @@ public class Enemy : Entity
             }
             else
             {
-                playerInSight = false;
+                //playerInSight = false;
             }
         }
         else if (playerInSight)
         {
-            playerInSight = false;
+            //playerInSight = false;
         }
     }
 
