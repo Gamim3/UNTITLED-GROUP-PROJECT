@@ -1327,8 +1327,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Inventory
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4cdfb3c5cf429e748802a4984c2f6279, type: 2}
+  m_sharedMaterial: {fileID: -6041162560096221756, guid: 4cdfb3c5cf429e748802a4984c2f6279,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1352,7 +1353,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.35
+  m_fontSize: 18.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2923,6 +2924,7 @@ MonoBehaviour:
   - {fileID: 6450337984665518464}
   - {fileID: 8133114520280498413}
   - {fileID: 5961011625230229803}
+  rootTransform: {fileID: 0}
   _inventoryItemPrefab: {fileID: 5549351522654432294, guid: ab2b12f8dad251c408f74823ab487005,
     type: 3}
   itemsInInventory: []
@@ -5276,8 +5278,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Add Item
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4cdfb3c5cf429e748802a4984c2f6279, type: 2}
+  m_sharedMaterial: {fileID: -6041162560096221756, guid: 4cdfb3c5cf429e748802a4984c2f6279,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5795,7 +5798,7 @@ GameObject:
   - component: {fileID: 4769504164186511343}
   - component: {fileID: 4168244350718315476}
   m_Layer: 5
-  m_Name: Button
+  m_Name: AddItemBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

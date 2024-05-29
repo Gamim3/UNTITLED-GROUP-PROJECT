@@ -35,8 +35,6 @@ public class InventoryManager : MonoBehaviour
     public List<GraphicRaycaster> graphicRaycasters;
     public RectTransform rectTransform;
 
-    public bool canCheckInventoryQuest;
-
     public event ItemRecieved OnItemRecieved;
 
     private void Awake()
@@ -300,21 +298,16 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < allItems.Length; i++)
         {
-            int amount = GetTotalItemAmount(inventorySlots, allItems[i]);
+            int amount = GetTotalItemAmount(allItems[i]);
             itemsInInventory.Add(new(allItems[i], amount));
-        }
-
-        if (canCheckInventoryQuest)
-        {
-            Debug.Log("CheckInventoryQuest in manager");
-            // QuestManager.Instance.CheckInventory();
         }
     }
 
-    static int GetTotalItemAmount(List<InventorySlot> list, Item item)
+    public int GetTotalItemAmount(Item item)
     {
         int result = 0;
-        foreach (var slot in list)
+
+        foreach (var slot in inventorySlots)
         {
             if (slot.transform.childCount > 1)
             {

@@ -120,9 +120,12 @@ public class Enemy : Entity
         {
             if (questManager != null)
             {
-                if (questManager.activeQuest.enemyToHunt == enemyType)
+                for (int i = 0; i < questManager.activeQuests.Count; i++)
                 {
-                    questManager.TypeCheck();
+                    if (questManager.activeQuests[i].enemyToHunt == enemyType || questManager.activeQuests[i].enemyToHunt == EnemyType.ANY)
+                    {
+                        questManager.TypeCheck(questManager.activeQuests[i].questId);
+                    }
                 }
             }
 

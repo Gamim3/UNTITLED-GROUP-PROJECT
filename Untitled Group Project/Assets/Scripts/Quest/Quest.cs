@@ -13,17 +13,15 @@ public class Quest : ScriptableObject
     [Tooltip("Description Of Quest, As Displayed In The Quest UI")]
     public string questDescription;
 
-    [Tooltip("Set This As A Unique Id, Preferebaly In Order Of Quests")]
+    [Tooltip("Set This As A Unique Id, Preferebaly In Order Of Quests (NOT 0)")]
     public int questId;
-    [Tooltip("The Next Quest After This Is Completed, Leave Empty If Last")]
-    public Quest nextQuest;
 
     [Header("Options")]
     [Tooltip("Amount Of Items, Kills Or Hits Needed To Complete Quest")]
     public int questGoalAmount;
 
     [Tooltip("Leave Empty If Not A Collect Quest")]
-    public Item itemToCollect;
+    public ItemInfo itemToCollect;
     [Tooltip("Any Will Complete The Quest For Any Monster. Select A Specific Monster To Only Listen For That Monster")]
     public Enemy.EnemyType enemyToHunt;
 
@@ -33,8 +31,6 @@ public class Quest : ScriptableObject
     public Recipe recipeToUnlock;
     [Tooltip("Leave Empty If No Reward Should Be Granted")]
     public ItemInfo itemToGet;
-
-    public bool completed;
 }
 
 [System.Serializable]

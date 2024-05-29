@@ -37,6 +37,7 @@ public class QuestBoardManager : MonoBehaviour
             }
         }
         Destroy(_boardSlots[0].GetChild(0).gameObject);
-        Instantiate(_questPrefabs[Random.Range(0, _questPrefabs.Length)], _boardSlots[0]);
+        GameObject _questBoardItem = Instantiate(_questPrefabs[Random.Range(0, _questPrefabs.Length)], _boardSlots[0]);
+        _questBoardItem.GetComponent<QuestBoardItem>().InitiateBoardItem(quest);
     }
 }

@@ -4,103 +4,228 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] Quest[] _allQuests;
-    [SerializeField] int _questIndex;
+    QuestBoardManager _questBoardManager;
 
-    public Quest activeQuest;
+    [SerializeField] Quest[] _allQuests;
+    [SerializeField] List<int> _activeQuestIds = new List<int>();
+
+    [SerializeField] int _maxActiveQuests = 4;
+
+
+
+    public List<Quest> activeQuests = new();
 
     PlayerStats _playerStats;
 
-    public int currentCompletionAmount;
+    public List<int> completionAmount = new();
 
     // Start is called before the first frame update
     void Start()
     {
         _playerStats = FindObjectOfType<PlayerStats>();
+        if (_playerStats == null)
+        {
+            Debug.LogError("No PlayerStats In Scene!");
+        }
+        _questBoardManager = FindObjectOfType<QuestBoardManager>();
+        if (_questBoardManager == null)
+        {
+            Debug.LogError("No QuestBoardManager In Scene!");
+        }
 
-        activeQuest = _allQuests[_questIndex];
+        for (int i = 0; i < _activeQuestIds.Count; i++)
+        {
+            activeQuests.Add(GetQuestById(_activeQuestIds[i]));
+        }
     }
 
     private void OnEnable()
     {
         //Subscribe To Hit Event
-        InventoryManager.Instance.OnItemRecieved += TypeCheck;
+        InventoryManager.Instance.OnItemRecieved += OnItemRecieved;
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.Instance.OnItemRecieved -= OnItemRecieved;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (activeQuest != null)
+        if (activeQuests.Count == 0)
         {
-            if (CheckForCompletion())
-            {
-                StartNewQuest();
-            }
-            else if (activeQuest.completed)
-            {
-                StartNewQuest();
-            }
+            activeQuests.Add(GetRandomQuest());
         }
 
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            if (CheckForCompletion(activeQuests[i].questId))
+            {
+                CompleteQuest(activeQuests[i].questId);
+            }
+        }
     }
 
-    public bool CheckForCompletion()
+    public bool CheckForCompletion(int id)
     {
-        if (currentCompletionAmount >= activeQuest.questGoalAmount)
+        Quest quest = GetQuestById(id);
+
+        if (quest == null)
         {
-            return true;
+            Debug.LogError($"No Quest Found With Id Of {id}");
+            return false;
+        }
+
+        for (int i = 0; i < activeQuests.Count; i++)
+        {
+            if (activeQuests[i] == quest)
+            {
+                if (completionAmount[id] >= activeQuests[id].questGoalAmount)
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     public void AddQuestAmount(QuestType questType)
     {
-        if (activeQuest.questType == questType)
+        for (int i = 0; i < activeQuests.Count; i++)
         {
-            currentCompletionAmount++;
+            if (activeQuests[i].questType == questType)
+            {
+                completionAmount[i]++;
+            }
         }
     }
 
     public void DebugAddQuestAmount()
     {
-        currentCompletionAmount++;
+        completionAmount[0]++;
     }
 
-    public void TypeCheck()
+    public void TypeCheck(int id)
     {
-        AddQuestAmount(activeQuest.questType);
+        Quest quest = GetQuestById(id);
+
+        AddQuestAmount(quest.questType);
     }
 
-    public void StartNewQuest()
+    void OnItemRecieved()
     {
-        _playerStats.AddXp(activeQuest.xpReward);
-
-        if (activeQuest.itemToGet.item != null)
+        for (int i = 0; i < activeQuests.Count; i++)
         {
-            InventoryManager.Instance.AddItem(activeQuest.itemToGet.item.itemID, activeQuest.itemToGet.amount);
+            if (activeQuests[i].questType == QuestType.COLLECT)
+            {
+                if (InventoryCheck(activeQuests[i].questId))
+                {
+                    completionAmount[i] = activeQuests[i].itemToCollect.amount;
+                }
+            }
         }
-        if (activeQuest.recipeToUnlock != null)
+    }
+
+    public bool InventoryCheck(int id)
+    {
+        Quest quest = GetQuestById(id);
+
+        int itemAmount = InventoryManager.Instance.GetTotalItemAmount(quest.itemToCollect.item);
+        if (itemAmount >= quest.questGoalAmount)
         {
-            CraftingManager.Instance.AddRecipe(activeQuest.recipeToUnlock);
+            return true;
         }
 
-        // activeQuest.completed = true; //Uncomment When Building Or Testing Saving
+        return false;
+    }
 
-        if (activeQuest.nextQuest)
+    public void CompleteQuest(int id)
+    {
+        Quest questToComplete = GetQuestById(id);
+        if (questToComplete == null)
         {
-            activeQuest = activeQuest.nextQuest;
-            _questIndex = activeQuest.questId;
-            currentCompletionAmount = 0;
+            Debug.LogError($"COULD NOT COMPLETE QUEST OF ID {id} BECAUSE IT'S ID DOES NOT EXIST OR = 0");
         }
+        _playerStats.AddXp(questToComplete.xpReward);
+
+        if (questToComplete.itemToGet.item != null)
+        {
+            InventoryManager.Instance.AddItem(questToComplete.itemToGet.item.itemID, questToComplete.itemToGet.amount);
+        }
+        if (questToComplete.recipeToUnlock != null)
+        {
+            CraftingManager.Instance.AddRecipe(questToComplete.recipeToUnlock);
+        }
+
+        activeQuests.Remove(questToComplete);
+        _activeQuestIds.Remove(questToComplete.questId);
+
+        int randomQuestAmount = Random.Range(0, 4 - activeQuests.Count);
+
+        for (int i = 0; i < randomQuestAmount; i++)
+        {
+            activeQuests.Add(GetRandomQuest());
+        }
+
+    }
+
+    Quest GetRandomQuest()
+    {
+        if (activeQuests.Count == _maxActiveQuests)
+        {
+            Debug.Log("Reached Maximum Quest Amount");
+            return null;
+        }
+        Quest randomQuest = _allQuests[Random.Range(0, _allQuests.Length)];
+
+        AddQuestBoardItem(randomQuest);
+        _activeQuestIds.Add(randomQuest.questId);
+        return randomQuest;
+    }
+
+    void AddQuestBoardItem(Quest quest)
+    {
+        _questBoardManager.AddQuest(quest);
+    }
+
+    public Quest GetQuestById(int id)
+    {
+        if (id == 0)
+        {
+            Debug.LogWarning($"Id was 0, Set Quests Id In Editor");
+            return null;
+        }
+
+        Quest quest = _allQuests[0];
+
+        for (int i = 0; i < _allQuests.Length; i++)
+        {
+            if (_allQuests[i].questId == id)
+            {
+                quest = _allQuests[i];
+                break;
+            }
+        }
+
+        if (quest == null)
+        {
+            Debug.LogError($"Invalid Quest Id {id}, Id Does Not Exist");
+        }
+
+        return quest;
     }
 
     public void LoadData(GameData data)
     {
-        _questIndex = data.questIndex;
+        for (int i = 0; i < data.questIds.Length; i++)
+        {
+            _activeQuestIds.Add(data.questIds[i]);
+        }
     }
 
     public void SaveData(GameData data)
     {
-        data.questIndex = _questIndex;
+        data.questIds = _activeQuestIds.ToArray();
     }
 }
