@@ -39,11 +39,11 @@ public class CharCombatState : CharBaseState
     {
         if (!Ctx.IsTargetingAction)
         {
-            SetSuperState(Factory.FreeLook());
+            SetSubState(Factory.FreeLook());
         }
         else if (Ctx.IsTargetingAction)
         {
-            SetSuperState(Factory.Target());
+            SetSubState(Factory.Target());
         }
     }
 

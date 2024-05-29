@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using UnityEngine;
 
 public abstract class CharBaseState
 {
@@ -57,10 +57,12 @@ public abstract class CharBaseState
     public void UpdateStates()
     {
         UpdateState();
+        Debug.Log($"{this._stateName} is updating");
 
         if (_currentSubState != null)
         {
-            _currentSubState.UpdateStates();
+            Debug.Log($"updating {_currentSubState._stateName} from {this._stateName}");
+            this._currentSubState.UpdateStates();
         }
     }
 
@@ -70,7 +72,7 @@ public abstract class CharBaseState
 
         if (_currentSubState != null)
         {
-            _currentSubState.FixedUpdateState();
+            this._currentSubState.FixedUpdateStates();
         }
     }
 

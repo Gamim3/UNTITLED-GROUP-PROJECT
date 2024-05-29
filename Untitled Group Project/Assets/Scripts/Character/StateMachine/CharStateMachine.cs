@@ -428,7 +428,7 @@ public class CharStateMachine : Entity
         _healthPoints = 100;
 
         _states = new CharStateFactory(this);
-        _currentState = _states.Grounded();
+        _currentState = _states.Combat();
         _currentState.EnterState();
 
 
