@@ -8,6 +8,9 @@ public class FuzzyLogicVisualizer : MonoBehaviour
     [SerializeField] Color _falseColor;
     [SerializeField] Color _trueColor;
 
+    [SerializeField] TextMeshProUGUI _switchCase;
+    [SerializeField] TextMeshProUGUI _actionState;
+
     [Header ("DataSet1")]
     [SerializeField] TextMeshProUGUI _dataSet1Name;
     [SerializeField] TextMeshProUGUI[] _dataSet1FuzzyValue;
@@ -29,6 +32,7 @@ public class FuzzyLogicVisualizer : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] _dataSet4States;
 
     [SerializeField] FuzzyLogic _logic;
+    [SerializeField] EnemyBrain _brain;
 
     public void Update()
     {
@@ -112,6 +116,12 @@ public class FuzzyLogicVisualizer : MonoBehaviour
             _dataSet4States[0].color = _trueColor;
             _dataSet4States[2].color = _falseColor;
             _dataSet4States[1].color = _falseColor;
+        }
+
+        _switchCase.text = $"Case:{_brain.enemyState}/81";
+        if (_brain.attacksCurrentlyInQueue.Length != 0)
+        {
+            _actionState.text = $"Action:{_brain.attacksCurrentlyInQueue[_brain.attacksCurrentlyInQueue.Length -1]}";
         }
     }
 

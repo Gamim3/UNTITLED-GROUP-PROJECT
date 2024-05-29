@@ -44,6 +44,7 @@ public class Enemy : Entity
     [SerializeField] EnemyBrain _brain;
     [SerializeField] FuzzyLogic _logic;
     [SerializeField] QuestManager _questManager;
+    [SerializeField] GameObject _fuzzyLogicVisuals;
 
     private float startSpeed;
 
@@ -114,6 +115,11 @@ public class Enemy : Entity
 
     public override void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _fuzzyLogicVisuals.SetActive(!_fuzzyLogicVisuals.activeSelf);
+        }
+
         base.Update();
 
         if (_healthPoints <= 0)
@@ -269,6 +275,8 @@ public class Enemy : Entity
 
     public void LeftClawAttack()
     {
+        transform.LookAt(player.transform);
+
         if (leftClawAttackTimer >= 0 && leftClawAttack)
         {
             leftClaw.GetComponent<Collider>().enabled = true;
@@ -292,6 +300,8 @@ public class Enemy : Entity
 
     public void RightClawAttack()
     {
+        transform.LookAt(player.transform);
+
         if (rightClawAttackTimer > 0 && rightClawAttack)
         {
             rightClaw.GetComponent<Collider>().enabled = true;
