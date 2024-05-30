@@ -78,11 +78,11 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             return false;
         }
 
-        for (int i = 0; i < activeQuests.Count; i++)
+        for (int i = activeQuests.Count; i > 0; i--)
         {
-            if (activeQuests[i] == quest)
+            if (activeQuests[i - 1] == quest)
             {
-                if (completionAmount[i] >= quest.questGoalAmount)
+                if (completionAmount[i - 1] >= quest.questGoalAmount)
                 {
                     return true;
                 }
@@ -159,11 +159,12 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             CraftingManager.Instance.AddRecipe(questToComplete.recipeToUnlock);
         }
 
-        for (int i = 0; i < activeQuests.Count; i++)
+        for (int i = activeQuests.Count; i > 0; i--)
         {
-            if (activeQuests[i] == questToComplete)
+            if (activeQuests[i - 1] == questToComplete)
             {
-                completionAmount.RemoveAt(i);
+                completionAmount.RemoveAt(i - 1);
+                Debug.Log("Removed One Completion Amount");
             }
         }
         activeQuests.Remove(questToComplete);
