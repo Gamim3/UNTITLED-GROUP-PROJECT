@@ -46,31 +46,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cutsceneActions:
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
+  - inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
       type: 3}
-    _actionIndex: 1
-    _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
+    actionIndex: 1
+    excludeMouse: 1
+    tutorialtext: Walk forward
+  - inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
       type: 3}
-    _actionIndex: 2
-    _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
+    actionIndex: 3
+    excludeMouse: 1
+    tutorialtext: Walk backwards
+  - inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
       type: 3}
-    _actionIndex: 3
-    _excludeMouse: 1
-  - _inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
+    actionIndex: 2
+    excludeMouse: 1
+    tutorialtext: Walk to the left
+  - inputActionReference: {fileID: 5507021154536648582, guid: 0159298ac333de540bd2798801d96765,
       type: 3}
-    _actionIndex: 4
-    _excludeMouse: 1
+    actionIndex: 4
+    excludeMouse: 1
+    tutorialtext: Walk to the right
+  _uiRebindTutorialTxt: {fileID: 0}
   _completedRebind: 0
   _isRebinding: 0
   _startedRebind: 0
-  _newInput: 0
   _bindingIndex: 0
   _lastPressedKey: 
   _currentKeyboardInputIndex: 
   _currentPressedKey: 
   _previousPressedKey: 
+  _pressingBindedKey: 0
   _bindedKeys: []
   _movementPoints:
   - {fileID: 0}
