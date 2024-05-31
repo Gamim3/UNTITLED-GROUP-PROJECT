@@ -7,8 +7,6 @@ public class CharDashState : CharBaseState
     public CharDashState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "Dash";
-
-        IsRootState = true;
     }
 
     public override void EnterState()

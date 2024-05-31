@@ -7,8 +7,6 @@ public class CharTargetState : CharBaseState
     public CharTargetState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "Target";
-
-        // IsRootState = true;
     }
 
     public override void EnterState()
@@ -16,11 +14,16 @@ public class CharTargetState : CharBaseState
         InitializeSubState();
 
         Ctx.IsTargetingState = true;
+
+        Ctx.TargetCam.gameObject.SetActive(true);
+        // Ctx.CurrentTarget = Ctx.GetViableTarget();
     }
 
     public override void ExitState()
     {
         Ctx.IsTargetingState = false;
+
+        Ctx.TargetCam.gameObject.SetActive(false);
     }
 
     public override void UpdateState()
@@ -55,8 +58,7 @@ public class CharTargetState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        // IDK YET
-        if (Ctx.IsTargetingAction)
+        if (!Ctx.IsTargetingAction)
         {
             SwitchState(Factory.FreeLook());
         }

@@ -65,10 +65,13 @@ public class CharCombatState : CharBaseState
     {
         if (!Ctx.IsTargetingAction)
         {
+            Debug.Log("FreeLook substate");
+
             SetSubState(Factory.FreeLook());
         }
         else if (Ctx.IsTargetingAction)
         {
+            Debug.Log("Target substate");
             SetSubState(Factory.Target());
         }
     }

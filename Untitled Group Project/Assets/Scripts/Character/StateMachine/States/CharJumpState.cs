@@ -5,8 +5,6 @@ public class CharJumpState : CharBaseState
     public CharJumpState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "Jump";
-
-        // IsRootState = true;
     }
 
     public override void EnterState()

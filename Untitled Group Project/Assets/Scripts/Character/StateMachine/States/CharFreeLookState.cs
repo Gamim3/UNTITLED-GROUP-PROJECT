@@ -7,8 +7,6 @@ public class CharFreeLookState : CharBaseState
     public CharFreeLookState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "FreeLook";
-
-        // IsRootState = true; // idk
     }
 
     public override void EnterState()
@@ -18,11 +16,15 @@ public class CharFreeLookState : CharBaseState
         InitializeSubState();
 
         Ctx.IsFreeLookState = true;
+
+        Ctx.FreeLookCam.gameObject.SetActive(true);
     }
 
     public override void ExitState()
     {
         Ctx.IsFreeLookState = false;
+
+        Ctx.FreeLookCam.gameObject.SetActive(false);
     }
 
     public override void UpdateState()
@@ -59,7 +61,6 @@ public class CharFreeLookState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        // IDK YET
         if (Ctx.IsTargetingAction)
         {
             SwitchState(Factory.Target());

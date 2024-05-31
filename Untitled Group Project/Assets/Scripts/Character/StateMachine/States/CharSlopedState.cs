@@ -5,8 +5,6 @@ public class CharSlopedState : CharBaseState
     public CharSlopedState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         _stateName = "Sloped";
-
-        // IsRootState = true;
     }
 
     public override void EnterState()

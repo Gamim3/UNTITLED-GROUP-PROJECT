@@ -5,8 +5,6 @@ public class CharAirborneState : CharBaseState
     public CharAirborneState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "Airborne";
-
-        // IsRootState = true;
     }
 
     public override void EnterState()

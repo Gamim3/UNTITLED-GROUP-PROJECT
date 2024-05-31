@@ -4,8 +4,6 @@ public class CharGroundedState : CharBaseState
     public CharGroundedState(CharStateMachine currentContext, CharStateFactory charachterStateFactory) : base(currentContext, charachterStateFactory)
     {
         StateName = "Grounded";
-
-        // IsRootState = true;
     }
 
     public override void EnterState()

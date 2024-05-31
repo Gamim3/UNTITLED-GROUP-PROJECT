@@ -30,9 +30,9 @@ public class CharStateMachine : Entity
     public Transform CamHolder
     { get { return _camHolder; } }
 
-    [SerializeField] CinemachineVirtualCamera _virtualCam;
-    public CinemachineVirtualCamera VirtualCam
-    { get { return _virtualCam; } set { _virtualCam = value; } }
+    [SerializeField] CinemachineVirtualCamera _freeLookCam;
+    public CinemachineVirtualCamera FreeLookCam
+    { get { return _freeLookCam; } set { _freeLookCam = value; } }
 
     [SerializeField] private Transform _orientation;
     public Transform Orientation
@@ -210,9 +210,17 @@ public class CharStateMachine : Entity
     public List<Transform> TargetsVisible
     { get { return _targetsVisible; } }
 
+    [SerializeField] Transform _currentTarget;
+    public Transform CurrentTarget
+    { get { return _currentTarget; } set { _currentTarget = value; } }
+
     [SerializeField] Transform _nextTarget;
     public Transform NextTarget
     { get { return _nextTarget; } }
+
+    [SerializeField] CinemachineVirtualCamera _targetCam;
+    public CinemachineVirtualCamera TargetCam
+    { get { return _targetCam; } }
 
     #endregion
 
@@ -241,7 +249,7 @@ public class CharStateMachine : Entity
 
     [SerializeField] bool _isTargetingAction;
     public bool IsTargetingAction
-    { get { return _isTargetingState; } }
+    { get { return _isTargetingAction; } }
 
     [SerializeField] bool _isDashAction;
     public bool IsDashAction
@@ -259,14 +267,6 @@ public class CharStateMachine : Entity
     [SerializeField] float _camSensitivity;
     public float CamSensitivity
     { get { return _camSensitivity; } }
-
-    [SerializeField] bool _isCamAcceleration;
-    public bool IsCamAcceleration
-    { get { return _isCamAcceleration; } }
-
-    [SerializeField] float _camAcceleration;
-    public float CamAcceleration
-    { get { return _camAcceleration; } }
 
     [SerializeField] CinemachineCameraOffset _camOffset;
     public CinemachineCameraOffset CamOffset
@@ -517,8 +517,6 @@ public class CharStateMachine : Entity
         if (Input.GetKeyDown(KeyCode.P))
         {
             // Debug.Log(_currentState.ToString());
-
-            _playerObj.forward = GetViableTarget().position;
         }
 
         if (_nextTarget != null)
