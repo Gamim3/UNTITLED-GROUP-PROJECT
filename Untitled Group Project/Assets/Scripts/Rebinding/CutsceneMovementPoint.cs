@@ -9,8 +9,6 @@ public class CutsceneMovementPoint : MonoBehaviour
     [SerializeField] bool _canStartTimer;
 
     [SerializeField] float _maxSaveTime;
-    [Range(0, 1)]
-    public float test;
     [SerializeField] float _timeToSave;
 
     [SerializeField] Material _material;

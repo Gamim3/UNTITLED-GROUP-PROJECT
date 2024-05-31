@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.InputSystem;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -130,6 +131,9 @@ public class MainMenuManager : MonoBehaviour
         RefreshSaveFiles();
 
         // TODO - more checks to see if this works ( seems promosing )
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
     }
 

@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 
 public class CutsceneRebinding : MonoBehaviour
 {
@@ -330,6 +331,7 @@ public class CutsceneRebinding : MonoBehaviour
         if (index >= _cutsceneActions.Count)
         {
             Debug.LogError("OUT OF RANGE");
+            SceneManager.LoadScene("MainMenu");
             return;
         }
         if (_pressingBindedKey)

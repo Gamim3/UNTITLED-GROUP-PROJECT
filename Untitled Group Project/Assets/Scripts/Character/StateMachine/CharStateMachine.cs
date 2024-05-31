@@ -540,7 +540,7 @@ public class CharStateMachine : Entity
             PlayerRigidBody.drag = 0;
         }
 
-        HandleStrafeSpeed();
+        // HandleStrafeSpeed();
         SpeedControl();
 
         if (Mathf.Abs(DesiredMoveForce - LastDesiredMoveForce) > 0f && MoveForce != 0)
@@ -732,18 +732,18 @@ public class CharStateMachine : Entity
 
     #region Speed
 
-    public void HandleStrafeSpeed()
-    {
-        if (_currentMovementInput.y == 1)
-        {
-            _strafeSpeedMultiplier = 1.0f; // Full speed when moving forward
-        }
-        else
-        {
-            // Adjust strafe speed based on forward input
-            _strafeSpeedMultiplier = Mathf.Lerp(0.5f, 1.0f, Mathf.Abs(_currentMovementInput.y));
-        }
-    }
+    // public void HandleStrafeSpeed()
+    // {
+    //     if (_currentMovementInput.y == 1)
+    //     {
+    //         _strafeSpeedMultiplier = 1.0f; // Full speed when moving forward
+    //     }
+    //     else
+    //     {
+    //         // Adjust strafe speed based on forward input
+    //         _strafeSpeedMultiplier = Mathf.Lerp(0.5f, 1.0f, Mathf.Abs(_currentMovementInput.y));
+    //     }
+    // }
 
     private void SpeedControl()
     {
