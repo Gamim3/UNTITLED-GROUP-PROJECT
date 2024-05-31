@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using static EnemyBrain;
 using Random = UnityEngine.Random;
 
@@ -141,6 +142,8 @@ public class Enemy : Entity
             InventoryManager.Instance.AddItem(DroppableItems[0].item.itemID, Random.Range(1, 3));
 
             Destroy(gameObject);
+
+            SceneManager.LoadScene("GuildHall");
         }
 
         _distance = Vector3.Distance(transform.position, player.transform.position);

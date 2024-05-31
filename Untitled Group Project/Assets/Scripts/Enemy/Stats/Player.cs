@@ -15,6 +15,6 @@ public class Player : Entity
     {
         base.Update();
 
-        logic.playerHealth = _healthPoints / _maxHealth * 100;
+        //logic.playerHealth = _healthPoints / _maxHealth * 100;
     }
 }

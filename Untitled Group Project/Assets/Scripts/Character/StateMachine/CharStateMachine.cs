@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Enemy;
+using UnityEngine.SceneManagement;
 
 public class CharStateMachine : Entity
 {
@@ -421,7 +423,6 @@ public class CharStateMachine : Entity
     private void Awake()
     {
         // DontDestroyOnLoad(this);
-        _healthPoints = 100;
 
         _states = new CharStateFactory(this);
         _currentState = _states.Combat();
@@ -442,7 +443,7 @@ public class CharStateMachine : Entity
 
     public override void Start()
     {
-
+        base.Start();
     }
 
     private void OnEnable()
@@ -554,6 +555,16 @@ public class CharStateMachine : Entity
         }
 
         LastDesiredMoveForce = DesiredMoveForce;
+            
+        if(_logic != null)
+        {
+            _logic.playerHealth = _healthPoints / _maxHealth * 100;
+        }
+
+        if (_healthPoints <= 0)
+        {
+            SceneManager.LoadScene("GuildHall");
+        }
     }
 
     private void FixedUpdate()
