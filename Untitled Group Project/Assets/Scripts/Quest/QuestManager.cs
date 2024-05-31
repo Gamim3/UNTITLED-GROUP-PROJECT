@@ -44,7 +44,8 @@ public class QuestManager : MonoBehaviour, IDataPersistence
     private void OnEnable()
     {
         //Subscribe To Hit Event
-        InventoryManager.Instance.OnItemRecieved += OnItemRecieved;
+        if (InventoryManager.Instance)
+            InventoryManager.Instance.OnItemRecieved += OnItemRecieved;
     }
 
     private void OnDisable()

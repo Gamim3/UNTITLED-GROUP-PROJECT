@@ -36,6 +36,7 @@ public class InventoryManager : MonoBehaviour
     public RectTransform rectTransform;
 
     public event ItemRecieved OnItemRecieved;
+    public delegate void ItemRecieved();
 
     private void Awake()
     {
@@ -48,10 +49,10 @@ public class InventoryManager : MonoBehaviour
             Instance = this;
         }
 
+        Debug.Log(Instance);
         // player = FindObjectOfType<CharStateMachine>().gameObject;
     }
 
-    public delegate void ItemRecieved();
 
     private void Start()
     {
@@ -153,7 +154,7 @@ public class InventoryManager : MonoBehaviour
                     return true;
                 }
                 SpawnNewItem(itemId, amount, slot);
-                OnItemRecieved.Invoke();
+                OnItemRecieved?.Invoke();
                 return true;
             }
         }
