@@ -153,7 +153,8 @@ public class MainMenuManager : MonoBehaviour
             _saveFiles[index].DeleteFileButton.onClick.AddListener(delegate { DeleteSaveFileButton(index); });
         }
 
-        _firstLoadButton = _saveFiles[0].gameObject;
+        if (_saveFiles.Count > 0)
+            _firstLoadButton = _saveFiles[0].gameObject;
     }
 
     public void NewGame()
@@ -227,7 +228,7 @@ public class MainMenuManager : MonoBehaviour
 
         DataPersistenceManager.instance.LoadGame(saveSlot.SaveFileName, saveSlot.SaveDataName);
 
-        FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
+        // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
         SceneManager.UnloadSceneAsync(_mainMenuScene);
     }

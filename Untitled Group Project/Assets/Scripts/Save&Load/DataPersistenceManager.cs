@@ -65,7 +65,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && SceneManager.GetActiveScene().name != "MainMenu")
         {
             SaveManualGame();
         }
