@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 884.88196, g: 756.6934, b: 717.36334, a: 1}
+  m_IndirectSpecularColor: {r: 890.547, g: 749.6856, b: 673.8018, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1352,6 +1352,7 @@ MonoBehaviour:
   _logic: {fileID: 385659123}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
+  otherCanvas: {fileID: 698485939}
   invManager: {fileID: 847731265}
   engageTimer: 1
   disengageTimer: 1
@@ -2571,6 +2572,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: bf19b9d9c217f63419f4a8c6aa8be17e, type: 3}
+--- !u!1 &698485939 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 858232498659349555, guid: f443277716d21a240868be3f7fa4dbc0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1410475185}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &773419768 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7393807198421277726, guid: ae48d11817e30ec43a25ecdb71f876f4,
@@ -6183,7 +6190,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 49174.62
+      value: 50199.09
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}

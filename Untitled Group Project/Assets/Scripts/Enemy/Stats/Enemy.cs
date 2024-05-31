@@ -48,6 +48,7 @@ public class Enemy : Entity
     [SerializeField] FuzzyLogic _logic;
     [SerializeField] QuestManager _questManager;
     [SerializeField] GameObject _fuzzyLogicVisuals;
+    [SerializeField] GameObject otherCanvas;
     [SerializeField] InventoryManager invManager;
 
     private float startSpeed;
@@ -122,6 +123,7 @@ public class Enemy : Entity
         if (Input.GetKeyDown(KeyCode.F))
         {
             _fuzzyLogicVisuals.SetActive(!_fuzzyLogicVisuals.activeSelf);
+            otherCanvas.SetActive(!otherCanvas.activeSelf);
         }
 
         base.Update();
