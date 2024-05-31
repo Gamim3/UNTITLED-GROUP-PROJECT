@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static EnemyBrain;
+using Random = UnityEngine.Random;
 
 public class Enemy : Entity
 {
     [SerializeField] float _attackSpeed;
 
     [SerializeField] EnemyType _enemyType;
+    public List<ItemInfo> DroppableItems = new();
 
     [SerializeField] float _exhaustionSpeed;
     [SerializeField] float _meleeRange;
@@ -45,6 +47,7 @@ public class Enemy : Entity
     [SerializeField] FuzzyLogic _logic;
     [SerializeField] QuestManager _questManager;
     [SerializeField] GameObject _fuzzyLogicVisuals;
+    [SerializeField] InventoryManager invManager;
 
     private float startSpeed;
 
@@ -134,6 +137,8 @@ public class Enemy : Entity
                     }
                 }
             }
+
+            InventoryManager.Instance.AddItem(DroppableItems[0].item.itemID, Random.Range(1, 3));
 
             Destroy(gameObject);
         }

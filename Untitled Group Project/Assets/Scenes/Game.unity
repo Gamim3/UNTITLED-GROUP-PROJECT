@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 890.60754, g: 749.7696, b: 673.85846, a: 1}
+  m_IndirectSpecularColor: {r: 890.6915, g: 749.82623, b: 673.9698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -449,7 +449,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3230
   m_TargetDisplay: 0
 --- !u!224 &65592685
 RectTransform:
@@ -1326,6 +1326,9 @@ MonoBehaviour:
   _moveSpeed: 2.5
   _attackSpeed: 2.2
   _enemyType: 1
+  DroppableItems:
+  - item: {fileID: 11400000, guid: 864547fb35ecdd341a766d4da229c1e8, type: 2}
+    amount: 0
   _exhaustionSpeed: 1
   _meleeRange: 3.5
   _projectileSpeed: 18
@@ -1349,6 +1352,7 @@ MonoBehaviour:
   _logic: {fileID: 385659123}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
+  invManager: {fileID: 847731265}
   engageTimer: 1
   disengageTimer: 1
   energyRegainTimer: 1
@@ -2731,6 +2735,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825669684}
   m_CullTransparentMesh: 1
+--- !u!114 &847731265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3317676802356507158, guid: f443277716d21a240868be3f7fa4dbc0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1410475185}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff5c1edeb4f5542abc8b605e71d5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &848469618 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c56986c477cd6f24ca8aa05bcd0626f9,
@@ -5799,6 +5815,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1797167711442086792, guid: f443277716d21a240868be3f7fa4dbc0,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797167711442086792, guid: f443277716d21a240868be3f7fa4dbc0,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797167711442086792, guid: f443277716d21a240868be3f7fa4dbc0,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797167711442086792, guid: f443277716d21a240868be3f7fa4dbc0,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 3371018676814297907, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6147,7 +6183,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 44052.277
+      value: 47637.918
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
