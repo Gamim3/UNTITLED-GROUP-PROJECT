@@ -434,9 +434,6 @@ public class CharStateMachine : Entity
 
         MoveForce = DesiredMoveForce;
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         _playerCam = FindObjectOfType<Camera>();
     }
 

@@ -3,9 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
-using System;
-using UnityEngine.InputSystem;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -122,7 +119,10 @@ public class MainMenuManager : MonoBehaviour
     private void Awake()
     {
         // TODO - maybe use this idk yet
-        // DontDestroyOnLoad(FindObjectOfType<EventSystem>().gameObject);
+        // DontDestroyOnLoad(FindObjectOfType<EventSystem>().gameObject);       
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         // DontDestroyOnLoad(FindObjectOfType<Camera>().gameObject);
     }
 
@@ -131,8 +131,6 @@ public class MainMenuManager : MonoBehaviour
         RefreshSaveFiles();
 
         // TODO - more checks to see if this works ( seems promosing )
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
 
         SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
     }
@@ -198,6 +196,10 @@ public class MainMenuManager : MonoBehaviour
         // SceneManager.LoadScene(_gameScene);
 
         SceneManager.UnloadSceneAsync(_mainMenuScene);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         // LoadSaveFile(_saveSlots[0]);
     }
 
@@ -235,6 +237,10 @@ public class MainMenuManager : MonoBehaviour
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
         SceneManager.UnloadSceneAsync(_mainMenuScene);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     public void DeleteSaveFileButton(int index)
