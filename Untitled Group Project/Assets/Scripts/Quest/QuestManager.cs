@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour, IDataPersistence
 {
@@ -190,6 +191,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         }
         Quest randomQuest = _allQuests[Random.Range(0, _allQuests.Length)];
 
+
         AddQuestBoardItem(randomQuest);
         completionAmount.Add(0);
         _activeQuestIds.Add(randomQuest.questId);
@@ -198,7 +200,8 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     void AddQuestBoardItem(Quest quest)
     {
-        _questBoardManager.AddQuest(quest);
+        if (SceneManager.GetActiveScene().name == "Guildhall")
+            _questBoardManager.AddQuest(quest);
     }
 
     public Quest GetQuestById(int id)
