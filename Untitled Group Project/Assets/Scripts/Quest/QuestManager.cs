@@ -29,7 +29,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             Debug.LogError("No PlayerStats In Scene!");
         }
         _questBoardManager = FindObjectOfType<QuestBoardManager>();
-        if (_questBoardManager == null)
+        if (_questBoardManager == null && SceneManager.GetActiveScene().name == "GuildHall")
         {
             Debug.LogError("No QuestBoardManager In Scene!");
         }
