@@ -200,9 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ecea499971cba40b90130bc4439144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthPoints: 0
-  _energy: 0
-  _moveSpeed: 6
+  _healthPoints: 150
+  _energy: 100
+  _moveSpeed: 10
   playerInput: {fileID: 7120629029091282}
   _playerObj: {fileID: 6470602492927477769}
   _playerAnimator: {fileID: 9220521713210226788}
@@ -261,7 +261,7 @@ MonoBehaviour:
   _camOffsetY: 0
   _camOffsetZ: 0
   _walkSpeed: 1.4
-  _runSpeed: 8
+  _runSpeed: 6
   _airSpeed: 0.5
   _speedIncreaseMultiplier: 1.25
   _moveMultiplier: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 402877061371547527}
   - component: {fileID: 4311435802149124151}
   - component: {fileID: 6711244995347219863}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerObj
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1081,17 +1081,17 @@ PrefabInstance:
     - target: {fileID: 4518575434092309589, guid: 681c0e4b529a3a14295072964b35548d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.19681254
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4518575434092309589, guid: 681c0e4b529a3a14295072964b35548d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6650264
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4518575434092309589, guid: 681c0e4b529a3a14295072964b35548d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.939417
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 4518575434092309589, guid: 681c0e4b529a3a14295072964b35548d,
         type: 3}

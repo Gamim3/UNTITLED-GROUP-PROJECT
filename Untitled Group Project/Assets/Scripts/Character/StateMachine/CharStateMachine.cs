@@ -1,9 +1,8 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Enemy;
 using UnityEngine.SceneManagement;
 
 public class CharStateMachine : Entity
@@ -555,8 +554,8 @@ public class CharStateMachine : Entity
         }
 
         LastDesiredMoveForce = DesiredMoveForce;
-            
-        if(_logic != null)
+
+        if (_logic != null)
         {
             _logic.playerHealth = _healthPoints / _maxHealth * 100;
         }
