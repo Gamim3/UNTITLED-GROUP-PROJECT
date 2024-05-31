@@ -39,28 +39,28 @@ public class CharJumpState : CharBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsMoveAction)
-        {
-            SetSubState(Factory.Idle());
-        }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
-        {
-            SetSubState(Factory.Walking());
-        }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
-        {
-            SetSubState(Factory.Running());
-        }
-        else if (Ctx.IsDashAction)
-        {
-            // DASH STATE
-            // SetSubState(Factory.Dash()); 
-        }
+        // if (!Ctx.IsMoveAction)
+        // {
+        SetSubState(Factory.Idle());
+        // }
+        // else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
+        // {
+        //     SetSubState(Factory.Walking());
+        // }
+        // else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        // {
+        //     SetSubState(Factory.Running());
+        // }
+        // else if (Ctx.IsDashAction)
+        // {
+        //     // DASH STATE
+        //     // SetSubState(Factory.Dash()); 
+        // }
     }
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        if (Ctx.IsGrounded && !Ctx.IsSloped)
         {
             SwitchState(Factory.Grounded());
         }

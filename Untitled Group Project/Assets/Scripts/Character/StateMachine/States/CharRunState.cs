@@ -43,7 +43,7 @@ public class CharRunState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction || Ctx.IsJumpingState)
         {
             SwitchState(Factory.Idle());
         }
