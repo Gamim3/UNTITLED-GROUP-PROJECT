@@ -120,7 +120,7 @@ MonoBehaviour:
     - sceneGUID: 491c20f6bee586c4ba2e079fb65a5e95
       profile: {fileID: 11400000, guid: 857c23241b0cc584a977c3dfa2edcf4d, type: 2}
     - sceneGUID: 86e5f19cdc2bf984195d3b8025371cde
-      profile: {fileID: 0}
+      profile: {fileID: 11400000, guid: 857c23241b0cc584a977c3dfa2edcf4d, type: 2}
     - sceneGUID: 473afef7d12baa941ade2ccd3612578a
       profile: {fileID: 11400000, guid: 857c23241b0cc584a977c3dfa2edcf4d, type: 2}
     - sceneGUID: b2d4679ad54656b4cbc79527dc128175
@@ -285,6 +285,7 @@ MonoBehaviour:
       - 908fb057c30f62348a2bfca2c6f4a4ec
       - 5fae6c8b226a71a499d617772e4047b1
       - d619416bb93a65a44b031dda8ce520a7
+      - 86e5f19cdc2bf984195d3b8025371cde
       settings:
         m_Version: 1
         dilationSettings:
