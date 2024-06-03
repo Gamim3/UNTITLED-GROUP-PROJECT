@@ -78,7 +78,7 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogWarning($"Should not load in the {scene.name}");
             return;
         }
-        if (scene.name == "Game")
+        if (scene.name == "Game" || scene.name == "GuildHall")
         {
             Debug.LogWarning($"Loaded scene: {scene.name}");
 

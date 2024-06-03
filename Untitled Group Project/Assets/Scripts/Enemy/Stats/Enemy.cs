@@ -143,9 +143,11 @@ public class Enemy : Entity
 
             InventoryManager.Instance.AddItem(DroppableItems[0].item.itemID, Random.Range(1, 3));
 
-            Destroy(gameObject);
+            //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().SaveAutoGame();
 
             SceneManager.LoadScene("GuildHall");
+
+            //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().OnSceneLoaded(SceneManager.GetSceneByName("GuildHall"), LoadSceneMode.Single);
         }
 
         _distance = Vector3.Distance(transform.position, player.transform.position);
