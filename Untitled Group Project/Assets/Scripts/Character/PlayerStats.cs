@@ -17,8 +17,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     public event XpChanged OnXpGained;
 
-
-
     private void Start()
     {
         if (xpGoal == 0)

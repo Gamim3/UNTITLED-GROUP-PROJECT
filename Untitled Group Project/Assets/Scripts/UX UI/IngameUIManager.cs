@@ -19,6 +19,9 @@ public class IngameUIManager : MonoBehaviour
     public Transform playerRaycastPos;
     public LayerMask interactableLayers;
 
+    [Header("QuestBoard")]
+    [SerializeField] Camera _questBoardCam;
+    [SerializeField] Camera _normalCam;
 
     [Header("XP")]
     [SerializeField] Transform _xpBar;
@@ -53,11 +56,27 @@ public class IngameUIManager : MonoBehaviour
 
 
         hudCanvas.GetComponent<Canvas>().enabled = false;
+
+        _questBoardCam.enabled = false;
+        _normalCam.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (IsUIShowing())
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         if (hudCanvas.GetComponent<Canvas>().enabled == false && SceneManager.GetActiveScene().name != "MainMenu")
         {
             hudCanvas.GetComponent<Canvas>().enabled = true;
@@ -76,6 +95,10 @@ public class IngameUIManager : MonoBehaviour
                 {
                     ToggleCrafting();
                 }
+                else if (hit.transform.GetComponent<QuestBoardManager>())
+                {
+                    ToggleQuestBoard();
+                }
             }
         }
 
@@ -91,29 +114,56 @@ public class IngameUIManager : MonoBehaviour
         if (craftingCanvas.activeSelf && inventoryCanvas.activeSelf)
         {
             craftingCanvas.GetComponent<Canvas>().enabled = false;
+            craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        }
+        if (_questBoardCam.enabled)
+        {
+            ToggleQuestBoard();
         }
         inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
+        inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = inventoryCanvas.GetComponent<Canvas>().enabled;
     }
 
     public void ToggleCrafting()
     {
         craftingCanvas.GetComponent<Canvas>().enabled = !craftingCanvas.GetComponent<Canvas>().enabled;
+        craftingCanvas.GetComponent<GraphicRaycaster>().enabled = craftingCanvas.GetComponent<Canvas>().enabled;
+
         if (!inventoryCanvas.GetComponent<Canvas>().enabled)
         {
             inventoryCanvas.GetComponent<Canvas>().enabled = true;
+            inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = true;
             _openedWithCrafting = true;
         }
         else if (_openedWithCrafting)
         {
             inventoryCanvas.GetComponent<Canvas>().enabled = false;
+            inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             _openedWithCrafting = false;
+        }
+    }
+
+    void ToggleQuestBoard()
+    {
+        if (_questBoardCam.enabled)
+        {
+            _questBoardCam.enabled = false;
+            _normalCam.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            _questBoardCam.enabled = true;
+            _normalCam.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
     void OnXpGained(int xpAmount)
     {
         _xpBar.GetComponent<Animator>().SetTrigger("Trigger");
-
 
         if (_playerStats.xp != 0)
             StartCoroutine(XpSlider(xpAmount));
@@ -123,6 +173,18 @@ public class IngameUIManager : MonoBehaviour
         }
         _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
         _levelText.text = _playerStats.level.ToString();
+    }
+
+    bool IsUIShowing()
+    {
+        bool value = false;
+
+        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf || _questBoardCam.enabled)
+        {
+            return true;
+        }
+
+        return value;
     }
 
     IEnumerator XpSlider(int xpAmount)

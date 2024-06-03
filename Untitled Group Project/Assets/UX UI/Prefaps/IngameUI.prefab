@@ -55,6 +55,8 @@ MonoBehaviour:
   interactableLayers:
     serializedVersion: 2
     m_Bits: 128
+  _questBoardCam: {fileID: 0}
+  _normalCam: {fileID: 0}
   _xpBar: {fileID: 251349689452645795}
   _xpSliderImage: {fileID: 74468022028948606}
   _xpSliderText: {fileID: 2792680974143091199}
@@ -680,7 +682,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4875429599351988341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -782,7 +784,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8116356542267353838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -2565,7 +2567,7 @@ PrefabInstance:
     - target: {fileID: 3088854621047188255, guid: 76486641b325f4f4ab6a0b2780abb322,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1536.7085
+      value: 9732.488
       objectReference: {fileID: 0}
     - target: {fileID: 3251525502058731592, guid: 76486641b325f4f4ab6a0b2780abb322,
         type: 3}
