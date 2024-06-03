@@ -18,9 +18,10 @@ public class Entity : MonoBehaviour
 
     public virtual void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Game")
+
+        _maxHealth = _healthPoints;
+        if (SceneManager.GetActiveScene().name == "Game")
         {
-            _maxHealth = _healthPoints;
             _maxEnergy = _energy;
 
             _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
@@ -40,5 +41,15 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         _healthPoints -= damage;
+    }
+
+    public virtual float GetHealth()
+    {
+        return _healthPoints;
+    }
+
+    public virtual float GetMaxHealth()
+    {
+        return _maxHealth;
     }
 }

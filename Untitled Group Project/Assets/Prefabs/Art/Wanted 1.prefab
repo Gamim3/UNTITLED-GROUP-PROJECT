@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 80728151229764376}
   - component: {fileID: -9170017253858163563}
   - component: {fileID: 5610719019739387200}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wanted 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

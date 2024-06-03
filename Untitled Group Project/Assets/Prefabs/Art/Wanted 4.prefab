@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 5931154443661177891}
   - component: {fileID: -1870227167446778130}
   - component: {fileID: 8077587176055445209}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wanted 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

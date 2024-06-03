@@ -68,5 +68,6 @@ public class QuestBoardItem : MonoBehaviour
         }
 
         _questManager = FindObjectOfType<QuestManager>();
+        GetComponentInChildren<Canvas>().worldCamera = GetComponentInParent<QuestBoardManager>().BoardCam;
     }
 }

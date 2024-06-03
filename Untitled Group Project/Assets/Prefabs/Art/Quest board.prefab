@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &251875557370552305
 Transform:
   m_ObjectHideFlags: 0
@@ -433,6 +433,7 @@ MonoBehaviour:
   - {fileID: 4739677759005663706}
   - {fileID: 3830860833890193455}
   _quests: []
+  _boardCam: {fileID: 2835433324927189408}
 --- !u!65 &6659415483736462735
 BoxCollider:
   m_ObjectHideFlags: 0

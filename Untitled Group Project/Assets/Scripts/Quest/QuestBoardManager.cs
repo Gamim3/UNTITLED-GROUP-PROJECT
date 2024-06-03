@@ -9,19 +9,14 @@ public class QuestBoardManager : MonoBehaviour
     [SerializeField] Transform[] _boardSlots;
 
     [SerializeField] List<Quest> _quests;
-
+    [SerializeField] Camera _boardCam;
+    public Camera BoardCam { get { return _boardCam; } }
 
     QuestManager _questManager;
     // Start is called before the first frame update
     void Start()
     {
         _questManager = GetComponent<QuestManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void AddQuest(Quest quest)

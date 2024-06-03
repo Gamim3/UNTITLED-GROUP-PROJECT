@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class IngameUIManager : MonoBehaviour
 {
+    CharStateMachine _charStateMachine;
+
     [Header("Panels")]
     public GameObject inventoryCanvas;
     public GameObject craftingCanvas;
@@ -28,6 +30,10 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] Image _xpSliderImage;
     [SerializeField] TMP_Text _xpSliderText;
     [SerializeField] TMP_Text _levelText;
+
+    [Header("Health")]
+    [SerializeField] Image _healthSliderImage;
+    [SerializeField] TMP_Text _healthTxt;
 
     PlayerStats _playerStats;
 
@@ -57,11 +63,14 @@ public class IngameUIManager : MonoBehaviour
 
         hudCanvas.GetComponent<Canvas>().enabled = false;
 
-        _questBoardCam.enabled = false;
-        _normalCam.enabled = true;
+        // _questBoardCam.enabled = false;
+        _questBoardCam.gameObject.SetActive(false);
+        // _normalCam.enabled = true;
+        _normalCam.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        _charStateMachine = FindObjectOfType<CharStateMachine>();
     }
 
     // Update is called once per frame
@@ -107,6 +116,9 @@ public class IngameUIManager : MonoBehaviour
             if (_devPanel)
                 _devPanel.SetActive(!_devPanel.activeSelf);
         }
+
+        _healthSliderImage.fillAmount = _charStateMachine.GetHealth() / _charStateMachine.GetMaxHealth();
+        _healthTxt.text = $"{_charStateMachine.GetHealth()}/{_charStateMachine.GetMaxHealth()}";
     }
 
     public void ToggleInventory()
@@ -116,7 +128,7 @@ public class IngameUIManager : MonoBehaviour
             craftingCanvas.GetComponent<Canvas>().enabled = false;
             craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         }
-        if (_questBoardCam.enabled)
+        if (_questBoardCam.gameObject.activeSelf)
         {
             ToggleQuestBoard();
         }
@@ -145,17 +157,21 @@ public class IngameUIManager : MonoBehaviour
 
     void ToggleQuestBoard()
     {
-        if (_questBoardCam.enabled)
+        if (_questBoardCam.gameObject.activeSelf)
         {
-            _questBoardCam.enabled = false;
-            _normalCam.enabled = true;
+            // _questBoardCam.enabled = false;
+            _questBoardCam.gameObject.SetActive(false);
+            // _normalCam.enabled = true;
+            _normalCam.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
         {
-            _questBoardCam.enabled = true;
-            _normalCam.enabled = false;
+            // _questBoardCam.enabled = true;
+            _questBoardCam.gameObject.SetActive(true);
+            // _normalCam.enabled = false;
+            _normalCam.gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -179,7 +195,7 @@ public class IngameUIManager : MonoBehaviour
     {
         bool value = false;
 
-        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf || _questBoardCam.enabled)
+        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf || _questBoardCam.gameObject.activeSelf)
         {
             return true;
         }
