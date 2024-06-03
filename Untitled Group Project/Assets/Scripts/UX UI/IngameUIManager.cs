@@ -37,6 +37,10 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] Image _healthSliderImage;
     [SerializeField] TMP_Text _healthTxt;
 
+    [SerializeField] Color _greenHp;
+    [SerializeField] Color _yellowHp;
+    [SerializeField] Color  _redHp;
+
     PlayerStats _playerStats;
 
     private void OnEnable()
@@ -124,6 +128,21 @@ public class IngameUIManager : MonoBehaviour
 
         _healthSliderImage.fillAmount = _charStateMachine.GetHealth() / _charStateMachine.GetMaxHealth();
         _healthTxt.text = $"{_charStateMachine.GetHealth()}/{_charStateMachine.GetMaxHealth()}";
+
+        if(_healthSliderImage.fillAmount * 100 > 70)
+        {
+            _healthSliderImage.color = _greenHp;
+        }
+        else if (_healthSliderImage.fillAmount * 100 < 70)
+        {
+            _healthSliderImage.color = _yellowHp;
+
+            if (_healthSliderImage.fillAmount * 100 < 40)
+            {
+                _healthSliderImage.color = _redHp;
+            }
+        }
+
     }
 
     public void ToggleInventory()

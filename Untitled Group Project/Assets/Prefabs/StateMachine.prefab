@@ -233,7 +233,7 @@ MonoBehaviour:
   sphereOffset: 0.4
   _isSloped: 0
   _isExitingSlope: 0
-  _maxSlopeAngle: 360
+  _maxSlopeAngle: 0
   _playerHeight: 2
   _camFollow: {fileID: 0}
   _camLookAt: {fileID: 0}
@@ -261,8 +261,8 @@ MonoBehaviour:
   _camOffsetX: 0
   _camOffsetY: 0
   _camOffsetZ: 0
-  _walkSpeed: 1.4
-  _runSpeed: 6
+  _walkSpeed: 4.2
+  _runSpeed: 7
   _airSpeed: 0.5
   _speedIncreaseMultiplier: 1.25
   _moveMultiplier: 0

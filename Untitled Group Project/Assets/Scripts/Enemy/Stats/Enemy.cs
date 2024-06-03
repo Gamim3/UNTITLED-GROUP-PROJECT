@@ -224,7 +224,10 @@ public class Enemy : Entity
 
             Vector3 newPosition = transform.position + directionToPlayer;
 
-            _agent.SetDestination(newPosition);
+            if(Vector3.Distance(newPosition, player.transform.position) < 20 && _distance < 20)
+            {
+                _agent.SetDestination(newPosition);
+            }
 
             Exhaustion(_exhaustionSpeed / 4);
         }
