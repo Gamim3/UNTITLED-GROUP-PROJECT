@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,6 +27,7 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] Camera _normalCam;
 
     [Header("XP")]
+    public bool smoothXpSlider;
     [SerializeField] Transform _xpBar;
     [SerializeField] Image _xpSliderImage;
     [SerializeField] TMP_Text _xpSliderText;
@@ -63,10 +65,13 @@ public class IngameUIManager : MonoBehaviour
 
         hudCanvas.GetComponent<Canvas>().enabled = false;
 
-        // _questBoardCam.enabled = false;
-        _questBoardCam.gameObject.SetActive(false);
-        // _normalCam.enabled = true;
-        _normalCam.gameObject.SetActive(true);
+        if (_questBoardCam)
+        {
+            // _questBoardCam.enabled = false;
+            _questBoardCam.gameObject.SetActive(false);
+            // _normalCam.enabled = true;
+            _normalCam.gameObject.SetActive(true);
+        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -128,7 +133,7 @@ public class IngameUIManager : MonoBehaviour
             craftingCanvas.GetComponent<Canvas>().enabled = false;
             craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         }
-        if (_questBoardCam.gameObject.activeSelf)
+        if (_questBoardCam && _questBoardCam.gameObject.activeSelf)
         {
             ToggleQuestBoard();
         }
@@ -157,6 +162,9 @@ public class IngameUIManager : MonoBehaviour
 
     void ToggleQuestBoard()
     {
+        if (!_questBoardCam)
+            return;
+
         if (_questBoardCam.gameObject.activeSelf)
         {
             // _questBoardCam.enabled = false;
@@ -186,16 +194,20 @@ public class IngameUIManager : MonoBehaviour
         else
         {
             _xpSliderImage.fillAmount = 0;
+            _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
+            _levelText.text = _playerStats.level.ToString();
         }
-        _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
-        _levelText.text = _playerStats.level.ToString();
     }
 
     bool IsUIShowing()
     {
         bool value = false;
 
-        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf || _questBoardCam.gameObject.activeSelf)
+        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf)
+        {
+            return true;
+        }
+        if (_questBoardCam && _questBoardCam.gameObject.activeSelf)
         {
             return true;
         }
@@ -205,12 +217,23 @@ public class IngameUIManager : MonoBehaviour
 
     IEnumerator XpSlider(int xpAmount)
     {
-        yield return new WaitForSeconds(0.005f);
-
-        if (_xpSliderImage.fillAmount < _playerStats.xp / _playerStats.xpGoal)
+        if (smoothXpSlider)
         {
-            _xpSliderImage.fillAmount += xpAmount / 100;
-            StartCoroutine(XpSlider(xpAmount));
+            yield return new WaitForSeconds(0.01f);
+
+            if (_xpSliderImage.fillAmount < _playerStats.xp / _playerStats.xpGoal)
+            {
+                _xpSliderImage.fillAmount += xpAmount / 100;
+                StartCoroutine(XpSlider(xpAmount));
+            }
         }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+            _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
+            _levelText.text = _playerStats.level.ToString();
+        }
+
     }
 }
