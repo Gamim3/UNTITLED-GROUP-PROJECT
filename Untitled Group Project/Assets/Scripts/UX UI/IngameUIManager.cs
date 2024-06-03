@@ -76,8 +76,8 @@ public class IngameUIManager : MonoBehaviour
             // _normalCam.enabled = true;
             _normalCam.gameObject.SetActive(true);
         }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         _charStateMachine = FindObjectOfType<CharStateMachine>();
     }
@@ -90,7 +90,7 @@ public class IngameUIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else
+        else if(SceneManager.GetActiveScene().name != "MainMenu")
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
