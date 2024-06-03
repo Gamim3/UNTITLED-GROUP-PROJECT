@@ -3110,6 +3110,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2226471404459099375, guid: f443277716d21a240868be3f7fa4dbc0,
+        type: 3}
+      propertyPath: playerRaycastPos
+      value: 
+      objectReference: {fileID: 999036611}
     - target: {fileID: 2761632177411362363, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -3488,7 +3493,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 512.23615
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
@@ -5577,6 +5582,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0da5b4971f820954a954684bb4329179, type: 3}
+--- !u!4 &999036611 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6470602492927477769, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 999036610}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028615854 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8129791337832232637, guid: 1d146c1d338f52f49a7ea150e6de29bf,
