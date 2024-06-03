@@ -161,6 +161,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void NewGame()
     {
+        SceneManager.LoadScene("GuildHall");
+
         DataPersistenceManager.instance.ChangeSelectedSaveFile(_currentSaveFileName);
 
         // TODO - this works for now maybe find better way later
