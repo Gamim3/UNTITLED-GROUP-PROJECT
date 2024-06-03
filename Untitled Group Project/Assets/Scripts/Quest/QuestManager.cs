@@ -201,7 +201,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     void AddQuestBoardItem(Quest quest)
     {
-        if (SceneManager.GetActiveScene().name == "Guildhall")
+        if (_questBoardManager != null)
             _questBoardManager.AddQuest(quest);
     }
 

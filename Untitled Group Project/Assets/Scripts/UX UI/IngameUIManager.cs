@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IngameUIManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class IngameUIManager : MonoBehaviour
     [Header("Panels")]
     public GameObject inventoryCanvas;
     public GameObject craftingCanvas;
+    public GameObject hudCanvas;
 
     [SerializeField] GameObject _devPanel;
     bool _openedWithCrafting;
@@ -48,11 +50,19 @@ public class IngameUIManager : MonoBehaviour
         }
         _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
         _levelText.text = _playerStats.level.ToString();
+
+
+        hudCanvas.GetComponent<Canvas>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hudCanvas.GetComponent<Canvas>().enabled == false && SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            hudCanvas.GetComponent<Canvas>().enabled = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
