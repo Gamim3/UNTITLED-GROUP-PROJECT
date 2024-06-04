@@ -6,14 +6,16 @@ using UnityEngine;
 public class AttackTest : MonoBehaviour
 {
     [SerializeField] GameObject _damageNumberCanvas;
-    [SerializeField] float _minDamage = 5;
-    [SerializeField] float _MaxDamage = 12;
+    [SerializeField] int _minDamage = 5;
+    [SerializeField] int _MaxDamage = 12;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
+            Debug.LogWarning("Attacking");
             float damageToDo = Random.Range(_minDamage, _MaxDamage);
-            other.GetComponent<Entity>().TakeDamage(damageToDo);
+            other.GetComponentInParent<Entity>().TakeDamage(damageToDo);
             if (damageToDo > 10f)
             {
                 StartCoroutine(HitPause());
@@ -21,14 +23,14 @@ public class AttackTest : MonoBehaviour
             Transform damageCanvas = Instantiate(_damageNumberCanvas, other.transform.position, Quaternion.identity).transform;
             damageCanvas.LookAt(Camera.main.transform.position);
             damageCanvas.GetComponentInChildren<TMP_Text>().text = damageToDo.ToString();
-            Destroy(damageCanvas.gameObject, 1f);
+            Destroy(damageCanvas.gameObject, 3f);
         }
     }
 
     IEnumerator HitPause()
     {
-        Time.timeScale = 0;
-        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(0.2f);
         Time.timeScale = 1;
     }
 }

@@ -324,8 +324,6 @@ public class IngameUIManager : MonoBehaviour
 
     bool IsUIShowing()
     {
-        bool value = false;
-
         if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf)
         {
             return true;
@@ -335,7 +333,7 @@ public class IngameUIManager : MonoBehaviour
             return true;
         }
 
-        return value;
+        return false;
     }
 
     IEnumerator XpSlider(int xpAmount)
