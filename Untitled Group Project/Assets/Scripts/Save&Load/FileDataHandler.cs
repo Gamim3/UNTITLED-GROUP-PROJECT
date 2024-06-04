@@ -563,39 +563,41 @@ public class FileDataHandler
             data.saveDataName = _tempDataFileName;
             data.lastUpdated = DateTime.Now.ToBinary();
 
-            int dotIndex = _tempDataFileName.LastIndexOf('.');
-            string tempDataName = _tempDataFileName.Substring(0, dotIndex);
-
-            ScreenShotManager.instance.StartTakingScreenshot((screenShotData) =>
+            if (ScreenShotManager.instance != null)
             {
-                string timeStamp = DateTime.FromBinary(data.lastUpdated).ToString("yyyy-MM-dd_HH-mm-ss");
-                string fileName = $"{tempDataName}_{timeStamp}.png";
-                string directoryPath = Path.Combine(Application.persistentDataPath, saveFileName, data.saveType);
-                string[] existingFiles = Directory.GetFiles(directoryPath, $"{tempDataName}_*.png");
+                int dotIndex = _tempDataFileName.LastIndexOf('.');
+                string tempDataName = _tempDataFileName.Substring(0, dotIndex);
 
-                // Delete existing screenshots with the same tempDataName
-                foreach (string existingFile in existingFiles)
+                ScreenShotManager.instance.StartTakingScreenshot((screenShotData) =>
                 {
-                    try
+                    string timeStamp = DateTime.FromBinary(data.lastUpdated).ToString("yyyy-MM-dd_HH-mm-ss");
+                    string fileName = $"{tempDataName}_{timeStamp}.png";
+                    string directoryPath = Path.Combine(Application.persistentDataPath, saveFileName, data.saveType);
+                    string[] existingFiles = Directory.GetFiles(directoryPath, $"{tempDataName}_*.png");
+
+                    // Delete existing screenshots with the same tempDataName
+                    foreach (string existingFile in existingFiles)
                     {
-                        File.Delete(existingFile);
-                        Debug.Log($"Deleted previous screenshot at: {existingFile}");
+                        try
+                        {
+                            File.Delete(existingFile);
+                            Debug.Log($"Deleted previous screenshot at: {existingFile}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogError($"Error deleting file {existingFile}: {ex.Message}");
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.LogError($"Error deleting file {existingFile}: {ex.Message}");
-                    }
-                }
 
-                // Construct the file path for the new screenshot
-                string filePath = Path.Combine(directoryPath, fileName);
+                    // Construct the file path for the new screenshot
+                    string filePath = Path.Combine(directoryPath, fileName);
 
-                // Write the new screenshot data to the file
-                File.WriteAllBytes(filePath, screenShotData);
+                    // Write the new screenshot data to the file
+                    File.WriteAllBytes(filePath, screenShotData);
 
-                Debug.Log($"New screenshot saved to: {filePath}");
-            });
-
+                    Debug.Log($"New screenshot saved to: {filePath}");
+                });
+            }
             string dataToStore = JsonUtility.ToJson(data, true);
 
             if (_useEncryption)

@@ -145,6 +145,8 @@ public class Enemy : Entity
 
             //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().SaveAutoGame();
 
+            DataPersistenceManager.instance.SaveAutoGame();
+
             SceneManager.LoadScene("GuildHall");
 
             //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().OnSceneLoaded(SceneManager.GetSceneByName("GuildHall"), LoadSceneMode.Single);
@@ -224,7 +226,7 @@ public class Enemy : Entity
 
             Vector3 newPosition = transform.position + directionToPlayer;
 
-            if(Vector3.Distance(newPosition, player.transform.position) < 20 && _distance < 20)
+            if (Vector3.Distance(newPosition, player.transform.position) < 20 && _distance < 20)
             {
                 _agent.SetDestination(newPosition);
             }
