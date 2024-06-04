@@ -57,6 +57,7 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         UpdateItemsInfoList();
+        player = FindObjectOfType<CharStateMachine>().gameObject;
     }
 
     private void Update()
@@ -98,7 +99,7 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"Adding Item {allItems[i]}");
             }
         }
-        if (!HasSpace(amount))
+        if (!HasSpace(_itemToSpawn, amount))
         {
             Debug.Log("Inventory Was Full, Could Not Add " + _itemToSpawn);
             return false;
@@ -312,7 +313,7 @@ public class InventoryManager : MonoBehaviour
         return result;
     }
 
-    public bool HasSpace(int amount)
+    public bool HasSpace(Item itemToCheck, int amount)
     {
         //Check For Stackable Slot
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -320,7 +321,7 @@ public class InventoryManager : MonoBehaviour
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
 
-            if (itemInSlot != null && itemInSlot.item == _itemToSpawn && itemInSlot.count + amount < itemInSlot.item.maxStack)
+            if (itemInSlot != null && itemInSlot.item == itemToCheck && itemInSlot.count + amount < itemInSlot.item.maxStack)
             {
                 return true;
             }

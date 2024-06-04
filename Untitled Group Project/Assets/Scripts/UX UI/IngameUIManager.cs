@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,13 +15,21 @@ public class IngameUIManager : MonoBehaviour
     public GameObject inventoryCanvas;
     public GameObject craftingCanvas;
     public GameObject hudCanvas;
+    [SerializeField] GameObject _interactPanel;
 
     [SerializeField] GameObject _devPanel;
     bool _openedWithCrafting;
 
+    [Header("Interacting")]
     //Debug Raycast, Replace With Actual Player Raycast
     public Transform playerRaycastPos;
+    [SerializeField] Vector3 _shootOffset = new Vector3(0, 0, -1);
+    [SerializeField] float _rayRadius = 1f;
+    [SerializeField] float _interactRange = 4f;
     public LayerMask interactableLayers;
+    RaycastHit _interactableHit;
+    [SerializeField] TMP_Text _interactableTxt;
+
 
     [Header("QuestBoard")]
     [SerializeField] Camera _questBoardCam;
@@ -39,9 +48,12 @@ public class IngameUIManager : MonoBehaviour
 
     [SerializeField] Color _greenHp;
     [SerializeField] Color _yellowHp;
-    [SerializeField] Color  _redHp;
+    [SerializeField] Color _redHp;
 
     PlayerStats _playerStats;
+    PlayerInput _playerInput;
+
+    bool _onInteract;
 
     private void OnEnable()
     {
@@ -80,6 +92,7 @@ public class IngameUIManager : MonoBehaviour
         //Cursor.visible = false;
 
         _charStateMachine = FindObjectOfType<CharStateMachine>();
+        _playerInput = FindObjectOfType<PlayerInput>();
     }
 
     // Update is called once per frame
@@ -90,7 +103,7 @@ public class IngameUIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else if(SceneManager.GetActiveScene().name != "MainMenu")
+        else if (SceneManager.GetActiveScene().name != "MainMenu")
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -107,6 +120,7 @@ public class IngameUIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
         {
+            OnInteract();
             if (Physics.Raycast(playerRaycastPos.position, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
             {
                 if (hit.transform.tag == "Crafting")
@@ -119,17 +133,29 @@ public class IngameUIManager : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            OnInteract();
+        }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        CheckInteractable();
+
+        if (Input.GetKeyDown(KeyCode.P) && SceneManager.GetActiveScene().name != "MainMenu")
         {
             if (_devPanel)
                 _devPanel.SetActive(!_devPanel.activeSelf);
         }
 
+        HandleHealth();
+
+    }
+
+    void HandleHealth()
+    {
         _healthSliderImage.fillAmount = _charStateMachine.GetHealth() / _charStateMachine.GetMaxHealth();
         _healthTxt.text = $"{_charStateMachine.GetHealth()}/{_charStateMachine.GetMaxHealth()}";
 
-        if(_healthSliderImage.fillAmount * 100 > 70)
+        if (_healthSliderImage.fillAmount * 100 > 70)
         {
             _healthSliderImage.color = _greenHp;
         }
@@ -142,7 +168,6 @@ public class IngameUIManager : MonoBehaviour
                 _healthSliderImage.color = _redHp;
             }
         }
-
     }
 
     public void ToggleInventory()
@@ -216,6 +241,85 @@ public class IngameUIManager : MonoBehaviour
             _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
             _levelText.text = _playerStats.level.ToString();
         }
+    }
+
+    private void CheckInteractable()
+    {
+        if (Physics.SphereCast(_normalCam.transform.position + _shootOffset, _rayRadius, _normalCam.transform.forward, out _interactableHit, _interactRange + 3f))
+        {
+            Debug.DrawRay(_normalCam.transform.position + _shootOffset, _interactableHit.point - _normalCam.transform.position + _shootOffset, Color.red);
+            if (_interactableHit.transform.GetComponent<DroppedItem>())
+            {
+                DroppedItem droppedItem = _interactableHit.transform.GetComponent<DroppedItem>();
+                if (droppedItem.item.Count > 1)
+                {
+                    if (_interactableTxt != null)
+                    {
+                        _interactableTxt.text = $"Press ({_playerInput.actions.FindAction("Interact", true).GetBindingDisplayString()}) to pick up stack of items";
+                    }
+                }
+                else
+                {
+                    if (_interactableTxt != null)
+                    {
+
+                        _interactableTxt.text = $"Press ({_playerInput.actions.FindAction("Interact", true).GetBindingDisplayString()}) to pick up {droppedItem.amount[0]} {droppedItem.item[0].name}";
+                    }
+                }
+                if (_interactPanel != null)
+                {
+                    _interactPanel.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("No InteractPanel Set, Interaction Text Won't Show Up");
+                }
+
+                if (_onInteract)
+                {
+                    _onInteract = false;
+                    for (int i = 0; i < droppedItem.item.Count; i++)
+                    {
+                        if (droppedItem.amount[i] > droppedItem.item[i].maxStack)
+                        {
+                            if (InventoryManager.Instance.HasSpace(droppedItem.item[i], droppedItem.amount[i]))
+                            {
+                                InventoryManager.Instance.AddItem(droppedItem.item[i].itemID, droppedItem.amount[i]);
+                                droppedItem.amount[i] -= droppedItem.amount[i];
+                            }
+                        }
+                        else if (InventoryManager.Instance.HasSpace(droppedItem.item[i], droppedItem.amount[i]))
+                        {
+                            InventoryManager.Instance.AddItem(droppedItem.item[i].itemID, droppedItem.amount[i]);
+                            Destroy(droppedItem.gameObject);
+                            // Debug.Log($"Pressed {_playerInput.actions.FindAction("Interact").GetBindingDisplayString()} To Pick Up {droppedItem.amount} {droppedItem.item}");
+                        }
+                        else
+                        {
+                            // Debug.Log($"[NO SPACE] Pressed {_playerInput.actions.FindAction("Interact").GetBindingDisplayString()} To Pick Up {droppedItem.amount} {droppedItem.item}, but had no room in inventory");
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                if (_interactPanel != null)
+                {
+                    _interactPanel.SetActive(false);
+                    _interactableTxt.text = "";
+                }
+                else
+                {
+                    Debug.LogWarning("No InteractPanel Set, Interaction Text Won't Show Up");
+                }
+            }
+        }
+    }
+
+    void OnInteract()
+    {
+        _onInteract = !_onInteract;
     }
 
     bool IsUIShowing()
