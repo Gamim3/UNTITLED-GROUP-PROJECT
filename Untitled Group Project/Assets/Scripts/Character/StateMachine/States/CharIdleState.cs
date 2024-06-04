@@ -9,7 +9,7 @@ public class CharIdleState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter Idle");
+        // Debug.Log("Enter Idle");
 
         InitializeSubState();
 
@@ -18,7 +18,7 @@ public class CharIdleState : CharBaseState
 
     public override void ExitState()
     {
-        Debug.Log("Exit Idle");
+        // Debug.Log("Exit Idle");
 
         Ctx.IsIdleState = false;
     }

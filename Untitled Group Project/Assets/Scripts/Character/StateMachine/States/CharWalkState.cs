@@ -13,7 +13,7 @@ public class CharWalkState : CharBaseState
 
         Ctx.IsWalkState = true;
 
-        Debug.Log("Walk Enter");
+        // Debug.Log("Walk Enter");
 
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
 

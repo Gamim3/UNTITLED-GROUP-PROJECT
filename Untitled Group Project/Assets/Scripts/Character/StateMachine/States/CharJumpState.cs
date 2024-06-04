@@ -11,7 +11,11 @@ public class CharJumpState : CharBaseState
     {
         InitializeSubState();
 
+        Debug.Log("Enter Jump");
+
         Ctx.IsJumpingState = true;
+
+        Ctx.IsJumpTime = Ctx.MaxJumpTime;
 
         Ctx.IsExitingSlope = true;
 
@@ -60,15 +64,16 @@ public class CharJumpState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsGrounded && !Ctx.IsSloped)
+        // Can only leave jump when jump time has reset
+        if (Ctx.IsGrounded && !Ctx.IsSloped && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Grounded());
         }
-        else if (Ctx.IsSloped)
+        else if (Ctx.IsSloped && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Sloped());
         }
-        else if (!Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction)
+        else if (!Ctx.IsGrounded && !Ctx.IsSloped && !Ctx.IsJumpAction && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Airborne());
         }

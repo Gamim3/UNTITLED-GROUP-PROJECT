@@ -11,7 +11,7 @@ public class CharFreeLookState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter FreeLook");
+        // Debug.Log("Enter FreeLook");
 
         InitializeSubState();
 
@@ -29,7 +29,7 @@ public class CharFreeLookState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update FreeLook");
+        // Debug.Log("Update FreeLook");
 
         CheckSwitchStates();
     }

@@ -11,7 +11,7 @@ public class CharCombatState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter Combat");
+        // Debug.Log("Enter Combat");
 
         InitializeSubState();
 
@@ -25,7 +25,7 @@ public class CharCombatState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update Combat");
+        // Debug.Log("Update Combat");
 
         // Ctx.PlayerAnimator.GetCurrentAnimatorClipInfo(0).
 
@@ -65,13 +65,10 @@ public class CharCombatState : CharBaseState
     {
         if (!Ctx.IsTargetingAction)
         {
-            Debug.Log("FreeLook substate");
-
             SetSubState(Factory.FreeLook());
         }
         else if (Ctx.IsTargetingAction)
         {
-            Debug.Log("Target substate");
             SetSubState(Factory.Target());
         }
     }

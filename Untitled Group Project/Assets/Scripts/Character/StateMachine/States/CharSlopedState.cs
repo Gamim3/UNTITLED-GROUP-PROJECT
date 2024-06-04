@@ -33,6 +33,10 @@ public class CharSlopedState : CharBaseState
 
     public override void UpdateState()
     {
+    }
+
+    public override void FixedUpdateState()
+    {
         Debug.Log("Update Sloped");
 
         Ctx.Movement = Ctx.GetSlopeMoveDirection(Ctx.CurrentMovement);
@@ -44,12 +48,9 @@ public class CharSlopedState : CharBaseState
 
         if (Ctx.PlayerRigidBody.velocity.y > 0 || Ctx.PlayerRigidBody.velocity.y > 0)
         {
-            Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
+            // Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
-    }
 
-    public override void FixedUpdateState()
-    {
         CheckSwitchStates();
     }
 

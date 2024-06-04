@@ -8,7 +8,7 @@ public class CharGroundedState : CharBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter Grounded");
+        // Debug.Log("Enter Grounded");
 
         InitializeSubState();
 
@@ -18,7 +18,6 @@ public class CharGroundedState : CharBaseState
         Ctx.ForceSlowDownRate = 5;
         Ctx.IsAirborneState = false;
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
-        Ctx.IsJumpTime = Ctx.MaxJumpTime;
         Ctx.JumpMent = new Vector3(0, 1, 0);
 
         Ctx.JumpAmount = 1; // idk yet
@@ -31,7 +30,7 @@ public class CharGroundedState : CharBaseState
 
     public override void ExitState()
     {
-        Debug.Log("Exit Grounded");
+        // Debug.Log("Exit Grounded");
 
         Ctx.IsGroundedState = false;
     }
@@ -40,7 +39,7 @@ public class CharGroundedState : CharBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update Grounded");
+        // Debug.Log("Update Grounded");
 
         Ctx.Movement = Ctx.CurrentMovement.normalized;
 
