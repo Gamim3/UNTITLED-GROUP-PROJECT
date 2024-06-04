@@ -360,74 +360,6 @@ MonoBehaviour:
   initialXpGoal: 1000
   xpGoalIncrement: 1.5
   _recipeToUnlock: []
---- !u!1 &4589975699407895581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8029026235438994321}
-  - component: {fileID: 7407614960134601567}
-  - component: {fileID: 1365354571950653931}
-  m_Layer: 0
-  m_Name: Sword Hitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8029026235438994321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4589975699407895581}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: 0.541}
-  m_LocalScale: {x: 0.05, y: 0.55, z: 0.01}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8936063649416227368}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!136 &7407614960134601567
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4589975699407895581}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1365354571950653931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4589975699407895581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfcec789aa786404f8476241cc7703c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4775394006848514904
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,6 +873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfcec789aa786404f8476241cc7703c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageNumberCanvas: {fileID: 771177033710170224, guid: c8686c3fc2fc0e14282278138ce6d23d,
+    type: 3}
+  _minDamage: 5
+  _MaxDamage: 12
 --- !u!1001 &2818053474546000494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1296,10 +1232,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2899674557588442295, guid: b5f0a41089bf35244a56b5c7340672c4,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8029026235438994321}
     - targetCorrespondingSourceObject: {fileID: 2899674557588442295, guid: b5f0a41089bf35244a56b5c7340672c4,
         type: 3}
       insertIndex: -1

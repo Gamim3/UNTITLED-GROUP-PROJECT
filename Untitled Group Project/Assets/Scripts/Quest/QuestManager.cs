@@ -50,7 +50,8 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     private void OnDisable()
     {
-        InventoryManager.Instance.OnItemRecieved -= OnItemRecieved;
+        if (InventoryManager.Instance)
+            InventoryManager.Instance.OnItemRecieved -= OnItemRecieved;
     }
 
     // Update is called once per frame
