@@ -186,7 +186,7 @@ public class MainMenuManager : MonoBehaviour
             return;
         }
 
-        FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
+        // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
         DataPersistenceManager.instance.LoadGame(_currentSaveFileName, _currentSaveDataName);
     }

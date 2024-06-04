@@ -415,14 +415,13 @@ public class FileDataHandler
                 Debug.LogWarning($"{directoryPath}\nexists and will not create another directory");
             }
 
+            data.saveFileName = saveFileName;
+            data.saveType = "manual";
+            data.saveDataName = _saveDataName;
+            data.lastUpdated = DateTime.Now.ToBinary();
 
             if (ScreenShotManager.instance != null)
             {
-                data.saveFileName = saveFileName;
-                data.saveType = "manual";
-                data.saveDataName = _saveDataName;
-                data.lastUpdated = DateTime.Now.ToBinary();
-
                 int dotIndex = _saveDataName.LastIndexOf('.');
                 string tempDataName = _saveDataName.Substring(0, dotIndex);
 

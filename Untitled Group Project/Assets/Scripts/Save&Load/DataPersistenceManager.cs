@@ -23,6 +23,8 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] bool _useEncryption;
     [SerializeField] int _maxAutoSaves;
 
+    [SerializeField] string[] _scenesNotToLoadIn;
+
     public static DataPersistenceManager instance { get; private set; }
 
     private GameData _gameData;
@@ -73,29 +75,30 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu")
+        for (int i = 0; i < _scenesNotToLoadIn.Length; i++)
         {
-            Debug.LogWarning($"Should not load in the {scene.name}");
-            return;
-        }
-        if (scene.name == "Game" || scene.name == "GuildHall")
-        {
-            Debug.LogWarning($"Loaded scene: {scene.name}");
-
-            this._gameData = _dataHandler.LoadSaveFile(_saveFileName, _saveDataName);
-
-            if (this._gameData == null)
+            if (scene.name == _scenesNotToLoadIn[i])
             {
-                Debug.LogWarning($"Should not load when there is no data");
+                Debug.LogWarning($"Should not load in the {scene.name}");
                 return;
             }
-
-            this._dataPersistenceObjects = FindAllDataPersistenceObjects();
-
-            FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_saveFileName, _saveDataName);
-
-            LoadGame(_saveFileName, _saveDataName);
         }
+
+        Debug.LogWarning($"Loaded scene: {scene.name}");
+
+        this._gameData = _dataHandler.LoadSaveFile(_saveFileName, _saveDataName);
+
+        if (this._gameData == null)
+        {
+            Debug.LogWarning($"Should not load when there is no data");
+            return;
+        }
+
+        this._dataPersistenceObjects = FindAllDataPersistenceObjects();
+
+        // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_saveFileName, _saveDataName);
+
+        LoadGame(_saveFileName, _saveDataName);
     }
 
     public bool CheckIfSelectedSaveFileExists(string newSaveFileName)
@@ -229,8 +232,6 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     #endregion
-
-
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {

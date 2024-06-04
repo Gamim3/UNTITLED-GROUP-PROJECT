@@ -51,7 +51,8 @@ public class SaveFile : MonoBehaviour
             _saveFileName = data.saveFileName;
             _saveDataName = data.saveDataName;
 
-            _saveFileNameTxt.text = _saveFileName + "_" + _saveDataName;
+            // _saveFileNameTxt.text = _saveFileName + "_" + _saveDataName;
+            _saveFileNameTxt.text = _saveFileName;
             _saveFileLastPlayedTxt.text = DateTime.FromBinary(data.lastUpdated).ToString();
         }
     }
