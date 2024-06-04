@@ -95,7 +95,7 @@ public class Enemy : Entity
             _questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
 
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = transform.Find("Nav").GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
         startSpeed = _moveSpeed;
 
