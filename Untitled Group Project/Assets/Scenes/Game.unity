@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.014071936, g: 0.014834018, b: 0.018642398, a: 1}
+  m_IndirectSpecularColor: {r: 0.014070118, g: 0.014828714, b: 0.018617334, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -279,6 +279,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0da5b4971f820954a954684bb4329179, type: 3}
+--- !u!20 &54940992 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2007169411157749943, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 54940991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &65592681
 GameObject:
   m_ObjectHideFlags: 0
@@ -5373,7 +5379,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _normalCam
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 54940992}
     - target: {fileID: 2226471404459099375, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: playerInput
@@ -5772,7 +5778,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 140352.34
+      value: 140864.58
       objectReference: {fileID: 0}
     - target: {fileID: 7676625339805020760, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}

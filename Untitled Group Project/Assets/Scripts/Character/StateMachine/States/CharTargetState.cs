@@ -27,7 +27,7 @@ public class CharTargetState : CharBaseState
 
     public override void UpdateState()
     {
-        Ctx.PlayerCam.GetComponent<ThirdPersonCam>().CamTarget.LookAt(Ctx.GetViableTarget());
+        Ctx.CamTarget.LookAt(Ctx.GetViableTarget());
 
         CheckSwitchStates();
     }
