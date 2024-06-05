@@ -12,7 +12,9 @@ public class IngameUIManager : MonoBehaviour
 {
     CharStateMachine _charStateMachine;
     PlayerStats _playerStats;
-    PlayerInput _playerInput;
+
+    [SerializeField] private PlayerInput playerInput = null;
+    public PlayerInput PlayerInput => playerInput; PlayerInput _playerInput;
 
     #region Panels
     [Header("Panels")]
@@ -88,15 +90,15 @@ public class IngameUIManager : MonoBehaviour
         _playerStats = FindObjectOfType<PlayerStats>();
 
         _playerStats.OnXpGained += OnXpGained;
-        _playerInput.actions.FindAction("Pause").started += OnPause;
-        _playerInput.actions.FindAction("Pause").canceled += OnPause;
+        playerInput.actions.FindAction("Pause").started += OnPause;
+        playerInput.actions.FindAction("Pause").started += OnPause;
     }
 
     private void OnDisable()
     {
         _playerStats.OnXpGained -= OnXpGained;
-        _playerInput.actions.FindAction("Pause").started -= OnPause;
-        _playerInput.actions.FindAction("Pause").canceled -= OnPause;
+        playerInput.actions.FindAction("Pause").started -= OnPause;
+        playerInput.actions.FindAction("Pause").canceled -= OnPause;
     }
 
     void Start()
@@ -371,7 +373,7 @@ public class IngameUIManager : MonoBehaviour
 
     void OnPause(InputAction.CallbackContext context)
     {
-        _onPause = context.ReadValue<bool>();
+        _onPause = context.ReadValueAsButton();
         if (_onPause)
         {
             _canPause = false;
