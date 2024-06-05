@@ -358,7 +358,7 @@ public class Enemy : Entity
     {
         float animatorParameter = animator.GetFloat("PlayerLoc");
 
-        if (animatorParameter <= 1 && animatorParameter >= 0)
+        if (animatorParameter <= 1 && animatorParameter >= 0 && playerInSight)
         {
             Vector3 relativePoint = transform.InverseTransformPoint(player.transform.position);
             relativePoint = transform.InverseTransformPoint(player.transform.position);
@@ -414,12 +414,12 @@ public class Enemy : Entity
             }
             else
             {
-                //playerInSight = false;
+                playerInSight = false;
             }
         }
         else if (playerInSight)
         {
-            //playerInSight = false;
+            playerInSight = false;
         }
     }
 
