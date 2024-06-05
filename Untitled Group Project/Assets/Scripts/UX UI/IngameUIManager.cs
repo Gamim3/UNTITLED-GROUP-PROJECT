@@ -10,7 +10,10 @@ using UnityEngine.UI;
 public class IngameUIManager : MonoBehaviour
 {
     CharStateMachine _charStateMachine;
+    PlayerStats _playerStats;
+    PlayerInput _playerInput;
 
+    #region Panels
     [Header("Panels")]
     public GameObject inventoryCanvas;
     public GameObject craftingCanvas;
@@ -19,7 +22,9 @@ public class IngameUIManager : MonoBehaviour
 
     [SerializeField] GameObject _devPanel;
     bool _openedWithCrafting;
+    #endregion
 
+    #region Interacting
     [Header("Interacting")]
     //Debug Raycast, Replace With Actual Player Raycast
     public Transform playerRaycastPos;
@@ -29,7 +34,7 @@ public class IngameUIManager : MonoBehaviour
     public LayerMask interactableLayers;
     RaycastHit _interactableHit;
     [SerializeField] TMP_Text _interactableTxt;
-
+    #endregion
 
     [Header("QuestBoard")]
     [SerializeField] Camera _questBoardCam;
@@ -42,6 +47,7 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] TMP_Text _xpSliderText;
     [SerializeField] TMP_Text _levelText;
 
+    #region Health
     [Header("Health")]
     [SerializeField] Image _healthSliderImage;
     [SerializeField] TMP_Text _healthTxt;
@@ -49,9 +55,24 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] Color _greenHp;
     [SerializeField] Color _yellowHp;
     [SerializeField] Color _redHp;
+    #endregion
 
-    PlayerStats _playerStats;
-    PlayerInput _playerInput;
+    #region Settings
+    [Header("Settings")]
+    [SerializeField] Toggle _toggleRunBtn;
+    [SerializeField] Slider _sensSlider;
+    [SerializeField] Slider _distanceSlider;
+
+    [SerializeField] float _mouseSensitivity;
+    [SerializeField] bool _toggleRun;
+    [SerializeField] float _distanceToCam;
+    #endregion
+    #region PlayerPrefs
+    [Header("PlayerPrefs")]
+    [SerializeField] string _mouseSens;
+    [SerializeField] string _runToggle;
+    [SerializeField] string _camDistance;
+    #endregion
 
     bool _onInteract;
 
@@ -83,13 +104,28 @@ public class IngameUIManager : MonoBehaviour
 
         if (_questBoardCam)
         {
-            // _questBoardCam.enabled = false;
             _questBoardCam.gameObject.SetActive(false);
-            // _normalCam.enabled = true;
             _normalCam.gameObject.SetActive(true);
         }
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+
+        #region PlayerPrefs
+        ChangeSensitivity(PlayerPrefs.GetFloat(_mouseSens));
+        _sensSlider.value = _mouseSensitivity;
+        ChangeCamDistance(PlayerPrefs.GetFloat(_camDistance));
+        _distanceSlider.value = _distanceToCam;
+
+        if (PlayerPrefs.GetInt(_runToggle) == 0)
+        {
+            ToggleRun(false);
+            _toggleRunBtn.isOn = false;
+        }
+        else if (PlayerPrefs.GetInt(_runToggle) == 1)
+        {
+            ToggleRun(true);
+            _toggleRunBtn.isOn = true;
+        }
+
+        #endregion
 
         _charStateMachine = FindObjectOfType<CharStateMachine>();
         _playerInput = FindObjectOfType<PlayerInput>();
@@ -354,6 +390,34 @@ public class IngameUIManager : MonoBehaviour
             _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
             _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
             _levelText.text = _playerStats.level.ToString();
+        }
+
+    }
+
+    public void ChangeSensitivity(float value)
+    {
+        _mouseSensitivity = value;
+        PlayerPrefs.SetFloat(_mouseSens, _mouseSensitivity);
+    }
+
+    public void ChangeCamDistance(float value)
+    {
+        _distanceToCam = value;
+
+        PlayerPrefs.SetFloat(_camDistance, _distanceToCam);
+    }
+
+    public void ToggleRun(bool value = false)
+    {
+
+        _toggleRun = value;
+        if (_toggleRun)
+        {
+            PlayerPrefs.SetInt(_runToggle, 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(_runToggle, 0);
         }
 
     }
