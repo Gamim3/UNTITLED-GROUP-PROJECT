@@ -19,6 +19,9 @@ public class Enemy : Entity
     [SerializeField] float _projectileSpeed;
     [SerializeField] float _projectileDamage;
 
+    [Header("AnimationSettings")]
+    [SerializeField] float neckMoveAmount;
+
     [Header("Distanc/Detection")]
     [SerializeField] float _distance;
 
@@ -52,6 +55,8 @@ public class Enemy : Entity
     [SerializeField] InventoryManager invManager;
 
     private float startSpeed;
+
+    private Animator animator;
 
     //alles hieronder is temporary en word verwijderd wanneer animations er in zitten
     [Header("TempMelee")]
@@ -95,6 +100,8 @@ public class Enemy : Entity
             _questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
 
+        animator = GetComponent<Animator>();
+
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
         startSpeed = _moveSpeed;
@@ -125,6 +132,8 @@ public class Enemy : Entity
 
     public override void Update()
     {
+        CheckIfPlayerIsLeftOrRight();
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             _fuzzyLogicVisuals.SetActive(!_fuzzyLogicVisuals.activeSelf);
@@ -342,6 +351,33 @@ public class Enemy : Entity
                 rightClaw.GetComponent<Collider>().enabled = false;
                 _brain.attackQueue.Dequeue();
             }
+        }
+    }
+
+    public void CheckIfPlayerIsLeftOrRight()
+    {
+        float animatorParameter = animator.GetFloat("PlayerLoc");
+
+        if (animatorParameter <= 1 && animatorParameter >= 0)
+        {
+            Vector3 relativePoint = transform.InverseTransformPoint(player.transform.position);
+            relativePoint = transform.InverseTransformPoint(player.transform.position);
+            if (relativePoint.x < 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.y))
+            {
+                animator.SetFloat("PlayerLoc", animatorParameter + neckMoveAmount);
+            }
+            if (relativePoint.x > 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.y))
+            {
+                animator.SetFloat("PlayerLoc", animatorParameter - neckMoveAmount);
+            }
+        }
+        else if(animatorParameter > 1)
+        {
+            animator.SetFloat("PlayerLoc", animatorParameter - neckMoveAmount);
+        }
+        else if (animatorParameter < 0)
+        {
+            animator.SetFloat("PlayerLoc", animatorParameter + neckMoveAmount);
         }
     }
 

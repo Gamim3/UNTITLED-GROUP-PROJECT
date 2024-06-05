@@ -119,7 +119,7 @@ public class EnemyBrain : MonoBehaviour
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(Healthy) | energy(full) | distance(middle)");
-                attackQueue.Enqueue(Attacks.Engage);
+                attackQueue.Enqueue(Attacks.Charge);
                 enemyState = 2;
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Healthy && _energy == Energy.High && _distance == Distance.Close:
@@ -199,7 +199,7 @@ public class EnemyBrain : MonoBehaviour
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Medium:
                 //("enemy(Healthy) | player(hurt) | energy(full) | distance(middle)");
-                attackQueue.Enqueue(Attacks.Engage);
+                attackQueue.Enqueue(Attacks.Charge);
                 enemyState = 12;
                 break;
             case EnemyHealth state when state == EnemyHealth.Healthy && _playerHealth == PlayerHealth.Hurt && _energy == Energy.High && _distance == Distance.Close:
