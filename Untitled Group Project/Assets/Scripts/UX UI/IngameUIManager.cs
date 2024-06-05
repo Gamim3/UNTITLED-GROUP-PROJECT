@@ -123,6 +123,8 @@ public class IngameUIManager : MonoBehaviour
             _normalCam.gameObject.SetActive(true);
         }
 
+        Time.timeScale = 1;
+
         #region PlayerPrefs
         ChangeSensitivity(PlayerPrefs.GetFloat(_mouseSens));
         _sensSlider.value = _mouseSensitivity;
@@ -141,6 +143,7 @@ public class IngameUIManager : MonoBehaviour
         }
 
         #endregion
+
 
         _charStateMachine = FindObjectOfType<CharStateMachine>();
     }
