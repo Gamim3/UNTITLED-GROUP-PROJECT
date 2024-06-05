@@ -29,6 +29,8 @@ public class EnemyBrain : MonoBehaviour
 
     public void Start()
     {
+        _fuzzyLogic = GetComponent<FuzzyLogic>();
+
         _enemy = GetComponent<Enemy>();
 
         attackQueue = new Queue<Attacks>();
@@ -827,6 +829,7 @@ public class EnemyBrain : MonoBehaviour
         Engage,
         DisengageDash,
         RegainEnergy,
+        Charge,
     }
 
     public enum EnemyHealth
