@@ -419,7 +419,10 @@ public class CharStateMachine : Entity
 
         MoveForce = DesiredMoveForce;
 
-        _playerCam = FindObjectOfType<Camera>();
+        if (_playerCam == null)
+        {
+            _playerCam = Camera.main;
+        }
     }
 
     public override void Start()
