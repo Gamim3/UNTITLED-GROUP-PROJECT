@@ -95,7 +95,7 @@ public class Enemy : Entity
             _questManager = GameObject.Find("QuestManager").GetComponent<QuestManager>();
         }
 
-        _agent = transform.Find("Nav").GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
         startSpeed = _moveSpeed;
 
@@ -108,6 +108,11 @@ public class Enemy : Entity
         startRightClaw = GameObject.Find("TempRightClawStart").transform;
 
         base.Start();
+
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
+        }
 
         //temporary word verwijderd wanneer animations er in zitten
         startEngageTimer = engageTimer;

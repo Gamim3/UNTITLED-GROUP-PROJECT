@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.014070207, g: 0.014829101, b: 0.018618407, a: 1}
+  m_IndirectSpecularColor: {r: 0.014074454, g: 0.01483834, b: 0.018647851, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -279,18 +279,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0da5b4971f820954a954684bb4329179, type: 3}
---- !u!4 &54940992 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4348710489577697380, guid: 0da5b4971f820954a954684bb4329179,
-    type: 3}
-  m_PrefabInstance: {fileID: 54940991}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &54940993 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 6037329053399567748, guid: 0da5b4971f820954a954684bb4329179,
-    type: 3}
-  m_PrefabInstance: {fileID: 54940991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &65592681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,7 +2357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49076e33ca2796409e2fd9b62c3f33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fuzzyLogic: {fileID: 0}
+  _fuzzyLogic: {fileID: 878996614}
   _decisionTime: 1
   _notImplementedAttacks: 00000000050000000300000009000000
   attacksCurrentlyInQueue: 
@@ -2442,7 +2430,7 @@ MonoBehaviour:
   radius: 50
   angle: 90
   _delay: 0.2
-  player: {fileID: 2043555844}
+  player: {fileID: 1165769283}
   _targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -2453,7 +2441,8 @@ MonoBehaviour:
   _projectile: {fileID: 4043281210981400423, guid: 29768c9ecc0e18a48ad302a1c8781f3d,
     type: 3}
   _projectileSpawnPosition: {fileID: 9023533189939689907}
-  _brain: {fileID: 0}
+  _brain: {fileID: 878996613}
+  _logic: {fileID: 878996614}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
   otherCanvas: {fileID: 698485939}
@@ -4112,6 +4101,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1165769283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2845915322674470586, guid: 0da5b4971f820954a954684bb4329179,
+    type: 3}
+  m_PrefabInstance: {fileID: 54940991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1171924918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5332,7 +5327,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _normalCam
       value: 
-      objectReference: {fileID: 54940993}
+      objectReference: {fileID: 0}
     - target: {fileID: 2226471404459099375, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: _questBoardCam
@@ -5342,7 +5337,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerRaycastPos
       value: 
-      objectReference: {fileID: 54940992}
+      objectReference: {fileID: 0}
     - target: {fileID: 3371018676814297907, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5691,7 +5686,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 129083.19
+      value: 130107.66
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
@@ -7422,12 +7417,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1153904772}
   m_SourcePrefab: {fileID: 100100000, guid: ae48d11817e30ec43a25ecdb71f876f4, type: 3}
---- !u!1 &2043555844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5084649862138811404, guid: 0da5b4971f820954a954684bb4329179,
-    type: 3}
-  m_PrefabInstance: {fileID: 54940991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2095433593 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2615773574545420825, guid: ae48d11817e30ec43a25ecdb71f876f4,

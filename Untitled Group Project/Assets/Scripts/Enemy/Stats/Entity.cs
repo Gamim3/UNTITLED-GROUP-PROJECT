@@ -14,18 +14,10 @@ public class Entity : MonoBehaviour
     protected float _maxHealth;
     protected float _maxEnergy;
 
-    [NonSerialized] protected FuzzyLogic _logic;
-
     public virtual void Start()
     {
-
         _maxHealth = _healthPoints;
-        if (SceneManager.GetActiveScene().name == "Game")
-        {
-            _maxEnergy = _energy;
-
-            _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
-        }
+        _maxEnergy = _energy;
     }
 
     public virtual void Update()

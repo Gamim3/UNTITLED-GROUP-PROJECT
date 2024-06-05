@@ -85,22 +85,6 @@ public class CharStateMachine : Entity
 
     #endregion
 
-    [Header("Stamina")]    // Inherits Energy From Entity so it should not need its own stamina
-    #region Stamina
-
-
-    // [SerializeField] float _stamina;
-    // public float Stamina
-    // { get { return _stamina; } set { _stamina = value; } }
-
-    // [SerializeField] float _maxStamina;
-    // public float MaxStamina
-    // { get { return _maxStamina; } }
-
-    // [SerializeField] float _staminaDecreaseMultiplier;
-
-    #endregion
-
     [Header("Jumping")]
     #region Jumping
 
@@ -163,8 +147,8 @@ public class CharStateMachine : Entity
 
     #endregion
 
-    [Header("Camera")]
-    #region Camera
+    [Header("FreeLook")]
+    #region FreeLook
 
     [SerializeField] Transform _camFollow;
     public Transform CamFollow
@@ -360,6 +344,10 @@ public class CharStateMachine : Entity
     public bool IsSlopedState
     { get { return _isSlopedState; } set { _isSlopedState = value; } }
 
+    [SerializeField] bool _isJumpingState;
+    public bool IsJumpingState
+    { get { return _isJumpingState; } set { _isJumpingState = value; } }
+
     #endregion
 
     #region SubState
@@ -375,10 +363,6 @@ public class CharStateMachine : Entity
     [SerializeField] bool _isRunState;
     public bool IsRunState
     { get { return _isRunState; } set { _isRunState = value; } }
-
-    [SerializeField] bool _isJumpingState;
-    public bool IsJumpingState
-    { get { return _isJumpingState; } set { _isJumpingState = value; } }
 
     [SerializeField] bool _isDashingState;
     public bool IsDashingState
@@ -421,12 +405,9 @@ public class CharStateMachine : Entity
 
     private void Awake()
     {
-        // DontDestroyOnLoad(this);
-
         _states = new CharStateFactory(this);
         _currentState = _states.Combat();
         _currentState.EnterState();
-
 
         _playerAnimator.SetTrigger("Grounded");
 
@@ -552,10 +533,11 @@ public class CharStateMachine : Entity
 
         LastDesiredMoveForce = DesiredMoveForce;
 
-        if (_logic != null)
-        {
-            _logic.playerHealth = _healthPoints / _maxHealth * 100;
-        }
+        // Possible Problem with logic ask niels
+        // if (_logic != null) 
+        // {
+        //     _logic.playerHealth = _healthPoints / _maxHealth * 100;
+        // }
 
         if (_healthPoints <= 0)
         {

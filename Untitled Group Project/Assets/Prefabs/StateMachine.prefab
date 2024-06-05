@@ -3123,10 +3123,10 @@ MonoBehaviour:
   _isGroundedState: 0
   _isAirborneState: 0
   _isSlopedState: 0
+  _isJumpingState: 0
   _isIdleState: 0
   _isWalkState: 0
   _isRunState: 0
-  _isJumpingState: 0
   _isDashingState: 0
   _isForced: 0
   _extraForce: 0
@@ -13212,10 +13212,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 2314372055491885887}
+  _stateMachine: {fileID: 266349427911377170}
   _orientation: {fileID: 6687638530507166595}
   _playerObj: {fileID: 8071513859085972249}
   _camTarget: {fileID: 6277244278688490470}
   mouseSensitivity: 3
+  _playerRotationSpeed: 30
   _minXRotation: 60
   _maxXRotation: 70
 --- !u!114 &7945605456643408265
