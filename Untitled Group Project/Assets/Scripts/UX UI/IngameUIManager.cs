@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class IngameUIManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class IngameUIManager : MonoBehaviour
     public GameObject craftingCanvas;
     public GameObject hudCanvas;
     [SerializeField] GameObject _interactPanel;
+    [SerializeField] GameObject _pausePanel;
 
     [SerializeField] GameObject _devPanel;
     bool _openedWithCrafting;
@@ -75,18 +77,28 @@ public class IngameUIManager : MonoBehaviour
     #endregion
 
     bool _onInteract;
+    bool _onPause;
+
+
+    bool _canPause;
+    [SerializeField] bool _paused;
 
     private void OnEnable()
     {
         _playerStats = FindObjectOfType<PlayerStats>();
+
         _playerStats.OnXpGained += OnXpGained;
+        _playerInput.actions.FindAction("Pause").started += OnPause;
+        _playerInput.actions.FindAction("Pause").canceled += OnPause;
     }
 
     private void OnDisable()
     {
         _playerStats.OnXpGained -= OnXpGained;
+        _playerInput.actions.FindAction("Pause").started -= OnPause;
+        _playerInput.actions.FindAction("Pause").canceled -= OnPause;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         _xpSliderImage = _xpBar.GetChild(2).GetComponent<Image>();
@@ -131,7 +143,6 @@ public class IngameUIManager : MonoBehaviour
         _playerInput = FindObjectOfType<PlayerInput>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsUIShowing())
@@ -358,6 +369,25 @@ public class IngameUIManager : MonoBehaviour
         _onInteract = !_onInteract;
     }
 
+    void OnPause(InputAction.CallbackContext context)
+    {
+        _onPause = context.ReadValue<bool>();
+        if (_onPause)
+        {
+            _canPause = false;
+            if (!_paused)
+                Pause();
+            else
+            {
+                Resume();
+            }
+        }
+        else
+        {
+            _canPause = true;
+        }
+    }
+
     bool IsUIShowing()
     {
         if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf)
@@ -420,5 +450,19 @@ public class IngameUIManager : MonoBehaviour
             PlayerPrefs.SetInt(_runToggle, 0);
         }
 
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        _pausePanel.SetActive(true);
+        _paused = true;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        _pausePanel.SetActive(false);
+        _paused = false;
     }
 }
