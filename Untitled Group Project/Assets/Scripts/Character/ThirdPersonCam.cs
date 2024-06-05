@@ -6,15 +6,22 @@ public class ThirdPersonCam : MonoBehaviour
 {
     [SerializeField] PlayerInput _playerInput;
 
+    [SerializeField] CharStateMachine _stateMachine;
+
     [SerializeField] Transform _orientation;
     [SerializeField] Transform _playerObj;
+
     [SerializeField] Transform _camTarget;
     public Transform CamTarget
     { get { return _camTarget; } }
 
     public float mouseSensitivity;
 
+    [SerializeField] float _playerRotationSpeed;
+
     Vector2 _camInput;
+
+    Vector3 inputDir;
 
     float _yRotation;
     float _xRotation;
@@ -44,6 +51,8 @@ public class ThirdPersonCam : MonoBehaviour
 
     void Update()
     {
+
+
         if (_playerInput.currentActionMap == _playerInput.actions.FindActionMap("Menu"))
         {
             return;
@@ -61,6 +70,13 @@ public class ThirdPersonCam : MonoBehaviour
 
         _camTarget.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
 
-        _playerObj.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
+        Vector3 viewDir = _stateMachine.transform.position - new Vector3(transform.position.x, _stateMachine.transform.position.y, transform.position.z);
+        _orientation.forward = viewDir.normalized;
+
+        inputDir = _orientation.forward * _stateMachine.CurrentMovementInput.y + _orientation.right * _stateMachine.CurrentMovementInput.x;
+
+        Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
+        _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _playerRotationSpeed);
+        // _playerObj.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
     }
 }
