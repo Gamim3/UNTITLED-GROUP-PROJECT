@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 2474588646975231675}
   - component: {fileID: 3661247934960519288}
   - component: {fileID: 6608896235278997599}
-  - component: {fileID: 383694325973981358}
   m_Layer: 0
   m_Name: CinemachineCam
   m_TagString: CineMachine
@@ -220,18 +219,3 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &383694325973981358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7666701100467316711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Offset: {x: 0, y: 0, z: -1.5}
-  m_ApplyAfter: 1
-  m_PreserveComposition: 0

@@ -3085,11 +3085,11 @@ MonoBehaviour:
   _isExitingSlope: 0
   _maxSlopeAngle: 360
   _playerHeight: 2
-  _camFollow: {fileID: 0}
-  _camLookAt: {fileID: 0}
-  _playerRotationSpeed: 0
-  _rotationThreshold: 0
-  _targetRadius: 8
+  _camTarget: {fileID: 6277244278688490470}
+  _minXRotation: 60
+  _maxXRotation: 70
+  _playerRotationSpeed: 30
+  _targetRadius: 3
   _targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3098,6 +3098,7 @@ MonoBehaviour:
   _currentTarget: {fileID: 0}
   _nextTarget: {fileID: 0}
   _isMoveAction: 0
+  _isCamAction: {x: 0, y: 0}
   _isJumpAction: 0
   _isRunAction: 0
   _isAttack1Action: 0
@@ -3105,8 +3106,8 @@ MonoBehaviour:
   _isTargetingAction: 0
   _isDashAction: 0
   _toggleRun: 0
-  _camSensitivity: 0
-  _camOffset: {fileID: 2630696935270361986}
+  _mouseSensitivity: 8
+  _camOffset: {fileID: 0}
   _camOffsetX: 0
   _camOffsetY: 0
   _camOffsetZ: 0
@@ -13038,7 +13039,6 @@ GameObject:
   - component: {fileID: 4465858558087263402}
   - component: {fileID: 5139870838372712158}
   - component: {fileID: 7658084215533734467}
-  - component: {fileID: 7651775128225136038}
   - component: {fileID: 7945605456643408265}
   m_Layer: 0
   m_Name: Camera
@@ -13055,8 +13055,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7662511651959291136}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.098516874, y: -0.020415192, z: 0.0020215022, w: 0.9949239}
-  m_LocalPosition: {x: 0.06033723, y: 1.6941742, z: -3.469633}
+  m_LocalRotation: {x: 0.06622726, y: -0, z: -0, w: 0.9978046}
+  m_LocalPosition: {x: 0, y: 1.4, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13199,27 +13199,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7651775128225136038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7662511651959291136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3935f35c06bbe984b8b2f1b313dc0f95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerInput: {fileID: 2314372055491885887}
-  _stateMachine: {fileID: 266349427911377170}
-  _orientation: {fileID: 6687638530507166595}
-  _playerObj: {fileID: 8071513859085972249}
-  _camTarget: {fileID: 6277244278688490470}
-  mouseSensitivity: 3
-  _playerRotationSpeed: 30
-  _minXRotation: 60
-  _maxXRotation: 70
 --- !u!114 &7945605456643408265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15773,27 +15752,27 @@ PrefabInstance:
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9949239
+      value: 0.9978046
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.098516874
+      value: 0.06622726
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.020415192
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0020215022
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
@@ -15820,12 +15799,23 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 6277244278688490470}
+    - target: {fileID: 6731412389468629018, guid: 9c5fe650f0139e24bb8396a4884f573f,
+        type: 3}
+      propertyPath: m_ScreenX
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7666701100467316711, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_Name
       value: CinemachineCam
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7756881678172928458, guid: 9c5fe650f0139e24bb8396a4884f573f,
+        type: 3}
+      propertyPath: ShoulderOffset.z
+      value: -1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 383694325973981358, guid: 9c5fe650f0139e24bb8396a4884f573f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -15846,17 +15836,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2630696935270361986 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 383694325973981358, guid: 9c5fe650f0139e24bb8396a4884f573f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2436793848999752492}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

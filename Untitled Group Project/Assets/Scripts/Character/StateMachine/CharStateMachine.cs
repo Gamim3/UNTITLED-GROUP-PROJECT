@@ -150,29 +150,29 @@ public class CharStateMachine : Entity
     [Header("FreeLook")]
     #region FreeLook
 
-    [SerializeField] Transform _camFollow;
-    public Transform CamFollow
-    { get { return _camFollow; } set { _camFollow = value; } }
+    [SerializeField] Transform _camTarget;
+    public Transform CamTarget
+    { get { return _camTarget; } set { _camTarget = value; } }
 
-    [SerializeField] Transform _camLookAt;
-    public Transform CamLookAt
-    { get { return _camLookAt; } set { _camLookAt = value; } }
+    [SerializeField] float _minXRotation;
+    public float MinXRotation
+    { get { return _minXRotation; } }
+
+    [SerializeField] float _maxXRotation;
+    public float MaxXRotation
+    { get { return _maxXRotation; } }
 
     [SerializeField] float _playerRotationSpeed;
     public float PlayerRotationSpeed
     { get { return _playerRotationSpeed; } }
 
-    [SerializeField] float _rotationThreshold;
-    public float RotationThreshold
-    { get { return _rotationThreshold; } }
+    float _yRotation;
+    public float YRotation
+    { get { return _yRotation; } set { _yRotation = value; } }
 
-    Quaternion _currentCamRotation;
-    public Quaternion CurrentCamRotation
-    { get { return _currentCamRotation; } set { _currentCamRotation = value; } }
-
-    Quaternion _previousCamRotation;
-    public Quaternion PreviousCamRotation
-    { get { return _previousCamRotation; } set { _previousCamRotation = value; } }
+    float _xRotation;
+    public float XRotation
+    { get { return _xRotation; } set { _xRotation = value; } }
 
     #endregion
 
@@ -216,6 +216,10 @@ public class CharStateMachine : Entity
     public bool IsMoveAction
     { get { return _isMoveAction; } }
 
+    [SerializeField] Vector2 _isCamAction;
+    public Vector3 IsCamAction
+    { get { return _isCamAction; } }
+
     [SerializeField] bool _isJumpAction;
     public bool IsJumpAction
     { get { return _isJumpAction; } }
@@ -249,9 +253,9 @@ public class CharStateMachine : Entity
     public bool ToggleRun
     { get { return ToggleRun1; } }
 
-    [SerializeField] float _camSensitivity;
-    public float CamSensitivity
-    { get { return _camSensitivity; } }
+    [SerializeField] float _mouseSensitivity;
+    public float MouseSensitivity
+    { get { return _mouseSensitivity; } }
 
     [SerializeField] CinemachineCameraOffset _camOffset;
     public CinemachineCameraOffset CamOffset
@@ -429,6 +433,10 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Move").performed += OnMovement;
         playerInput.actions.FindAction("Move").canceled += OnMovement;
 
+        playerInput.actions.FindAction("Camera").started += OnCamera;
+        playerInput.actions.FindAction("Camera").performed += OnCamera;
+        playerInput.actions.FindAction("Camera").canceled += OnCamera;
+
         playerInput.actions.FindAction("Jump").started += OnJump;
         playerInput.actions.FindAction("Jump").performed += OnJump;
         playerInput.actions.FindAction("Jump").canceled += OnJump;
@@ -459,6 +467,10 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Move").started -= OnMovement;
         playerInput.actions.FindAction("Move").performed -= OnMovement;
         playerInput.actions.FindAction("Move").canceled -= OnMovement;
+
+        playerInput.actions.FindAction("Camera").started -= OnCamera;
+        playerInput.actions.FindAction("Camera").performed -= OnCamera;
+        playerInput.actions.FindAction("Camera").canceled -= OnCamera;
 
         playerInput.actions.FindAction("Jump").started -= OnJump;
         playerInput.actions.FindAction("Jump").performed -= OnJump;
@@ -558,6 +570,11 @@ public class CharStateMachine : Entity
     {
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMoveAction = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
+    }
+
+    void OnCamera(InputAction.CallbackContext context)
+    {
+        _isCamAction = context.ReadValue<Vector2>();
     }
 
     void OnJump(InputAction.CallbackContext context)

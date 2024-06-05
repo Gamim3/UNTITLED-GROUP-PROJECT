@@ -19,7 +19,9 @@ public class ThirdPersonCam : MonoBehaviour
 
     [SerializeField] float _playerRotationSpeed;
 
-    Vector2 _camInput;
+
+    Vector2 cam;
+    float camY_;
 
     Vector3 inputDir;
 
@@ -31,22 +33,22 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerInput.actions.FindAction("Camera").started += OnCamera;
-        _playerInput.actions.FindAction("Camera").performed += OnCamera;
-        _playerInput.actions.FindAction("Camera").canceled += OnCamera;
+        _playerInput.actions.FindAction("Mouse").started += OnCamera;
+        _playerInput.actions.FindAction("Mouse").performed += OnCamera;
+        _playerInput.actions.FindAction("Mouse").canceled += OnCamera;
     }
 
     private void OnDisable()
     {
-        _playerInput.actions.FindAction("Camera").started -= OnCamera;
-        _playerInput.actions.FindAction("Camera").performed -= OnCamera;
-        _playerInput.actions.FindAction("Camera").canceled -= OnCamera;
+        _playerInput.actions.FindAction("Mouse").started -= OnCamera;
+        _playerInput.actions.FindAction("Mouse").performed -= OnCamera;
+        _playerInput.actions.FindAction("Mouse").canceled -= OnCamera;
     }
 
 
     void OnCamera(InputAction.CallbackContext context)
     {
-        _camInput = context.ReadValue<Vector2>();
+        cam = context.ReadValue<Vector2>();
     }
 
     void Update()
@@ -60,8 +62,11 @@ public class ThirdPersonCam : MonoBehaviour
 
         _orientation.forward = _playerObj.forward.normalized;
 
-        float mouseY = _camInput.y * mouseSensitivity;
-        float mouseX = _camInput.x * mouseSensitivity;
+        float mouseY = cam.y * mouseSensitivity * Time.deltaTime;
+        float mouseX = cam.x * mouseSensitivity * Time.deltaTime;
+
+        // float inputx = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        // float inputy = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         _yRotation += mouseX;
         _xRotation -= mouseY;
@@ -70,13 +75,13 @@ public class ThirdPersonCam : MonoBehaviour
 
         _camTarget.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
 
-        Vector3 viewDir = _stateMachine.transform.position - new Vector3(transform.position.x, _stateMachine.transform.position.y, transform.position.z);
-        _orientation.forward = viewDir.normalized;
 
-        inputDir = _orientation.forward * _stateMachine.CurrentMovementInput.y + _orientation.right * _stateMachine.CurrentMovementInput.x;
 
-        Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
-        _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _playerRotationSpeed);
-        // _playerObj.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
+        // _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _playerRotationSpeed);
     }
 }
+
+// _orientation.forward = viewDir.normalized;
+// Vector3 viewDir = _stateMachine.transform.position - new Vector3(transform.position.x, _stateMachine.transform.position.y, transform.position.z);
+// Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
+// inputDir = _orientation.forward * _stateMachine.CurrentMovementInput.y + _orientation.right * _stateMachine.CurrentMovementInput.x;
