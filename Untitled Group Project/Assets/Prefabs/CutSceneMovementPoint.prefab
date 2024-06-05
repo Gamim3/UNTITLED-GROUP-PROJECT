@@ -121,7 +121,6 @@ MonoBehaviour:
   _cutsceneRebinding: {fileID: 0}
   _canStartTimer: 0
   _maxSaveTime: 0.5
-  test: 0
   _timeToSave: 0
   _material: {fileID: 0}
   _renderer: {fileID: 7731980060499852867}
@@ -140,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2682807323492011935
 Transform:
   m_ObjectHideFlags: 0

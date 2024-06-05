@@ -17,14 +17,14 @@ public class CharFreeLookState : CharBaseState
 
         Ctx.IsFreeLookState = true;
 
-        Ctx.FreeLookCam.gameObject.SetActive(true);
+        // Ctx.FreeLookCam.gameObject.SetActive(true);
     }
 
     public override void ExitState()
     {
         Ctx.IsFreeLookState = false;
 
-        Ctx.FreeLookCam.gameObject.SetActive(false);
+        // Ctx.FreeLookCam.gameObject.SetActive(false);
     }
 
     public override void UpdateState()

@@ -1,100 +1,66 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonCam : MonoBehaviour
 {
-    [SerializeField]
-    Transform _orientation,
-    _player,
-    _camHolder,
-    _playerObj;
+    [SerializeField] PlayerInput _playerInput;
 
-    [SerializeField]
-    private float _rotationSpeed;
+    [SerializeField] Transform _orientation;
+    [SerializeField] Transform _playerObj;
+    [SerializeField] Transform _camTarget;
+    public Transform CamTarget
+    { get { return _camTarget; } }
 
-    [SerializeField]
-    private CharStateMachine _stateMachine;
+    public float mouseSensitivity;
 
-    float inputY;
-    float inputX;
+    Vector2 _camInput;
 
-    float oldInputY;
-    float oldInputX;
+    float _yRotation;
+    float _xRotation;
 
+    [SerializeField] float _minXRotation;
+    [SerializeField] float _maxXRotation;
 
-    Vector3 inputDir;
-
-    Quaternion currentCameraRotation;
-    Quaternion previousCameraRotation;
-
-    [SerializeField] float _rotationThreshold;
-
-
-    [SerializeField] List<GameObject> _cinemachineCams = new List<GameObject>();
-
-    private void Start()
+    private void OnEnable()
     {
-        // DontDestroyOnLoad(_camHolder);
-        _stateMachine = FindObjectOfType<CharStateMachine>();
+        _playerInput.actions.FindAction("Camera").started += OnCamera;
+        _playerInput.actions.FindAction("Camera").performed += OnCamera;
+        _playerInput.actions.FindAction("Camera").canceled += OnCamera;
+    }
 
-        _cinemachineCams.Add(GameObject.FindGameObjectWithTag("CineMachine"));
+    private void OnDisable()
+    {
+        _playerInput.actions.FindAction("Camera").started -= OnCamera;
+        _playerInput.actions.FindAction("Camera").performed -= OnCamera;
+        _playerInput.actions.FindAction("Camera").canceled -= OnCamera;
+    }
 
-        for (int i = 0; i < _cinemachineCams.Count; i++)
-        {
-            // DontDestroyOnLoad(_cinemachineCams[i]);
-        }
 
-        _orientation = _stateMachine.Orientation;
-        _player = _stateMachine.transform;
-        _playerObj = _stateMachine.PlayerObj;
+    void OnCamera(InputAction.CallbackContext context)
+    {
+        _camInput = context.ReadValue<Vector2>();
     }
 
     void Update()
     {
-        Vector3 viewDir = _player.position - new Vector3(transform.position.x, _player.position.y, transform.position.z);
-        _orientation.forward = viewDir.normalized;
-
-        inputDir = _orientation.forward * _stateMachine.CurrentMovementInput.y + _orientation.right * _stateMachine.CurrentMovementInput.x;
-        inputY = _stateMachine.CurrentMovementInput.y;
-        inputX = _stateMachine.CurrentMovementInput.x;
-
-        inputDir.y = 0;
-
-        currentCameraRotation = transform.rotation;
-        float rotationChange = Quaternion.Angle(currentCameraRotation, previousCameraRotation);
-
-        if (_stateMachine.IsAirborneState && rotationChange > _rotationThreshold)
+        if (_playerInput.currentActionMap == _playerInput.actions.FindActionMap("Menu"))
         {
-            Quaternion lookRotation = Quaternion.LookRotation(viewDir, Vector3.up);
-            _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
-            previousCameraRotation = currentCameraRotation;
-        }
-        else if (inputDir != Vector3.zero && !_stateMachine.IsAirborneState)
-        {
-
-
-            if (inputY == -oldInputY && inputY == 1f || inputY == -oldInputY && inputY == -1f || inputX == -oldInputX && inputX == 1f || inputX == -oldInputX && inputX == -1f)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
-                _playerObj.transform.rotation = lookRotation;
-            }
-            else
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
-                _playerObj.transform.rotation = Quaternion.Slerp(_playerObj.transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
-            }
-
+            return;
         }
 
-        if (inputY != 0)
-        {
-            oldInputY = inputY;
-            oldInputX = inputX;
-        }
-        if (inputX != 0)
-        {
-            oldInputX = inputX;
-            oldInputY = inputY;
-        }
+        _orientation.forward = _playerObj.forward.normalized;
+
+        float mouseY = _camInput.y * mouseSensitivity;
+        float mouseX = _camInput.x * mouseSensitivity;
+
+        _yRotation += mouseX;
+        _xRotation -= mouseY;
+
+        _xRotation = Mathf.Clamp(_xRotation, -_minXRotation, _maxXRotation);
+
+        _camTarget.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+
+        _playerObj.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
     }
 }

@@ -219,9 +219,9 @@ public class CharStateMachine : Entity
     public Transform NextTarget
     { get { return _nextTarget; } }
 
-    [SerializeField] CinemachineVirtualCamera _targetCam;
-    public CinemachineVirtualCamera TargetCam
-    { get { return _targetCam; } }
+    // [SerializeField] CinemachineVirtualCamera _targetCam;
+    // public CinemachineVirtualCamera TargetCam
+    // { get { return _targetCam; } }
 
     #endregion
 

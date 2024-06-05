@@ -15,7 +15,6 @@ public class CharTargetState : CharBaseState
 
         Ctx.IsTargetingState = true;
 
-        Ctx.TargetCam.gameObject.SetActive(true);
         // Ctx.CurrentTarget = Ctx.GetViableTarget();
     }
 
@@ -23,11 +22,13 @@ public class CharTargetState : CharBaseState
     {
         Ctx.IsTargetingState = false;
 
-        Ctx.TargetCam.gameObject.SetActive(false);
+        // Ctx.TargetCam.gameObject.SetActive(false);
     }
 
     public override void UpdateState()
     {
+        Ctx.PlayerCam.GetComponent<ThirdPersonCam>().CamTarget.LookAt(Ctx.GetViableTarget());
+
         CheckSwitchStates();
     }
 
