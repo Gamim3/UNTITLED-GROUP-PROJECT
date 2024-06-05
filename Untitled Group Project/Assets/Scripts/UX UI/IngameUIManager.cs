@@ -88,6 +88,7 @@ public class IngameUIManager : MonoBehaviour
     private void OnEnable()
     {
         _playerStats = FindObjectOfType<PlayerStats>();
+        _playerInput = FindObjectOfType<PlayerInput>();
 
         _playerStats.OnXpGained += OnXpGained;
         playerInput.actions.FindAction("Pause").started += OnPause;
@@ -142,7 +143,6 @@ public class IngameUIManager : MonoBehaviour
         #endregion
 
         _charStateMachine = FindObjectOfType<CharStateMachine>();
-        _playerInput = FindObjectOfType<PlayerInput>();
     }
 
     void Update()
@@ -466,5 +466,12 @@ public class IngameUIManager : MonoBehaviour
         Time.timeScale = 1;
         _pausePanel.SetActive(false);
         _paused = false;
+    }
+
+    public void MainMenu()
+    {
+        if (DataPersistenceManager.instance)
+            DataPersistenceManager.instance.SaveAutoGame();
+        SceneManager.LoadScene("MainMenu");
     }
 }
