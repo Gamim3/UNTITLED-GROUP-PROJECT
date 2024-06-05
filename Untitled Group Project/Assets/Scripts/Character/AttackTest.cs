@@ -9,6 +9,8 @@ public class AttackTest : MonoBehaviour
     [SerializeField] int _minDamage = 5;
     [SerializeField] int _MaxDamage = 12;
 
+    [SerializeField] Vector3 _spawnOffset = new Vector3(0, 2, 0);
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -20,7 +22,7 @@ public class AttackTest : MonoBehaviour
             {
                 StartCoroutine(HitPause());
             }
-            Transform damageCanvas = Instantiate(_damageNumberCanvas, other.transform.position, Quaternion.identity).transform;
+            Transform damageCanvas = Instantiate(_damageNumberCanvas, other.transform.position + _spawnOffset, Quaternion.identity).transform;
             damageCanvas.LookAt(Camera.main.transform.position);
             damageCanvas.GetComponentInChildren<TMP_Text>().text = damageToDo.ToString();
             Destroy(damageCanvas.gameObject, 3f);

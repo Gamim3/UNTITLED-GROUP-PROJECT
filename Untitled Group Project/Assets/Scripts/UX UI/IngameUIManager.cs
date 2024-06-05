@@ -390,7 +390,7 @@ public class IngameUIManager : MonoBehaviour
 
     bool IsUIShowing()
     {
-        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf)
+        if (inventoryCanvas.GetComponent<Canvas>().enabled || craftingCanvas.GetComponent<Canvas>().enabled || _devPanel.activeSelf || _pausePanel.activeSelf)
         {
             return true;
         }
