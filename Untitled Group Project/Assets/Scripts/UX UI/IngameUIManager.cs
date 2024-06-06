@@ -21,6 +21,7 @@ public class IngameUIManager : MonoBehaviour
     public GameObject inventoryCanvas;
     public GameObject craftingCanvas;
     public GameObject hudCanvas;
+    public GameObject upgradesCanvas;
     [SerializeField] GameObject _interactPanel;
     [SerializeField] GameObject _pausePanel;
 
@@ -81,8 +82,6 @@ public class IngameUIManager : MonoBehaviour
     bool _onInteract;
     bool _onPause;
 
-
-    bool _canPause;
     [SerializeField] bool _paused;
 
     private void OnEnable()
@@ -98,8 +97,11 @@ public class IngameUIManager : MonoBehaviour
     private void OnDisable()
     {
         _playerStats.OnXpGained -= OnXpGained;
-        playerInput.actions.FindAction("Pause").started -= OnPause;
-        playerInput.actions.FindAction("Pause").canceled -= OnPause;
+        if (playerInput != null)
+        {
+            playerInput.actions.FindAction("Pause").started -= OnPause;
+            playerInput.actions.FindAction("Pause").canceled -= OnPause;
+        }
     }
 
     void Start()
@@ -116,6 +118,8 @@ public class IngameUIManager : MonoBehaviour
 
 
         hudCanvas.GetComponent<Canvas>().enabled = false;
+        upgradesCanvas.GetComponent<Canvas>().enabled = false;
+        upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 
         if (_questBoardCam)
         {
@@ -173,15 +177,19 @@ public class IngameUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
         {
             OnInteract();
-            if (Physics.Raycast(playerRaycastPos.position, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
+            if (Physics.Raycast(playerRaycastPos.position + _shootOffset, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
             {
-                if (hit.transform.tag == "Crafting")
+                if (hit.transform.CompareTag("Crafting"))
                 {
                     ToggleCrafting();
                 }
                 else if (hit.transform.GetComponent<QuestBoardManager>())
                 {
                     ToggleQuestBoard();
+                }
+                else if (hit.transform.CompareTag("Upgrade"))
+                {
+                    ToggleUpgrades();
                 }
             }
         }
@@ -279,6 +287,21 @@ public class IngameUIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+    }
+
+    void ToggleUpgrades()
+    {
+        if (craftingCanvas.GetComponent<Canvas>().enabled)
+        {
+            ToggleCrafting();
+        }
+        if (!inventoryCanvas.GetComponent<Canvas>().enabled && !upgradesCanvas.GetComponent<Canvas>().enabled ||
+        inventoryCanvas.GetComponent<Canvas>().enabled && upgradesCanvas.GetComponent<Canvas>().enabled)
+        {
+            ToggleInventory();
+        }
+        upgradesCanvas.GetComponent<Canvas>().enabled = !upgradesCanvas.GetComponent<Canvas>().enabled;
+        upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = upgradesCanvas.GetComponent<Canvas>().enabled;
     }
 
     void OnXpGained(int xpAmount)
@@ -379,17 +402,12 @@ public class IngameUIManager : MonoBehaviour
         _onPause = context.ReadValueAsButton();
         if (_onPause)
         {
-            _canPause = false;
             if (!_paused)
                 Pause();
             else
             {
                 Resume();
             }
-        }
-        else
-        {
-            _canPause = true;
         }
     }
 

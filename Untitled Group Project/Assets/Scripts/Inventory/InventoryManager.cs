@@ -240,17 +240,24 @@ public class InventoryManager : MonoBehaviour
 
         if (spawnposition != null)
         {
-            droppedItem = Instantiate(itemToDrop.itemPrefab, spawnposition.position, Quaternion.identity);
+            if (itemToDrop.itemPrefab != null)
+            {
+                droppedItem = Instantiate(itemToDrop.itemPrefab, spawnposition.position, Quaternion.identity);
+                droppedItem.transform.GetComponent<DroppedItem>().item.Add(itemToDrop);
+                droppedItem.transform.GetComponent<DroppedItem>().amount.Add(amount);
+                Debug.Log($"Succesfully Dropped {amount} {itemToDrop}.");
+            }
         }
         else
         {
-            droppedItem = Instantiate(itemToDrop.itemPrefab, player.transform.position, Quaternion.identity);
+            if (itemToDrop.itemPrefab != null)
+            {
+                droppedItem = Instantiate(itemToDrop.itemPrefab, player.transform.position, Quaternion.identity);
+                droppedItem.transform.GetComponent<DroppedItem>().item.Add(itemToDrop);
+                droppedItem.transform.GetComponent<DroppedItem>().amount.Add(amount);
+                Debug.Log($"Succesfully Dropped {amount} {itemToDrop}.");
+            }
         }
-        droppedItem.transform.GetComponent<DroppedItem>().item.Add(itemToDrop);
-        droppedItem.transform.GetComponent<DroppedItem>().amount.Add(amount);
-        Debug.Log($"Succesfully Dropped {amount} {itemToDrop}.");
-
-
     }
 
     public void DropAllItems()
