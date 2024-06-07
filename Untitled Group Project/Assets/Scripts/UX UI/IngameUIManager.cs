@@ -279,6 +279,10 @@ public class IngameUIManager : MonoBehaviour
         {
             ToggleQuestBoard();
         }
+        if (upgradesCanvas.GetComponent<Canvas>().enabled)
+        {
+            ToggleUpgrades();
+        }
         inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
         inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = inventoryCanvas.GetComponent<Canvas>().enabled;
     }
