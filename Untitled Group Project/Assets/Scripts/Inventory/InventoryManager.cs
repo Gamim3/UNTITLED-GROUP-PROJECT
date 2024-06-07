@@ -122,13 +122,13 @@ public class InventoryManager : MonoBehaviour
                     UpdateItemsInfoList();
 
                     itemInSlot.RefreshCount();
-                    OnItemRecieved.Invoke();
+                    OnItemRecieved?.Invoke();
                     return true;
                 }
                 itemInSlot.count += amount;
                 itemInSlot.RefreshCount();
                 UpdateItemsInfoList();
-                OnItemRecieved.Invoke();
+                OnItemRecieved?.Invoke();
 
                 return true;
             }

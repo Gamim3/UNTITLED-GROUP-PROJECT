@@ -159,7 +159,10 @@ public class Enemy : Entity
 
             //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().SaveAutoGame();
 
-            DataPersistenceManager.instance.SaveAutoGame();
+            if (DataPersistenceManager.instance != null)
+            {
+                DataPersistenceManager.instance.SaveManualGame();
+            }
 
             SceneManager.LoadScene("GuildHall");
 
@@ -371,7 +374,7 @@ public class Enemy : Entity
                 animator.SetFloat("PlayerLoc", animatorParameter - neckMoveAmount);
             }
         }
-        else if(animatorParameter > 1)
+        else if (animatorParameter > 1)
         {
             animator.SetFloat("PlayerLoc", animatorParameter - neckMoveAmount);
         }
