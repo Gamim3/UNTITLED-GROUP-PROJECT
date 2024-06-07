@@ -90,8 +90,12 @@ public class IngameUIManager : MonoBehaviour
         _playerInput = FindObjectOfType<PlayerInput>();
 
         _playerStats.OnXpGained += OnXpGained;
-        playerInput.actions.FindAction("Pause").started += OnPause;
-        playerInput.actions.FindAction("Pause").started += OnPause;
+
+        _playerInput.actions.FindActionMap("Game").Enable();
+        _playerInput.actions.FindActionMap("Menu").Enable();
+
+        _playerInput.actions.FindAction("Pause").started += OnPause;
+        _playerInput.actions.FindAction("Pause").started += OnPause;
     }
 
     private void OnDisable()
@@ -99,8 +103,8 @@ public class IngameUIManager : MonoBehaviour
         _playerStats.OnXpGained -= OnXpGained;
         if (playerInput != null)
         {
-            playerInput.actions.FindAction("Pause").started -= OnPause;
-            playerInput.actions.FindAction("Pause").canceled -= OnPause;
+            _playerInput.actions.FindAction("Pause").started -= OnPause;
+            _playerInput.actions.FindAction("Pause").canceled -= OnPause;
         }
     }
 
@@ -403,7 +407,9 @@ public class IngameUIManager : MonoBehaviour
         if (_onPause)
         {
             if (!_paused)
+            {
                 Pause();
+            }
             else
             {
                 Resume();
@@ -477,6 +483,7 @@ public class IngameUIManager : MonoBehaviour
 
     public void Pause()
     {
+        _playerInput.actions.FindActionMap("Game").Disable();
         Time.timeScale = 0;
         _pausePanel.SetActive(true);
         _paused = true;
@@ -484,6 +491,7 @@ public class IngameUIManager : MonoBehaviour
 
     public void Resume()
     {
+        _playerInput.actions.FindActionMap("Game").Enable();
         Time.timeScale = 1;
         _pausePanel.SetActive(false);
         _paused = false;

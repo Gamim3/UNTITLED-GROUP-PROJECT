@@ -6,15 +6,6 @@
             "id": "9f922e54-2110-4f9e-b5c2-c626aeff66d3",
             "actions": [
                 {
-                    "name": "Test",
-                    "type": "Button",
-                    "id": "afb0d665-92a4-491f-a3ee-89520427e9da",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "ee36a5be-fd3d-4db6-9343-c426f2aa3a7f",
@@ -85,38 +76,9 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "3a0bcd34-712b-43a3-a3ba-15bbdd8b46fe",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "fd828557-0093-4d54-8306-70a2aac82488",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "89021493-767d-4c84-a502-f8c7a148b85b",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse;Controller",
-                    "action": "Test",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "2e2acc22-9dca-474e-98f0-50cb5bc9c4f6",
@@ -327,59 +289,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Gamepad",
-                    "id": "970edce3-94c4-4b80-ac26-14d7d48bd002",
-                    "path": "2DVector(mode=2)",
+                    "name": "",
+                    "id": "5f8cc082-34bd-4f27-a251-283ad802c629",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Camera",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "99386acf-6201-40b6-80a5-64782a1337c1",
-                    "path": "<Gamepad>/rightStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "7edb3129-b624-4e4e-ba99-832105af808f",
-                    "path": "<Gamepad>/rightStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "45f9993e-1abd-403d-b250-c11669a3c1d5",
-                    "path": "<Gamepad>/rightStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "05598a0d-c79d-42a3-bcc2-1b69e9b9d046",
-                    "path": "<Gamepad>/rightStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -545,26 +463,72 @@
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "92db03b0-e959-4d5f-99a1-5f90aa23ce73",
+            "actions": [
                 {
-                    "name": "",
-                    "id": "c0dc80ff-2841-4fa3-9be5-8d3947ed17a9",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "71bc7531-99b0-4077-89e4-b48a66124988",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "30578357-b4f9-477f-9d69-123db68b0ce9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "6b4342a5-eac2-4fba-a90a-62df9275aa09",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "c438b51d-ca99-4511-93cc-b90d37c43b2a",
+                    "id": "3b33c977-8a66-4964-89c5-ab48ae1468ac",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d07248f-3bdb-416d-ba1b-fb2dd8c86992",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f8072e8-da16-4ebe-9078-7e05fcf75617",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
