@@ -18,11 +18,15 @@ public class AttackTest : MonoBehaviour
             Debug.LogWarning("Attacking");
             float damageToDo = Random.Range(_minDamage, _MaxDamage);
             other.GetComponentInParent<Entity>().TakeDamage(damageToDo);
+
             if (damageToDo > 10f)
             {
                 StartCoroutine(HitPause());
             }
-            Transform damageCanvas = Instantiate(_damageNumberCanvas, other.transform.position + _spawnOffset, Quaternion.identity).transform;
+
+            Vector3 newPosition = other.transform.position + _spawnOffset;
+
+            Transform damageCanvas = Instantiate(_damageNumberCanvas, newPosition, Quaternion.identity).transform;
             damageCanvas.LookAt(Camera.main.transform.position);
             damageCanvas.GetComponentInChildren<TMP_Text>().text = damageToDo.ToString();
             Destroy(damageCanvas.gameObject, 3f);

@@ -95,7 +95,11 @@ public class IngameUIManager : MonoBehaviour
         _playerInput.actions.FindActionMap("Menu").Enable();
 
         _playerInput.actions.FindAction("Pause").started += OnPause;
-        _playerInput.actions.FindAction("Pause").started += OnPause;
+
+        _playerInput.actions.FindAction("Inventory").started += OnInventory;
+
+        _playerInput.actions.FindAction("Interact").started += OnInteract;
+        _playerInput.actions.FindAction("Interact").canceled += OnInteract;
     }
 
     private void OnDisable()
@@ -104,9 +108,39 @@ public class IngameUIManager : MonoBehaviour
         if (playerInput != null)
         {
             _playerInput.actions.FindAction("Pause").started -= OnPause;
-            _playerInput.actions.FindAction("Pause").canceled -= OnPause;
         }
     }
+
+
+    #region Inputs
+
+    void OnPause(InputAction.CallbackContext context)
+    {
+        _onPause = context.ReadValueAsButton();
+        if (_onPause)
+        {
+            if (!_paused)
+            {
+                Pause();
+            }
+            else
+            {
+                Resume();
+            }
+        }
+    }
+
+    void OnInventory(InputAction.CallbackContext context)
+    {
+        ToggleInventory();
+    }
+
+    void OnInteract(InputAction.CallbackContext context)
+    {
+        _onInteract = context.ReadValueAsButton();
+    }
+
+    #endregion
 
     void Start()
     {
@@ -160,11 +194,21 @@ public class IngameUIManager : MonoBehaviour
     {
         if (IsUIShowing())
         {
+            if (_playerInput.actions.FindActionMap("Game").enabled)
+            {
+                _playerInput.actions.FindActionMap("Game").Disable();
+            }
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else if (SceneManager.GetActiveScene().name != "MainMenu")
         {
+            if (!_playerInput.actions.FindActionMap("Game").enabled)
+            {
+                _playerInput.actions.FindActionMap("Game").Enable();
+            }
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -173,14 +217,8 @@ public class IngameUIManager : MonoBehaviour
             hudCanvas.GetComponent<Canvas>().enabled = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInventory();
-        }
-
         if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
         {
-            OnInteract();
             if (Physics.Raycast(playerRaycastPos.position + _shootOffset, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
             {
                 if (hit.transform.CompareTag("Crafting"))
@@ -196,10 +234,6 @@ public class IngameUIManager : MonoBehaviour
                     ToggleUpgrades();
                 }
             }
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            OnInteract();
         }
 
         CheckInteractable();
@@ -392,27 +426,6 @@ public class IngameUIManager : MonoBehaviour
                 {
                     Debug.LogWarning("No InteractPanel Set, Interaction Text Won't Show Up");
                 }
-            }
-        }
-    }
-
-    void OnInteract()
-    {
-        _onInteract = !_onInteract;
-    }
-
-    void OnPause(InputAction.CallbackContext context)
-    {
-        _onPause = context.ReadValueAsButton();
-        if (_onPause)
-        {
-            if (!_paused)
-            {
-                Pause();
-            }
-            else
-            {
-                Resume();
             }
         }
     }

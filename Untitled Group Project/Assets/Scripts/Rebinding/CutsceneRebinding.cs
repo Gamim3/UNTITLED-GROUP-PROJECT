@@ -354,9 +354,6 @@ public class CutsceneRebinding : MonoBehaviour
     {
         Debug.Log("SAVE BINDING");
 
-
-
-
         KeyRebinding.SaveBindingOverride(_cutsceneActions[_bindingIndex].inputActionReference.action);
         _completedRebind = false;
         Debug.Log($"composite: ({KeyRebinding.GetBindingName(_cutsceneActions[0].inputActionReference, 0)})");

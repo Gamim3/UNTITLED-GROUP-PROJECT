@@ -513,18 +513,6 @@ public class CharStateMachine : Entity
         if (Input.GetKeyDown(KeyCode.P))
         {
 
-
-            playerInput.actions.FindAction("Move").started += OnMovement;
-            playerInput.actions.FindAction("Move").performed += OnMovement;
-            playerInput.actions.FindAction("Move").canceled += OnMovement;
-
-            // Debug.Log(_currentState.ToString());
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            playerInput.actions.FindActionMap("Game").Enable();
-            playerInput.actions.FindActionMap("Menu").Disable();
-            // Debug.Log(_currentState.ToString());
         }
 
         if (_nextTarget != null)
