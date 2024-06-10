@@ -783,7 +783,12 @@ public class CharStateMachine : Entity
 
     public string GetCurrentAttackAnimation()
     {
-        return null;
+        string attackName;
+
+        var attackInfo = _playerAnimator.GetCurrentAnimatorClipInfo(0);
+        attackName = attackInfo[0].clip.name;
+
+        return attackName;
     }
 
     #endregion

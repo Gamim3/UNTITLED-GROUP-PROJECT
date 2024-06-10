@@ -71,6 +71,7 @@ public class CharCombatState : CharBaseState
         else
         {
             Debug.Log("Hitbox Inactive");
+            previousAttack = "";
             Ctx.HitBoxCollider.enabled = false;
         }
 
@@ -99,22 +100,25 @@ public class CharCombatState : CharBaseState
 
     }
 
+    string previousAttack;
+
     public override void OnTriggerEnterState(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            Ctx.GetCurrentAttackAnimation();
-
-            Ctx.HitBoxCollider.enabled = false;
-            // float damageToDo = Random.Range(_minDamage, _MaxDamage);
-            other.GetComponent<Entity>().TakeDamage(Ctx.Damage);
-
-            // Vector3 newPosition = other.transform.position + _spawnOffset;
-
-            // Transform damageCanvas = Instantiate(Ctx.DamageCanvas, newPosition, Quaternion.identity).transform;
-            // damageCanvas.LookAt(Camera.main.transform.position); 
-            // damageCanvas.GetComponentInChildren<TMP_Text>().text = damage.ToString();
-            // Destroy(damageCanvas.gameObject, 3f);
+            if (Ctx.GetCurrentAttackAnimation() == previousAttack)
+            {
+                Debug.Log("Dont do attack");
+                previousAttack = Ctx.GetCurrentAttackAnimation();
+                Ctx.HitBoxCollider.enabled = false;
+                return;
+            }
+            else
+            {
+                Debug.Log("Do attack");
+                previousAttack = Ctx.GetCurrentAttackAnimation();
+                other.GetComponent<Entity>().TakeDamage(Ctx.Damage);
+            }
         }
     }
 }
