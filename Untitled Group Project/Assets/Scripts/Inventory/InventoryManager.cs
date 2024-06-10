@@ -384,7 +384,7 @@ public class InventoryManager : MonoBehaviour
                 if (item.itemID > highestId)
                 {
                     highestId = item.itemID;
-                    Debug.Log($"Set highest id to {highestId}");
+                    Debug.Log($"Set highest id to {highestId + 1}");
                 }
             }
             itemToId.itemID = highestId + 1;
