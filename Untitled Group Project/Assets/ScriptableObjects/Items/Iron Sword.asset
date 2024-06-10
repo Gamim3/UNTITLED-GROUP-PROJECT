@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98f2d34cfd33c14394bd2c507c63dc5, type: 3}
   m_Name: Iron Sword
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 4
+  itemIdSet: 1
   itemPrefab: {fileID: 0}
   image: {fileID: 21300000, guid: 91bc995dd72dc674abadbe31a0d27eef, type: 3}
   maxStack: 1
-  itemIdSet: 0
+  isWeapon: 1
+  isArmor: 0
+  upgrade: {fileID: 11400000, guid: 7c4ec886fab21b7438051911a44eceb0, type: 2}

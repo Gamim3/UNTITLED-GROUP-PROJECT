@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Iron Sword
   m_EditorClassIdentifier: 
   upgradeType: 0
-  upgradeAmount: 0
+  upgradeAmount: 4
