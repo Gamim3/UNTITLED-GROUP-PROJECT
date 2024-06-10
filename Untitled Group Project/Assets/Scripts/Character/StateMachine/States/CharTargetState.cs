@@ -15,7 +15,7 @@ public class CharTargetState : CharBaseState
 
         Ctx.IsTargetingState = true;
 
-        // Ctx.CurrentTarget = Ctx.GetViableTarget();
+        // Ctx.CamTarget.LookAt(Ctx.GetViableTarget());
     }
 
     public override void ExitState()

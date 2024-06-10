@@ -85,6 +85,23 @@ public class CharStateMachine : Entity
 
     #endregion
 
+    [Header("Combat")]
+    #region Combat
+
+    [SerializeField] Collider _hitBoxCollider;
+    public Collider HitBoxCollider
+    { get { return _hitBoxCollider; } set { _hitBoxCollider = value; } }
+
+    [SerializeField] int _baseDamage;
+    public int BaseDamage
+    { get { return _baseDamage; } }
+
+    [SerializeField] int _damage;
+    public int Damage
+    { get { return _damage; } set { _damage = value; } }
+
+    #endregion
+
     [Header("Jumping")]
     #region Jumping
 
@@ -568,6 +585,11 @@ public class CharStateMachine : Entity
         _currentState.FixedUpdateStates();
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        _currentState.OnTriggerEnterState(other);
+    }
+
     #endregion
 
     #region InputVoids
@@ -738,6 +760,30 @@ public class CharStateMachine : Entity
 
         Debug.Log($"Found new target: {closestTarget.name}");
         return closestTarget;
+    }
+
+    public bool CheckAttackAnimation()
+    {
+        if (_playerAnimator.GetCurrentAnimatorStateInfo(0).length > _playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime)
+        {
+            var info = _playerAnimator.GetCurrentAnimatorClipInfo(0);
+            string current_animation = info[0].clip.name;
+
+            if (current_animation.Contains("Attack"))
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+
+    public string GetCurrentAttackAnimation()
+    {
+        return null;
     }
 
     #endregion

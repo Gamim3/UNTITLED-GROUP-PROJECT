@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CharCombatState : CharBaseState
@@ -30,27 +31,47 @@ public class CharCombatState : CharBaseState
         // Ctx.PlayerAnimator.GetCurrentAnimatorClipInfo(0).
 
         // CHECK IF STILL ATTACK ANIMATION
-        if (Ctx.IsAirborneState)
+        if (Ctx.IsAttack1Action)
         {
-            if (Ctx.IsAttack1Action)
-            {
-                Ctx.PlayerAnimator.SetInteger("NormalAttack", 2);
-            }
-            else
-            {
-                Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
-            }
+            Ctx.PlayerAnimator.SetInteger("NormalAttack", 4);
         }
         else
         {
-            if (Ctx.IsAttack1Action)
-            {
-                Ctx.PlayerAnimator.SetInteger("NormalAttack", 4);
-            }
-            else
-            {
-                Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
-            }
+            Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
+        }
+
+        if (Ctx.CheckAttackAnimation())
+        {
+            // Debug.Log($"Hitbox Active, animation playing: {current_animation}");
+            Ctx.Damage = 3;
+
+
+            // if (current_animation == "NBAttacks1")
+            // {
+            //     Debug.Log("Attack 1");
+            // }
+            // if (current_animation == "NBAttacks2")
+            // {
+            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 2;
+            //     Debug.Log("Attack 2");
+            // }
+            // if (current_animation == "NBAttacks3")
+            // {
+            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 3;
+            //     Debug.Log("Attack 3");
+            // }
+            // if (current_animation == "NBAttacks4")
+            // {
+            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 15;
+            //     Debug.Log("Attack 4");
+            // }
+
+            Ctx.HitBoxCollider.enabled = true;
+        }
+        else
+        {
+            Debug.Log("Hitbox Inactive");
+            Ctx.HitBoxCollider.enabled = false;
         }
 
         CheckSwitchStates();
@@ -76,5 +97,24 @@ public class CharCombatState : CharBaseState
     public override void CheckSwitchStates()
     {
 
+    }
+
+    public override void OnTriggerEnterState(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Ctx.GetCurrentAttackAnimation();
+
+            Ctx.HitBoxCollider.enabled = false;
+            // float damageToDo = Random.Range(_minDamage, _MaxDamage);
+            other.GetComponent<Entity>().TakeDamage(Ctx.Damage);
+
+            // Vector3 newPosition = other.transform.position + _spawnOffset;
+
+            // Transform damageCanvas = Instantiate(Ctx.DamageCanvas, newPosition, Quaternion.identity).transform;
+            // damageCanvas.LookAt(Camera.main.transform.position); 
+            // damageCanvas.GetComponentInChildren<TMP_Text>().text = damage.ToString();
+            // Destroy(damageCanvas.gameObject, 3f);
+        }
     }
 }

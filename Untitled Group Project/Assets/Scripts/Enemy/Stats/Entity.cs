@@ -11,6 +11,9 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float _energy;
     [SerializeField] protected float _moveSpeed;
 
+    [SerializeField] Transform _damageSpawnLocation;
+    [SerializeField] GameObject _damageCanvas;
+
     protected float _maxHealth;
     protected float _maxEnergy;
 
@@ -33,6 +36,9 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         _healthPoints -= damage;
+
+        GameObject canvas = Instantiate(_damageCanvas, _damageSpawnLocation);
+        canvas.GetComponent<DamageCanvas>().DamageTxt.text = damage.ToString();
     }
 
     public virtual float GetHealth()

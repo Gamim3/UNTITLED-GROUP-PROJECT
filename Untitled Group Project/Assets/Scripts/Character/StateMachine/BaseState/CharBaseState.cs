@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public abstract class CharBaseState
@@ -50,6 +51,8 @@ public abstract class CharBaseState
 
     public abstract void FixedUpdateState();
 
+    public extern virtual void OnTriggerEnterState(Collider other);
+
     public abstract void CheckSwitchStates();
 
     public abstract void InitializeSubState();
@@ -71,6 +74,16 @@ public abstract class CharBaseState
         if (_currentSubState != null)
         {
             this._currentSubState.FixedUpdateStates();
+        }
+    }
+
+    public void OnTriggerEnterStates(Collider other)
+    {
+        OnTriggerEnterState(other);
+
+        if (_currentSubState != null)
+        {
+            this._currentSubState.OnTriggerEnterState(other);
         }
     }
 
