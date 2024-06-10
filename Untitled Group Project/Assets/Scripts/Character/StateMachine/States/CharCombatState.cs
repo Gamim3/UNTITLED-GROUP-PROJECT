@@ -117,6 +117,23 @@ public class CharCombatState : CharBaseState
             {
                 Debug.Log("Do attack");
                 previousAttack = Ctx.GetCurrentAttackAnimation();
+
+                switch (previousAttack)
+                {
+                    case "NBAttacks1":
+                        Ctx.Damage = 5;
+                        break;
+                    case "NBAttacks2":
+                        Ctx.Damage = 7;
+                        break;
+                    case "NBAttacks3":
+                        Ctx.Damage = 4;
+                        break;
+                    case "NBAttacks4":
+                        Ctx.Damage = 12;
+                        break;
+                }
+
                 other.GetComponent<Entity>().TakeDamage(Ctx.Damage);
             }
         }
