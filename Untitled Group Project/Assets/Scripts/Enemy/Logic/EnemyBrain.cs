@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,7 +6,6 @@ using Random = UnityEngine.Random;
 public class EnemyBrain : MonoBehaviour
 {
     [SerializeField] FuzzyLogic _fuzzyLogic;
-    [SerializeField] int _decisionTime;
 
     Vector3 _playerHealthData;
     Vector3 _enemyHealthData;
@@ -35,7 +33,7 @@ public class EnemyBrain : MonoBehaviour
 
         attackQueue = new Queue<Attacks>();
 
-        StartCoroutine(Think());
+        MakeDesicion();
     }
 
     public void Update()
@@ -48,36 +46,8 @@ public class EnemyBrain : MonoBehaviour
             attackQueue.Clear();
         }
 
-        if (_enemy.playerInSight && attackQueue.Count != 0)
+        if (_enemy.playerInSight)
         {
-            switch (attackQueue.Peek())
-            {
-                case Attacks attack when attack == Attacks.Engage:
-                    _enemy.engaging = true;
-                    _enemy.Engage();
-                    break;
-                case Attacks attack when attack == Attacks.DisengageDash:
-                    _enemy.disengaging = true;
-                    _enemy.Disengage();
-                    break;
-                case Attacks attack when attack == Attacks.RegainEnergy:
-                    _enemy.regainingEnergy = true;
-                    _enemy.RegainEnergy();
-                    break;
-                case Attacks attack when attack == Attacks.SpikeThrow:
-                    _enemy.throwingSpike = true;
-                    _enemy.SpikeThrow();
-                    break;
-                case Attacks attack when attack == Attacks.LeftClaw:
-                    _enemy.leftClawAttack = true;
-                    _enemy.LeftClawAttack();
-                    break;
-                case Attacks attack when attack == Attacks.RightClaw:
-                    _enemy.rightClawAttack = true;
-                    _enemy.RightClawAttack();
-                    break;
-            }
-
             for (int i = 0; i < _notImplementedAttacks.Length; i++)
             {
                 if (attackQueue.Count != 0)
@@ -85,19 +55,11 @@ public class EnemyBrain : MonoBehaviour
                     if (attackQueue.Peek() == _notImplementedAttacks[i])
                     {
                         attackQueue.Clear();
+                        MakeDesicion();
                     }
                 }
             }
         }
-    }
-
-    public IEnumerator Think()
-    {
-        yield return new WaitForSeconds(_decisionTime);
-
-        MakeDesicion();
-
-        StartCoroutine(Think());
     }
 
     public void MakeDesicion()
