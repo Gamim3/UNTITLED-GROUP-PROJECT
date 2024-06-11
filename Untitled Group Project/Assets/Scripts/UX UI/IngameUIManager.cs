@@ -228,15 +228,6 @@ public class IngameUIManager : MonoBehaviour
             hudCanvas.GetComponent<Canvas>().enabled = true;
         }
 
-        // if (Input.GetKeyDown(KeyCode.E) && playerRaycastPos != null)
-        // {
-        //     if (Physics.Raycast(playerRaycastPos.position + _shootOffset, playerRaycastPos.forward, out RaycastHit hit, interactableLayers))
-        //     {
-
-        //     }
-        // }
-
-
         if (Input.GetKeyDown(KeyCode.P) && SceneManager.GetActiveScene().name != "MainMenu")
         {
             if (_devPanel)
@@ -508,6 +499,7 @@ public class IngameUIManager : MonoBehaviour
                     if (_interactPanel != null)
                     {
                         _interactPanel.SetActive(false);
+                        Debug.Log("SetCanvasFalse");
                         _interactableTxt.text = "";
                     }
                     else
@@ -525,6 +517,7 @@ public class IngameUIManager : MonoBehaviour
             if (_interactPanel != null)
             {
                 _interactPanel.SetActive(false);
+                Debug.Log("SetCanvasFalse");
                 _interactableTxt.text = "";
             }
             else
