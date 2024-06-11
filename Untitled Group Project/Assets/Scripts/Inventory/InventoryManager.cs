@@ -24,7 +24,6 @@ public class InventoryManager : MonoBehaviour
     public Item[] allItems;
 
     public InventoryItem heldItem;
-    // [SerializeField] InGameUIManager _uiManager;
 
     [SerializeField] Item _itemToSpawn;
 
@@ -82,7 +81,6 @@ public class InventoryManager : MonoBehaviour
             return null;
         }
     }
-
 
     public bool AddItem(int itemId, int amount)
     {
@@ -328,7 +326,7 @@ public class InventoryManager : MonoBehaviour
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
 
-            if (itemInSlot != null && itemInSlot.item == itemToCheck && itemInSlot.count + amount < itemInSlot.item.maxStack)
+            if (itemInSlot != null && itemInSlot.item == itemToCheck && itemInSlot.count + amount <= itemInSlot.item.maxStack)
             {
                 return true;
             }
