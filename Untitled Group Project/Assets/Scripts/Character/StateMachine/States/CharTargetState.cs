@@ -29,6 +29,10 @@ public class CharTargetState : CharBaseState
     {
         Ctx.CamTarget.LookAt(Ctx.GetViableTarget());
 
+        Ctx.PlayerAnimator.SetFloat("MovementX", Ctx.CurrentMovementInput.x);
+        Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
+
+
         CheckSwitchStates();
     }
 

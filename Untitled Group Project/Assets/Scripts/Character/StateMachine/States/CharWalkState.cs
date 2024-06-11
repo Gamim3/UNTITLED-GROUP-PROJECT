@@ -27,8 +27,6 @@ public class CharWalkState : CharBaseState
 
     public override void UpdateState()
     {
-        Ctx.PlayerAnimator.SetFloat("MovementX", Ctx.CurrentMovementInput.x);
-        Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
 
         CheckSwitchStates();
     }

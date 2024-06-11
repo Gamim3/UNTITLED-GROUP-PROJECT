@@ -716,19 +716,19 @@ public class CharStateMachine : Entity
             return null;
         }
 
-        foreach (Transform target in _targetsInRange)
-        {
-            if (target.GetComponent<Renderer>().isVisible)
-            {
-                _targetsVisible.Add(target);
-            }
-        }
+        // foreach (Transform target in _targetsInRange)
+        // {
+        //     if (target.GetComponent<Renderer>().isVisible)
+        //     {
+        //         _targetsVisible.Add(target);
+        //     }
+        // }
 
-        if (_targetsVisible.Count == 0)
-        {
-            Debug.Log($"Checked for visible targets but there were no targets in visible, there are {_targetsInRange.Count} targets in range");
-            return null;
-        }
+        // if (_targetsVisible.Count == 0)
+        // {
+        //     Debug.Log($"Checked for visible targets but there were no targets in visible, there are {_targetsInRange.Count} targets in range");
+        //     return null;
+        // }
 
         Transform closestTarget = null;
         float minimalDistance = Mathf.Infinity;

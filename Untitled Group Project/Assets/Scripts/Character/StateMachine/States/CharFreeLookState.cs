@@ -43,6 +43,10 @@ public class CharFreeLookState : CharBaseState
         float mouseY = Ctx.IsCamAction.y * Ctx.MouseSensitivity * Time.deltaTime;
         float mouseX = Ctx.IsCamAction.x * Ctx.MouseSensitivity * Time.deltaTime;
 
+        Ctx.PlayerAnimator.SetFloat("MovementX", 0);
+        Ctx.PlayerAnimator.SetFloat("MovementY", 1);
+
+
         Ctx.YRotation += mouseX;
         Ctx.XRotation -= mouseY;
 
@@ -55,8 +59,12 @@ public class CharFreeLookState : CharBaseState
 
         Vector3 inputDir = Ctx.Orientation.forward * Ctx.CurrentMovementInput.y + Ctx.Orientation.right * Ctx.CurrentMovementInput.x;
 
-        Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
-        Ctx.PlayerObj.transform.rotation = Quaternion.Slerp(Ctx.PlayerObj.transform.rotation, lookRotation, Time.deltaTime * Ctx.PlayerRotationSpeed);
+        // Check if the input direction is significant (to avoid zero-length direction vectors)
+        if (inputDir.sqrMagnitude > 0.01f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(inputDir, Vector3.up);
+            Ctx.PlayerObj.transform.rotation = Quaternion.Slerp(Ctx.PlayerObj.transform.rotation, lookRotation, Time.deltaTime * Ctx.PlayerRotationSpeed);
+        }
 
         CheckSwitchStates();
     }
