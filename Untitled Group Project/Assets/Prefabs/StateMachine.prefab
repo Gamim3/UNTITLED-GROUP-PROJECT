@@ -3093,7 +3093,7 @@ MonoBehaviour:
   _jumpAmount: 0
   _jumpForce: 3.5
   _jumpMent: {x: 0, y: 0, z: 0}
-  _maxJumpTime: 1.3
+  _maxJumpTime: 1
   _isJumpTime: 0
   _isGrounded: 1
   _groundLayer:

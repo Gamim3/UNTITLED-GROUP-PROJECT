@@ -36,12 +36,12 @@ public class CharIdleState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && !Ctx.IsJumpingState)
+        if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Walking());
         }
         // else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction) if not root
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsJumpingState)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Running());
         }

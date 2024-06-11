@@ -43,23 +43,23 @@ public class CharJumpState : CharBaseState
 
     public override void InitializeSubState()
     {
-        // if (!Ctx.IsMoveAction)
-        // {
-        SetSubState(Factory.Idle());
-        // }
-        // else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
-        // {
-        //     SetSubState(Factory.Walking());
-        // }
-        // else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
-        // {
-        //     SetSubState(Factory.Running());
-        // }
-        // else if (Ctx.IsDashAction)
-        // {
-        //     // DASH STATE
-        //     // SetSubState(Factory.Dash()); 
-        // }
+        if (!Ctx.IsMoveAction)
+        {
+            SetSubState(Factory.Idle());
+        }
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && Ctx.IsJumpTime == 0)
+        {
+            SetSubState(Factory.Walking());
+        }
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction && Ctx.IsJumpTime == 0)
+        {
+            SetSubState(Factory.Running());
+        }
+        else if (Ctx.IsDashAction)
+        {
+            // DASH STATE
+            // SetSubState(Factory.Dash()); 
+        }
     }
 
     public override void CheckSwitchStates()
@@ -86,7 +86,7 @@ public class CharJumpState : CharBaseState
     void HandleJump()
     {
         Ctx.IsForced = true;
-        Ctx.ExtraForce = 21;
+        Ctx.ExtraForce = 3.5f;
 
         Ctx.PlayerRigidBody.velocity = new Vector3(Ctx.PlayerRigidBody.velocity.x, 0f, Ctx.PlayerRigidBody.velocity.z);
         Ctx.PlayerRigidBody.AddForce(Ctx.JumpMent * Ctx.JumpForce, ForceMode.Impulse);

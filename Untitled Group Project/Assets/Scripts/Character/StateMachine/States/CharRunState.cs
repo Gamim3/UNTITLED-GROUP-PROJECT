@@ -12,6 +12,8 @@ public class CharRunState : CharBaseState
     {
         InitializeSubState();
 
+        Debug.Log("Enter Run");
+
         Ctx.IsRunState = true;
 
         Ctx.DesiredMoveForce = Ctx.RunSpeed;
@@ -43,7 +45,7 @@ public class CharRunState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction || Ctx.IsJumpingState)
+        if (!Ctx.IsMoveAction)
         {
             SwitchState(Factory.Idle());
         }
