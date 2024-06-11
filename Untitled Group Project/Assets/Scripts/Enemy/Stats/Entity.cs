@@ -13,12 +13,17 @@ public class Entity : MonoBehaviour
 
     [SerializeField] Transform _damageSpawnLocation;
     [SerializeField] GameObject _damageCanvas;
-
+    [NonSerialized] protected FuzzyLogic _logic;
     protected float _maxHealth;
     protected float _maxEnergy;
 
     public virtual void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
+        }
+
         _maxHealth = _healthPoints;
         _maxEnergy = _energy;
     }

@@ -49,7 +49,6 @@ public class Enemy : Entity
 
     [Header("Dependancy")]
     [SerializeField] EnemyBrain _brain;
-    [SerializeField] FuzzyLogic _logic;
     [SerializeField] QuestManager _questManager;
     [SerializeField] GameObject _fuzzyLogicVisuals;
     [SerializeField] GameObject otherCanvas;
@@ -78,11 +77,6 @@ public class Enemy : Entity
         startSpeed = _moveSpeed;
 
         base.Start();
-
-        if (SceneManager.GetActiveScene().name == "Game")
-        {
-            _logic = GameObject.FindWithTag("Enemy").GetComponent<FuzzyLogic>();
-        }
     }
 
     public override void Update()
@@ -93,7 +87,7 @@ public class Enemy : Entity
             ExecuteAttack();
         }
 
-        CheckIfPlayerIsLeftOrRight();
+        //CheckIfPlayerIsLeftOrRight();
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -147,6 +141,10 @@ public class Enemy : Entity
         {
             Engage();
         }
+        else if (animator.GetInteger("WalkDir") == -1)
+        {
+            Disengage();
+        }
     }
 
     public void ExecuteAttack()
@@ -175,15 +173,47 @@ public class Enemy : Entity
                 case Attacks attack when attack == Attacks.RightClaw:
                     RightClawAttack();
                     break;
+                case Attacks attack when attack == Attacks.Bite:
+                    BiteAttack();
+                    break;
                 case Attacks attack when attack == Attacks.Charge:
-                    /////////////////////////////////
+                    _brain.attackQueue.Clear();
+                    _brain.MakeDesicion();
+                    if(_brain.attackQueue.Peek() != Attacks.Charge)
+                    {
+                        ExecuteAttack();
+                    }
+                    else
+                    {
+                        _brain.attackQueue.Clear();
+                        _brain.attackQueue.Enqueue(Attacks.LeftClaw);
+                        ExecuteAttack();
+                    }
+                    break;
+                case Attacks attack when attack == Attacks.SpikeSlamAttack:
+                    _brain.attackQueue.Clear();
+                    _brain.MakeDesicion();
+                    if (_brain.attackQueue.Peek() != Attacks.SpikeSlamAttack)
+                    {
+                        ExecuteAttack();
+                    }
+                    else
+                    {
+                        _brain.attackQueue.Clear();
+                        _brain.attackQueue.Enqueue(Attacks.LeftClaw);
+                        ExecuteAttack();
+                    }
                     break;
 
             }
         }
-        else if (animator.GetInteger("WalkDir") == 1)
+        else if (animator.GetInteger("WalkDir") == 1 && animator.GetInteger("WalkDir") != -1)
         {
             Engage();
+        }
+        else if (animator.GetInteger("WalkDir") == -1 && animator.GetInteger("WalkDir") != 0)
+        {
+            Disengage();
         }
     }
 
@@ -215,20 +245,34 @@ public class Enemy : Entity
 
     public void Disengage()
     {
-        Vector3 directionToPlayer = transform.position - player.transform.position;
-
-        Vector3 newPosition = transform.position + directionToPlayer;
-
-        if (Vector3.Distance(newPosition, player.transform.position) < 20 && _distance < 20)
+        if (_distance < 20)
         {
+            animator.SetInteger("WalkDir", -1);
+
+            Vector3 directionToPlayer = transform.position - player.transform.position;
+
+            Vector3 newPosition = transform.position + directionToPlayer;
+
             _agent.SetDestination(newPosition);
+
+            Exhaustion(_exhaustionSpeed / 4);
+
+            if (_brain.attackQueue.Count != 0)
+            {
+                _brain.attackQueue.Dequeue();
+            }
         }
-
-        Exhaustion(_exhaustionSpeed / 4);
-
-        if (_brain.attackQueue.Peek() == Attacks.DisengageDash)
+        else
         {
-            _brain.attackQueue.Dequeue();
+            animator.SetInteger("WalkDir", 0);
+            if (_brain.attackQueue.Count != 0)
+            { 
+                _brain.attackQueue.Dequeue();
+                _brain.attackQueue.Clear();
+            }
+            _brain.MakeDesicion();
+
+            _brain.attacksCurrentlyInQueue = _brain.attackQueue.ToArray();
         }
     }
 
@@ -254,10 +298,7 @@ public class Enemy : Entity
     {
         animator.SetTrigger("SpikeThrow");
 
-        transform.LookAt(player.transform);
-
         Exhaustion(_exhaustionSpeed * 750);
-
 
         //add visual line of sight
         GameObject thrownProjectile = Instantiate(_projectile, _projectileSpawnPosition.position, _projectileSpawnPosition.rotation, _parent);
@@ -273,8 +314,6 @@ public class Enemy : Entity
 
     public void LeftClawAttack()
     {
-        transform.LookAt(player.transform);
-
         animator.SetTrigger("LeftClawAttack");
 
         Exhaustion(_exhaustionSpeed * 1000);
@@ -287,13 +326,23 @@ public class Enemy : Entity
 
     public void RightClawAttack()
     {
-        transform.LookAt(player.transform);
-
         animator.SetTrigger("RightClawAttack");
 
         Exhaustion(_exhaustionSpeed * 1000);
 
         if (_brain.attackQueue.Peek() == Attacks.RightClaw)
+        {
+            _brain.attackQueue.Dequeue();
+        }
+    }
+
+    public void BiteAttack()
+    {
+        animator.SetTrigger("BiteAttack");
+
+        Exhaustion(_exhaustionSpeed * 1000);
+
+        if (_brain.attackQueue.Peek() == Attacks.Bite)
         {
             _brain.attackQueue.Dequeue();
         }

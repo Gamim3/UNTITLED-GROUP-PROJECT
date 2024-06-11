@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class MeleeCollision : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public float damage = 10;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            other.transform.parent.gameObject.GetComponent<Entity>().TakeDamage(10);
+            collision.gameObject.GetComponent<Entity>().TakeDamage(damage);
         }
     }
 }
