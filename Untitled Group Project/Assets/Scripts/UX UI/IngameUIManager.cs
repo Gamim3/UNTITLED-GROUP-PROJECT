@@ -34,6 +34,8 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] float _interactionRange = 3f;
     public LayerMask interactableLayers;
     [SerializeField] TMP_Text _interactableTxt;
+    Transform _closestTransform = null;
+    float _closestDistance = Mathf.Infinity;
     #endregion
 
     [Header("QuestBoard")]
@@ -187,6 +189,7 @@ public class IngameUIManager : MonoBehaviour
 
     void Update()
     {
+        CheckInteractable();
         if (IsUIShowing())
         {
             if (_playerInput.actions.FindActionMap("Game").enabled)
@@ -196,9 +199,20 @@ public class IngameUIManager : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            _interactPanel.SetActive(false);
         }
         else if (SceneManager.GetActiveScene().name != "MainMenu")
         {
+            if (_closestTransform != null)
+            {
+                _interactPanel.SetActive(true);
+                Debug.Log($"Clostest Transform: {_closestTransform.name}");
+            }
+            else
+            {
+                _interactPanel.SetActive(false);
+            }
             if (!_playerInput.actions.FindActionMap("Game").enabled)
             {
                 _playerInput.actions.FindActionMap("Game").Enable();
@@ -220,7 +234,6 @@ public class IngameUIManager : MonoBehaviour
         //     }
         // }
 
-        CheckInteractable();
 
         if (Input.GetKeyDown(KeyCode.P) && SceneManager.GetActiveScene().name != "MainMenu")
         {
@@ -349,18 +362,24 @@ public class IngameUIManager : MonoBehaviour
     private void CheckInteractable()
     {
         Collider[] colliders = Physics.OverlapSphere(_playerStats.transform.position, _interactionRange, interactableLayers);
+
+
         if (colliders.Length != 0)
         {
-            Transform closestTransform = null;
-            float closestDistance = Mathf.Infinity;
             foreach (var collider in colliders)
             {
-                if (Vector3.Distance(collider.transform.position, _playerStats.transform.position) < closestDistance)
+
+                Vector3 towards = collider.transform.position - _playerStats.transform.position;
+                if (Physics.Raycast(_playerStats.transform.position, towards, out RaycastHit hit, Mathf.Infinity, interactableLayers))
                 {
-                    closestTransform = collider.transform;
-                    closestDistance = Vector3.Distance(collider.transform.position, _playerStats.transform.position);
+                    Debug.Log(hit.transform.name);
+                    if (Vector3.Distance(hit.point, _playerStats.transform.position) < _closestDistance)
+                    {
+                        _closestTransform = hit.transform;
+                        _closestDistance = Vector3.Distance(hit.point, _playerStats.transform.position);
+                    }
                 }
-                if (collider.transform.GetComponent<DroppedItem>() && closestTransform == collider.transform)
+                if (collider.transform.GetComponent<DroppedItem>() && _closestTransform == collider.transform)
                 {
                     DroppedItem droppedItem = collider.transform.GetComponent<DroppedItem>();
                     if (droppedItem.item.Count > 1)
@@ -414,7 +433,7 @@ public class IngameUIManager : MonoBehaviour
 
                     }
                 }
-                if (collider.transform.CompareTag("Crafting") && closestTransform == collider.transform)
+                if (collider.transform.CompareTag("Crafting") && _closestTransform == collider.transform)
                 {
                     if (_interactPanel != null)
                     {
@@ -435,7 +454,7 @@ public class IngameUIManager : MonoBehaviour
                     }
 
                 }
-                else if (collider.transform.GetComponent<QuestBoardManager>() && closestTransform == collider.transform)
+                else if (collider.transform.GetComponent<QuestBoardManager>() && _closestTransform == collider.transform)
                 {
                     if (_interactPanel != null)
                     {
@@ -456,7 +475,7 @@ public class IngameUIManager : MonoBehaviour
                     }
 
                 }
-                else if (collider.transform.CompareTag("Upgrade") && closestTransform == collider.transform)
+                else if (collider.transform.CompareTag("Upgrade") && _closestTransform == collider.transform)
                 {
                     if (_interactPanel != null)
                     {
@@ -488,9 +507,25 @@ public class IngameUIManager : MonoBehaviour
                     {
                         Debug.LogWarning("No InteractPanel Set, Interaction Text Won't Show Up");
                     }
+                    _closestTransform = null;
+                    _closestDistance = Mathf.Infinity;
                 }
             }
 
+        }
+        else
+        {
+            if (_interactPanel != null)
+            {
+                _interactPanel.SetActive(false);
+                _interactableTxt.text = "";
+            }
+            else
+            {
+                Debug.LogWarning("No InteractPanel Set, Interaction Text Won't Show Up");
+            }
+            _closestTransform = null;
+            _closestDistance = Mathf.Infinity;
         }
     }
 
