@@ -279,7 +279,7 @@ public class IngameUIManager : MonoBehaviour
         {
             ToggleQuestBoard();
         }
-        if (upgradesCanvas.GetComponent<Canvas>().enabled)
+        if (upgradesCanvas.GetComponent<Canvas>().enabled && inventoryCanvas.GetComponent<Canvas>().enabled)
         {
             ToggleUpgrades();
         }
@@ -340,7 +340,9 @@ public class IngameUIManager : MonoBehaviour
         if (!inventoryCanvas.GetComponent<Canvas>().enabled && !upgradesCanvas.GetComponent<Canvas>().enabled ||
         inventoryCanvas.GetComponent<Canvas>().enabled && upgradesCanvas.GetComponent<Canvas>().enabled)
         {
-            ToggleInventory();
+            // ToggleInventory();
+            inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
+            inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = inventoryCanvas.GetComponent<Canvas>().enabled;
         }
         upgradesCanvas.GetComponent<Canvas>().enabled = !upgradesCanvas.GetComponent<Canvas>().enabled;
         upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = upgradesCanvas.GetComponent<Canvas>().enabled;
