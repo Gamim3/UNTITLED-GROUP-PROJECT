@@ -134,7 +134,7 @@ public class CharCombatState : CharBaseState
                         break;
                 }
 
-                other.GetComponent<Entity>().TakeDamage(Ctx.Damage);
+                other.GetComponentInParent<Entity>().TakeDamage(Ctx.Damage);
             }
         }
     }
