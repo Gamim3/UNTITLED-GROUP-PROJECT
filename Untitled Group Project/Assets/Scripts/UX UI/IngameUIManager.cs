@@ -192,6 +192,7 @@ public class IngameUIManager : MonoBehaviour
         CheckInteractable();
         if (IsUIShowing())
         {
+            Time.timeScale = 0;
             if (_playerInput.actions.FindActionMap("Game").enabled)
             {
                 _playerInput.actions.FindActionMap("Game").Disable();
@@ -204,6 +205,7 @@ public class IngameUIManager : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name != "MainMenu")
         {
+            Time.timeScale = 1;
             if (_closestTransform != null)
             {
                 _interactPanel.SetActive(true);
@@ -451,6 +453,11 @@ public class IngameUIManager : MonoBehaviour
                     {
                         _onInteract = false;
                         ToggleCrafting();
+                        if (upgradesCanvas.GetComponent<Canvas>().enabled)
+                        {
+                            upgradesCanvas.GetComponent<Canvas>().enabled = false;
+                            upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+                        }
                     }
 
                 }
