@@ -74,26 +74,33 @@ public class CraftingManager : MonoBehaviour
     {
         if (selectedRecipeToCraft != null)
         {
-            for (int i = 0; i < selectedRecipeToCraft.itemsNeeded.Length; i++)
+            if (!InventoryManager.Instance.HasSpace(selectedRecipeToCraft.itemToCraft, selectedRecipeToCraft.amountToCraft))
             {
-                for (int y = 0; y < InventoryManager.Instance.itemsInInventory.Count; y++)
+                Debug.Log("Had No Place To Place Output From Crafting");
+            }
+            else
+            {
+                for (int i = 0; i < selectedRecipeToCraft.itemsNeeded.Length; i++)
                 {
-                    if (InventoryManager.Instance.itemsInInventory[y].item == selectedRecipeToCraft.itemsNeeded[i].item)
+                    for (int y = 0; y < InventoryManager.Instance.itemsInInventory.Count; y++)
                     {
-                        if (InventoryManager.Instance.itemsInInventory[y].amount < selectedRecipeToCraft.itemsNeeded[i].amount)
+                        if (InventoryManager.Instance.itemsInInventory[y].item == selectedRecipeToCraft.itemsNeeded[i].item)
                         {
-                            Debug.Log($"You don't have enough {selectedRecipeToCraft.itemsNeeded[i].item.name} to craft this item!");
-                            return;
+                            if (InventoryManager.Instance.itemsInInventory[y].amount < selectedRecipeToCraft.itemsNeeded[i].amount)
+                            {
+                                Debug.Log($"You don't have enough {selectedRecipeToCraft.itemsNeeded[i].item.name} to craft this item!");
+                                return;
+                            }
                         }
                     }
                 }
+                for (int i = 0; i < selectedRecipeToCraft.itemsNeeded.Length; i++)
+                {
+                    InventoryManager.Instance.UseItem(selectedRecipeToCraft.itemsNeeded[i].item.itemID, selectedRecipeToCraft.itemsNeeded[i].amount);
+                }
+                InventoryManager.Instance.AddItem(selectedRecipeToCraft.itemToCraft.itemID, selectedRecipeToCraft.amountToCraft);
+                InventoryManager.Instance.UpdateItemsInfoList();
             }
-            for (int i = 0; i < selectedRecipeToCraft.itemsNeeded.Length; i++)
-            {
-                InventoryManager.Instance.UseItem(selectedRecipeToCraft.itemsNeeded[i].item.itemID, selectedRecipeToCraft.itemsNeeded[i].amount);
-            }
-            InventoryManager.Instance.AddItem(selectedRecipeToCraft.itemToCraft.itemID, selectedRecipeToCraft.amountToCraft);
-            InventoryManager.Instance.UpdateItemsInfoList();
         }
         else
         {
