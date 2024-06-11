@@ -151,7 +151,7 @@ public class Enemy : Entity
 
     public void ExecuteAttack()
     {
-        if(animator.GetInteger("WalkDir") == 0 && playerInSight)
+        if(animator.GetInteger("WalkDir") == 0 && playerInSight && _brain.attackQueue.Count != 0)
         {
             _agent.ResetPath();
 
@@ -176,9 +176,7 @@ public class Enemy : Entity
                     RightClawAttack();
                     break;
                 case Attacks attack when attack == Attacks.Charge:
-                    _brain.attackQueue.Clear();
-                    _brain.MakeDesicion();
-                    ExecuteAttack();
+                    /////////////////////////////////
                     break;
 
             }
@@ -193,7 +191,7 @@ public class Enemy : Entity
 
     public void Engage()
     {
-        if (_distance > 3.5f)
+        if (_distance > 5f)
         {
             animator.SetInteger("WalkDir", 1);
 
@@ -207,6 +205,11 @@ public class Enemy : Entity
         {
             animator.SetInteger("WalkDir", 0);
             _brain.attackQueue.Dequeue();
+            _brain.attackQueue.Clear();
+
+            _brain.MakeDesicion();
+
+            _brain.attacksCurrentlyInQueue = _brain.attackQueue.ToArray();
         }
     }
 
@@ -232,13 +235,17 @@ public class Enemy : Entity
     public IEnumerator RegainEnergy()
     {
         animator.SetBool("Exhousted", true);
+        _energy = _maxEnergy;
 
         yield return new WaitForSeconds(_exhaustedTime);
-        _energy = _maxEnergy;
 
         animator.SetBool("Exhousted", false);
 
-        _brain.attackQueue.Dequeue();
+
+        if (_brain.attackQueue.Count != 0)
+        {
+            _brain.attackQueue.Dequeue();
+        }
 
         ExecuteAttack();
     }
