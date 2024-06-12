@@ -189,7 +189,9 @@ public class IngameUIManager : MonoBehaviour
 
     void Update()
     {
-        CheckInteractable();
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+            CheckInteractable();
+
         if (IsUIShowing())
         {
             Time.timeScale = 0;
