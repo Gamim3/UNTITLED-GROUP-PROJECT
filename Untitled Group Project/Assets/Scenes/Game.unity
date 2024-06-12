@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.014070118, g: 0.014828773, b: 0.018617691, a: 1}
+  m_IndirectSpecularColor: {r: 0.014070416, g: 0.014828892, b: 0.01861784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2423,11 +2423,11 @@ MonoBehaviour:
   _exhaustedTime: 2
   _exhaustionSpeed: 1
   _meleeRange: 3.5
-  _projectileSpeed: 30
+  _projectileSpeed: 40
   _projectileDamage: 5
   neckMoveAmount: 0.01
   _distance: 0
-  radius: 50
+  radius: 34
   angle: 90
   _delay: 0.2
   player: {fileID: 1165769283}
@@ -2441,6 +2441,7 @@ MonoBehaviour:
   _projectile: {fileID: 4043281210981400423, guid: 29768c9ecc0e18a48ad302a1c8781f3d,
     type: 3}
   _projectileSpawnPosition: {fileID: 1914832226}
+  throwAngle: 45
   _brain: {fileID: 878996613}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
@@ -5800,7 +5801,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 217187.5
+      value: 237676.88
       objectReference: {fileID: 0}
     - target: {fileID: 7675760509267378823, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}

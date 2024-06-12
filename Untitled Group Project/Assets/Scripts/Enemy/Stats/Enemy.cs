@@ -48,6 +48,8 @@ public class Enemy : Entity
     [SerializeField] Transform _parent;
     [SerializeField] GameObject _projectile;
     [SerializeField] Transform _projectileSpawnPosition;
+    [Range(0, 360)]
+    public float throwAngle;
 
     [Header("Dependancy")]
     [SerializeField] EnemyBrain _brain;
@@ -276,6 +278,8 @@ public class Enemy : Entity
 
     public void MoveSpike()
     {
+        thrownProjectile.GetComponent<EnemyProjectile>().AimAtPlayer();
+
         thrownProjectile.transform.SetParent(null);
 
         thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = _projectileSpeed;
