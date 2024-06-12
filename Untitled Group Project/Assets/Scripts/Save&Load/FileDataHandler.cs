@@ -378,12 +378,14 @@ public class FileDataHandler
         if (saveFileName == null)
         {
             Debug.Log($"Could not save doesnt have a save file name");
+            DataPersistenceManager.instance.SaveErrorCatch();
             return;
         }
 
         if (_isSaving)
         {
             Debug.Log("Could not save already saving");
+            DataPersistenceManager.instance.SaveErrorCatch();
             return;
         }
 
@@ -476,6 +478,7 @@ public class FileDataHandler
         catch (Exception e)
         {
             Debug.LogError("Error occured when trying to save data to file: " + manualSavePath + "\n" + e);
+            DataPersistenceManager.instance.SaveErrorCatch();
             _isSaving = false;
         }
     }
@@ -485,12 +488,14 @@ public class FileDataHandler
         if (saveFileName == null)
         {
             Debug.Log($"No profile id");
+            DataPersistenceManager.instance.SaveErrorCatch();
             return;
         }
 
         if (_isSaving)
         {
             Debug.Log("Could not save already saving");
+            DataPersistenceManager.instance.SaveErrorCatch();
             return;
         }
 
@@ -618,6 +623,7 @@ public class FileDataHandler
         catch (Exception e)
         {
             Debug.LogError("Error occured when trying to save data to file: " + autoSavePath + "\n" + e);
+            DataPersistenceManager.instance.SaveErrorCatch();
             _isSaving = false;
         }
 

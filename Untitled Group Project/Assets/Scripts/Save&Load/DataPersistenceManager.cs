@@ -25,6 +25,9 @@ public class DataPersistenceManager : MonoBehaviour
 
     [SerializeField] string[] _scenesNotToLoadIn;
 
+    public event CouldNotSave couldNotSaveEvent;
+    public delegate void CouldNotSave();
+
     public static DataPersistenceManager instance { get; private set; }
 
     private GameData _gameData;
@@ -232,6 +235,11 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     #endregion
+
+    public void SaveErrorCatch()
+    {
+        couldNotSaveEvent?.Invoke();
+    }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
