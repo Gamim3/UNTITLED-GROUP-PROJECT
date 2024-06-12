@@ -222,7 +222,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LeftClawAttack1
+      name: RightClawAttack
       takeName: LeftClawAttack1
       internalID: -8653074020250150688
       firstFrame: 0
@@ -246,9 +246,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.2260276
+        functionName: IsAttacking
+        data: RightClaw
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.5008538
         functionName: QueueAttack
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8135594
+        functionName: StoppedAttacking
+        data: RightClaw
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -265,7 +279,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: RightClawAttack
+      name: LeftClawAttack
       takeName: RightClawAttack
       internalID: 3506273160814785607
       firstFrame: 0
@@ -289,9 +303,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.22807793
+        functionName: IsAttacking
+        data: LeftClaw
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.5008537
         functionName: QueueAttack
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7142514
+        functionName: StoppedAttacking
+        data: LeftClaw
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -375,9 +403,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.24532935
+        functionName: IsAttacking
+        data: Head
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.5012066
         functionName: QueueAttack
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8848603
+        functionName: StoppedAttacking
+        data: Head
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

@@ -2442,7 +2442,6 @@ MonoBehaviour:
     type: 3}
   _projectileSpawnPosition: {fileID: 0}
   _brain: {fileID: 878996613}
-  _logic: {fileID: 878996614}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
   otherCanvas: {fileID: 698485939}
@@ -5801,7 +5800,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 205406.11
+      value: 208479.52
       objectReference: {fileID: 0}
     - target: {fileID: 7675760509267378823, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
@@ -7961,8 +7960,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3536484572944382841}
   - component: {fileID: 3536484572944382842}
-  - component: {fileID: 3536484572944382843}
-  - component: {fileID: 3536484572944382844}
   m_Layer: 10
   m_Name: DEF-Bone11.L
   m_TagString: Enemy
@@ -11272,46 +11269,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.65, y: 1, z: 2.18}
   m_Center: {x: -0.06, y: 0.1, z: -0.99}
---- !u!114 &3536484572944382843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108622604841383500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad200fef7dd0d94db540906ea1d8300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
---- !u!54 &3536484572944382844
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108622604841383500}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!4 &3547227850924725190
 Transform:
   m_ObjectHideFlags: 0
@@ -11889,6 +11846,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  enemy: {fileID: 878996615}
+  bodyPart: Head
 --- !u!54 &4131999707551373424
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12370,8 +12329,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8988641624712085556}
   - component: {fileID: 8988641624712085557}
-  - component: {fileID: 8988641624712085558}
-  - component: {fileID: 8988641624712085559}
   m_Layer: 10
   m_Name: DEF-Bone11.R
   m_TagString: Enemy
@@ -14180,8 +14137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2777003659850892219}
   - component: {fileID: 6592099534936330745}
-  - component: {fileID: 6592099534936330746}
-  - component: {fileID: 6592099534936330747}
   m_Layer: 10
   m_Name: DEF-Spine02
   m_TagString: Enemy
@@ -14210,46 +14165,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.02, y: 3.63, z: 1.73}
   m_Center: {x: 0, y: 0.51, z: 0}
---- !u!114 &6592099534936330746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6592099534936330744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad200fef7dd0d94db540906ea1d8300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
---- !u!54 &6592099534936330747
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6592099534936330744}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!4 &6610271311157821819
 Transform:
   m_ObjectHideFlags: 0
@@ -14316,6 +14231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  enemy: {fileID: 878996615}
+  bodyPart: LeftClaw
 --- !u!54 &6615710008027149967
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14633,6 +14550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  enemy: {fileID: 878996615}
+  bodyPart: RightClaw
 --- !u!54 &6989869449057181313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16218,6 +16137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  enemy: {fileID: 878996615}
+  bodyPart: RightClaw
 --- !u!54 &8612214797655928066
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16424,6 +16345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  enemy: {fileID: 878996615}
+  bodyPart: LeftClaw
 --- !u!54 &8726339450781088223
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16631,46 +16554,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.65, y: 1, z: 2.18}
   m_Center: {x: -0.06, y: 0.1, z: -0.99}
---- !u!114 &8988641624712085558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587336286544181141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad200fef7dd0d94db540906ea1d8300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
---- !u!54 &8988641624712085559
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587336286544181141}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &9015323089853507535
 GameObject:
   m_ObjectHideFlags: 0

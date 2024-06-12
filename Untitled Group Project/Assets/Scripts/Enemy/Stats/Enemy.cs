@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -58,6 +59,11 @@ public class Enemy : Entity
     private bool hasNotEnteredCombat;
 
     private Animator animator;
+
+    //checkst to see if that bodypart can deal damage
+    [NonSerialized] public bool isLeftClawAtacking;
+    [NonSerialized] public bool isRightClawAttacking; 
+    [NonSerialized] public bool isHeadAtacking;
 
     public override void Start()
     {
@@ -129,6 +135,38 @@ public class Enemy : Entity
         _logic.enemyHealth = _healthPoints / _maxHealth * 100;
         _logic.energy = _energy / _maxEnergy * 100;
         _logic.distance = _distance;
+    }
+
+    public void IsAttacking(string bodypart)
+    {
+        if(bodypart == "LeftClaw")
+        {
+            isLeftClawAtacking = true;
+        }
+        else if (bodypart == "RightClaw")
+        {
+            isRightClawAttacking = true;
+        }
+        else if (bodypart == "Head")
+        {
+            isHeadAtacking = true;
+        }
+    }
+
+    public void StoppedAttacking(string bodypart)
+    {
+        if (bodypart == "LeftClaw")
+        {
+            isLeftClawAtacking = false;
+        }
+        else if (bodypart == "RightClaw")
+        {
+            isRightClawAttacking = false;
+        }
+        else if (bodypart == "Head")
+        {
+            isHeadAtacking = false;
+        }
     }
 
     public void QueueAttack()
