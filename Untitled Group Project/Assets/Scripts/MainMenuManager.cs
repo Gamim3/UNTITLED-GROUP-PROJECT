@@ -145,7 +145,7 @@ public class MainMenuManager : MonoBehaviour
 
         // TODO - more checks to see if this works ( seems promosing )
 
-        SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
+        // SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
 
         _masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
         _musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
@@ -225,7 +225,8 @@ public class MainMenuManager : MonoBehaviour
         // DataPersistenceManager.instance.ChangeSelectedSaveData(_saveSlots[0].SaveDataName);
         // SceneManager.LoadScene(_gameScene);
 
-        SceneManager.UnloadSceneAsync(_mainMenuScene);
+        SceneManager.LoadScene(_gameScene);
+        // SceneManager.UnloadSceneAsync(_mainMenuScene);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -271,7 +272,8 @@ public class MainMenuManager : MonoBehaviour
 
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
-        SceneManager.UnloadSceneAsync(_mainMenuScene);
+        SceneManager.LoadScene(_gameScene);
+        // SceneManager.UnloadSceneAsync(_mainMenuScene);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
