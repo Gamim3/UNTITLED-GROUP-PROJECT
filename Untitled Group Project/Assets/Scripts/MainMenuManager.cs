@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _firstNewGameButton;
 
     [SerializeField] TMP_InputField _newGameInputField;
+    [SerializeField] TMP_Text _createGameStatusTxt;
 
 
     #endregion
@@ -74,6 +76,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _audioPanel;
     [SerializeField] GameObject _firstAudioButton;
 
+    [SerializeField] AudioMixer _mainMixer;
+
+    [SerializeField] Slider _masterSlider;
+    [SerializeField] Slider _musicSlider;
+    [SerializeField] Slider _sfxSlider;
+
     [Header("Video")]
     [SerializeField] GameObject _videoPanel;
     [SerializeField] GameObject _firstVideoButton;
@@ -99,11 +107,13 @@ public class MainMenuManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        DataPersistenceManager.instance.couldNotSaveEvent += CouldNotSave;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        DataPersistenceManager.instance.couldNotSaveEvent -= CouldNotSave;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -130,9 +140,20 @@ public class MainMenuManager : MonoBehaviour
     {
         RefreshSaveFiles();
 
+        if (_createGameStatusTxt != null)
+            _createGameStatusTxt.text = "";
+
         // TODO - more checks to see if this works ( seems promosing )
 
         SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
+
+        _masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
+        _musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
+        _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol");
+
+        SetMasterVol(_masterSlider.value);
+        SetMusicVol(_musicSlider.value);
+        SetSfxVol(_sfxSlider.value);
     }
 
     public void RefreshSaveFiles()
@@ -172,6 +193,8 @@ public class MainMenuManager : MonoBehaviour
         if (_currentSaveFileName == "")
         {
             Debug.LogWarning("Save file name can not be nothing");
+            if (_createGameStatusTxt != null)
+                _createGameStatusTxt.text = "Save file name can not be nothing!";
             return;
         }
 
@@ -183,8 +206,13 @@ public class MainMenuManager : MonoBehaviour
         else
         {
             Debug.LogWarning($"{_currentSaveFileName} already exists not creating a new game");
+            if (_createGameStatusTxt != null)
+                _createGameStatusTxt.text = $"File with name {_currentSaveFileName} already exists!";
             return;
         }
+
+        if (_createGameStatusTxt != null)
+            _createGameStatusTxt.text = $"Save File Added!";
 
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
@@ -203,6 +231,11 @@ public class MainMenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         // LoadSaveFile(_saveSlots[0]);
+    }
+
+    void CouldNotSave()
+    {
+        _createGameStatusTxt.text = $"An Error Occured Whilst Creating Save File With Name{_currentSaveFileName}";
     }
 
     public void OptionsBtn()
@@ -243,6 +276,22 @@ public class MainMenuManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+    }
+
+    public void SetMasterVol(float vol)
+    {
+        _mainMixer.SetFloat("MasterVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("MasterVol", vol);
+    }
+    public void SetMusicVol(float vol)
+    {
+        _mainMixer.SetFloat("MusicVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("MusicVol", vol);
+    }
+    public void SetSfxVol(float vol)
+    {
+        _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("SFXVol", vol);
     }
 
     public void DeleteSaveFileButton(int index)
