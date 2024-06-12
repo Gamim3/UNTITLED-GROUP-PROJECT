@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class FuzzyLogic : MonoBehaviour
 {
+    #region Variabless
+
     [Header("FuzzyStats")]
     public Vector3 fuzzyEnemyHealth;
     public Vector3 fuzzyPlayerHealth;
@@ -59,6 +61,10 @@ public class FuzzyLogic : MonoBehaviour
 
     [SerializeField] float _beginfullEnergy;
 
+    #endregion
+
+    #region MonoBehaviours
+
     public void Start()
     {
         _decimalText = "1";
@@ -90,6 +96,12 @@ public class FuzzyLogic : MonoBehaviour
         fuzzyDistance.y = GetDataFromGraph(_minMiddleDistance, _midMiddleDistance, _maxMiddleDistance, distance);
         fuzzyDistance.z = GetDataFromGraph(0, _beginFarDistance, distance);
     }
+
+    #endregion
+
+    #region ValueFromGraphs
+
+    //Gets the value from the grapgh based on the value of the vallue and the dataSet Slopes to get the fuzzy value
 
     public float GetDataFromGraph(float beginFloat , float GraphPoint, float evaluationPoint)
     {
@@ -158,4 +170,6 @@ public class FuzzyLogic : MonoBehaviour
 
             return 0;
     }
+
+    #endregion
 }

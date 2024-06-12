@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -10,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class Enemy : Entity
 {
+    #region Variables
+
     [SerializeField] float _attackSpeed;
 
     [SerializeField] EnemyType _enemyType;
@@ -55,15 +56,23 @@ public class Enemy : Entity
     [SerializeField] GameObject otherCanvas;
     [SerializeField] InventoryManager invManager;
 
+    //Private variables
+
     private float startSpeed;
     private bool hasNotEnteredCombat;
 
     private Animator animator;
 
+    private GameObject thrownProjectile;
+
     //checkst to see if that bodypart can deal damage
     [NonSerialized] public bool isLeftClawAtacking;
-    [NonSerialized] public bool isRightClawAttacking; 
+    [NonSerialized] public bool isRightClawAttacking;
     [NonSerialized] public bool isHeadAtacking;
+
+    #endregion
+
+    #region MonoBehaviours
 
     public override void Start()
     {
@@ -87,7 +96,7 @@ public class Enemy : Entity
 
     public override void Update()
     {
-        if(playerInSight && hasNotEnteredCombat && _brain.attackQueue.Count != 0)
+        if (playerInSight && hasNotEnteredCombat && _brain.attackQueue.Count != 0)
         {
             hasNotEnteredCombat = false;
             ExecuteAttack();
@@ -137,9 +146,14 @@ public class Enemy : Entity
         _logic.distance = _distance;
     }
 
+    #endregion
+
+    #region AnimationVoids
+
+    //these voids get called with animation events
     public void IsAttacking(string bodypart)
     {
-        if(bodypart == "LeftClaw")
+        if (bodypart == "LeftClaw")
         {
             isLeftClawAtacking = true;
         }
@@ -187,7 +201,7 @@ public class Enemy : Entity
 
     public void ExecuteAttack()
     {
-        if(animator.GetInteger("WalkDir") == 0 && playerInSight && _brain.attackQueue.Count != 0)
+        if (animator.GetInteger("WalkDir") == 0 && playerInSight && _brain.attackQueue.Count != 0)
         {
             _agent.ResetPath();
 
@@ -217,7 +231,7 @@ public class Enemy : Entity
                 case Attacks attack when attack == Attacks.Charge:
                     _brain.attackQueue.Clear();
                     _brain.MakeDesicion();
-                    if(_brain.attackQueue.Peek() != Attacks.Charge)
+                    if (_brain.attackQueue.Peek() != Attacks.Charge)
                     {
                         ExecuteAttack();
                     }
@@ -255,7 +269,23 @@ public class Enemy : Entity
         }
     }
 
-    //Attacks
+    public void SpawnSpike()
+    {
+        thrownProjectile = Instantiate(_projectile, _projectileSpawnPosition.position, _projectileSpawnPosition.rotation, _parent);
+    }
+
+    public void MoveSpike()
+    {
+        thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = _projectileSpeed;
+        thrownProjectile.GetComponent<EnemyProjectile>().projectileDamage = _projectileDamage;
+    }
+
+    #endregion
+
+    #region AttackVoids
+
+    //Voids that correspond to every attack the enemy does
+    //These voids get called in ExecuteAttack() inside the AnimationVoids Region
 
     public void Engage()
     {
@@ -304,7 +334,7 @@ public class Enemy : Entity
         {
             animator.SetInteger("WalkDir", 0);
             if (_brain.attackQueue.Count != 0)
-            { 
+            {
                 _brain.attackQueue.Dequeue();
                 _brain.attackQueue.Clear();
             }
@@ -337,12 +367,6 @@ public class Enemy : Entity
         animator.SetTrigger("SpikeThrow");
 
         Exhaustion(_exhaustionSpeed * 750);
-
-        //add visual line of sight
-        GameObject thrownProjectile = Instantiate(_projectile, _projectileSpawnPosition.position, _projectileSpawnPosition.rotation, _parent);
-
-        thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = _projectileSpeed;
-        thrownProjectile.GetComponent<EnemyProjectile>().projectileDamage = _projectileDamage;
 
         if (_brain.attackQueue.Peek() == Attacks.SpikeThrow)
         {
@@ -386,6 +410,11 @@ public class Enemy : Entity
         }
     }
 
+    #endregion
+
+    #region Checks
+
+    //Checks if player is at the left or right so it can move its head that way with a animator blend tree
     public void CheckIfPlayerIsLeftOrRight()
     {
         float animatorParameter = animator.GetFloat("PlayerLoc");
@@ -413,6 +442,8 @@ public class Enemy : Entity
         }
     }
 
+
+    //Ienumerator that loops an calls FieldOfViewCheck() every loop
     private IEnumerator FieldOfViewRoutine()
     {
         WaitForSeconds wait = new WaitForSeconds(_delay);
@@ -424,6 +455,7 @@ public class Enemy : Entity
         }
     }
 
+    //Checks if the player is inside a triangular point infront of the enemy using a layermask for onstructions and one for the targets collider
     private void FieldOfViewCheck()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, _targetMask);
@@ -455,10 +487,14 @@ public class Enemy : Entity
         }
     }
 
+    #endregion
+
+    #region Enums
     public enum EnemyType
     {
         ANY,
         SPIKEBEAR
     }
 
+    #endregion
 }

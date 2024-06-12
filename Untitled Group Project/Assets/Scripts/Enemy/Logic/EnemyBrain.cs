@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 
 public class EnemyBrain : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] FuzzyLogic _fuzzyLogic;
 
     Vector3 _playerHealthData;
@@ -25,6 +27,10 @@ public class EnemyBrain : MonoBehaviour
 
     [NonSerialized] Enemy _enemy;
 
+    #endregion
+
+    #region MonoBehaviours
+
     public void Start()
     {
         _fuzzyLogic = GetComponent<FuzzyLogic>();
@@ -39,12 +45,6 @@ public class EnemyBrain : MonoBehaviour
     public void Update()
     {
         GetFuzzyData();
-
-        //Queue debugging
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            attackQueue.Clear();
-        }
 
         if (_enemy.playerInSight)
         {
@@ -61,6 +61,12 @@ public class EnemyBrain : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region FuzzyLogicToAction
+
+    //makes a dicision dependent on the values it get  from the fuzzylogic
 
     public void MakeDesicion()
     {
@@ -840,6 +846,10 @@ public class EnemyBrain : MonoBehaviour
         _distanceData = _fuzzyLogic.fuzzyDistance;
     }
 
+    #endregion
+
+    #region Enums
+
     public enum Attacks
     {
         SpikeThrow,
@@ -883,4 +893,6 @@ public class EnemyBrain : MonoBehaviour
         Medium,
         Far,
     }
+
+    #endregion
 }
