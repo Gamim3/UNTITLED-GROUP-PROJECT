@@ -55,7 +55,7 @@ public class CharGroundedState : CharBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
         {
             SetSubState(Factory.Idle());
         }
@@ -69,8 +69,7 @@ public class CharGroundedState : CharBaseState
         }
         else if (Ctx.IsDashAction)
         {
-            // DASH STATE
-            // SetSubState(Factory.Dash()); 
+            SetSubState(Factory.Dashing());
         }
     }
 

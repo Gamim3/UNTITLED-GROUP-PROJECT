@@ -409,6 +409,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 266349427911377170, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
+      propertyPath: _dashForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 266349427911377170, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
       propertyPath: _damageCanvas
       value: 
       objectReference: {fileID: 771177033710170224, guid: c8686c3fc2fc0e14282278138ce6d23d,
@@ -1124,7 +1129,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 143425.75
+      value: 144962.45
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}

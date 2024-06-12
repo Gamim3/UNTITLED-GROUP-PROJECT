@@ -14,6 +14,8 @@ public class CharDashState : CharBaseState
         InitializeSubState();
 
         Ctx.IsIdleState = true;
+
+        HandleDash();
     }
 
     public override void ExitState()
@@ -47,4 +49,11 @@ public class CharDashState : CharBaseState
             SwitchState(Factory.Running());
         }
     }
+
+    // void HandleDash(float x, float y)
+    void HandleDash()
+    {
+        Ctx.PlayerRigidBody.AddForce(new Vector3(0, 0, 1) * Ctx.DashForce, ForceMode.Impulse);
+    }
+
 }

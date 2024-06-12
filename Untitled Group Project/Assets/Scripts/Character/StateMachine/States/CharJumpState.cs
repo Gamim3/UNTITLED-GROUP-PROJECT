@@ -43,7 +43,7 @@ public class CharJumpState : CharBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
         {
             SetSubState(Factory.Idle());
         }
@@ -57,8 +57,7 @@ public class CharJumpState : CharBaseState
         }
         else if (Ctx.IsDashAction)
         {
-            // DASH STATE
-            // SetSubState(Factory.Dash()); 
+            SetSubState(Factory.Dashing());
         }
     }
 

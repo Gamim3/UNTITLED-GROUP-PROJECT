@@ -45,20 +45,18 @@ public class CharRunState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Idle());
         }
-        // else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction) if not root
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Walking());
         }
-        // IDK IF DASH IS ROOT STATE OR NOT
-        // else if (Ctx.IsDashAction)
-        // {
-        //     SetSubState(Factory.Dashing());
-        // }
+        else if (Ctx.IsDashAction)
+        {
+            SwitchState(Factory.Dashing());
+        }
     }
 
     public override void InitializeSubState() { }

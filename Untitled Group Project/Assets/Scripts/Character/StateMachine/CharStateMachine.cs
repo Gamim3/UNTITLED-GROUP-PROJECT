@@ -127,6 +127,15 @@ public class CharStateMachine : Entity
 
     #endregion
 
+    [Header("Dashing")]
+    #region Dashing
+
+    [SerializeField] float _dashForce;
+    public float DashForce
+    { get { return _dashForce; } }
+
+    #endregion
+
     [Header("Groundcheck")]
     #region GroundCheck
 

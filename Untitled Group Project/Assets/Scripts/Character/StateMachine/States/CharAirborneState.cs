@@ -38,7 +38,7 @@ public class CharAirborneState : CharBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
         {
             SetSubState(Factory.Idle());
         }
@@ -50,11 +50,10 @@ public class CharAirborneState : CharBaseState
         {
             SetSubState(Factory.Running());
         }
-        // IDK IF DASH IS ROOT STATE OR NOT
-        // else if (Ctx.IsDashAction)
-        // {
-        //     SetSubState(Factory.Dashing());
-        // }
+        else if (Ctx.IsDashAction)
+        {
+            SetSubState(Factory.Dashing());
+        }
     }
 
     public override void CheckSwitchStates()
