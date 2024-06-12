@@ -231,18 +231,7 @@ public class Enemy : Entity
                     BiteAttack();
                     break;
                 case Attacks attack when attack == Attacks.Charge:
-                    _brain.attackQueue.Clear();
-                    _brain.MakeDesicion();
-                    if (_brain.attackQueue.Peek() != Attacks.Charge)
-                    {
-                        ExecuteAttack();
-                    }
-                    else
-                    {
-                        _brain.attackQueue.Clear();
-                        _brain.attackQueue.Enqueue(Attacks.LeftClaw);
-                        ExecuteAttack();
-                    }
+                    ChargeAttack();
                     break;
                 case Attacks attack when attack == Attacks.SpikeSlamAttack:
                     _brain.attackQueue.Clear();
@@ -411,6 +400,18 @@ public class Enemy : Entity
         Exhaustion(_exhaustionSpeed * 1000);
 
         if (_brain.attackQueue.Peek() == Attacks.Bite)
+        {
+            _brain.attackQueue.Dequeue();
+        }
+    }
+
+    public void ChargeAttack()
+    {
+        animator.SetTrigger("DashAttack");
+
+        Exhaustion(_exhaustionSpeed * 1000);
+
+        if (_brain.attackQueue.Peek() == Attacks.RightClaw)
         {
             _brain.attackQueue.Dequeue();
         }

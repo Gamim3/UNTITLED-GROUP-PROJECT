@@ -8,6 +8,7 @@ TagManager:
   - Crafting
   - Enemy
   - Upgrade
+  - PropSword
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Hitbox
   - Collider
   - Projectile
-  - 
-  - 
+  - Prop
+  - PropSword
   - 
   - 
   - 
