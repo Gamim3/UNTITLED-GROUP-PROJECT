@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.014070416, g: 0.014828892, b: 0.01861784, a: 1}
+  m_IndirectSpecularColor: {r: 0.014070118, g: 0.014828773, b: 0.018617691, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2423,7 +2423,7 @@ MonoBehaviour:
   _exhaustedTime: 2
   _exhaustionSpeed: 1
   _meleeRange: 3.5
-  _projectileSpeed: 18
+  _projectileSpeed: 30
   _projectileDamage: 5
   neckMoveAmount: 0.01
   _distance: 0
@@ -2437,10 +2437,10 @@ MonoBehaviour:
   _obstructionMask:
     serializedVersion: 2
     m_Bits: 8
-  _parent: {fileID: 121381300}
+  _parent: {fileID: 8726339450781088220}
   _projectile: {fileID: 4043281210981400423, guid: 29768c9ecc0e18a48ad302a1c8781f3d,
     type: 3}
-  _projectileSpawnPosition: {fileID: 0}
+  _projectileSpawnPosition: {fileID: 1914832226}
   _brain: {fileID: 878996613}
   _questManager: {fileID: 246864550}
   _fuzzyLogicVisuals: {fileID: 65592681}
@@ -5800,7 +5800,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 208479.52
+      value: 217187.5
       objectReference: {fileID: 0}
     - target: {fileID: 7675760509267378823, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
@@ -7448,6 +7448,89 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 500414361}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1914832225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1914832226}
+  - component: {fileID: 1914832228}
+  - component: {fileID: 1914832227}
+  m_Layer: 10
+  m_Name: projectilePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1914832226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914832225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.005397778, y: 0.8922071, z: -0.010667273, w: 0.45146832}
+  m_LocalPosition: {x: 0.11, y: 1.115, z: 0.364}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 8726339450781088220}
+  m_LocalEulerAnglesHint: {x: 1.37, y: 126.32, z: 0}
+--- !u!23 &1914832227
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914832225}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1914832228
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914832225}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2012197619 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7393807198421277726, guid: ae48d11817e30ec43a25ecdb71f876f4,
@@ -16309,6 +16392,7 @@ Transform:
   - {fileID: 8935596144566413688}
   - {fileID: 3916128827319922432}
   - {fileID: 8476951729131783169}
+  - {fileID: 1914832226}
   m_Father: {fileID: 8495139034399098155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8726339450781088221

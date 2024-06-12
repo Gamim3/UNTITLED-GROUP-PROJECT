@@ -276,6 +276,8 @@ public class Enemy : Entity
 
     public void MoveSpike()
     {
+        thrownProjectile.transform.SetParent(null);
+
         thrownProjectile.GetComponent<EnemyProjectile>().projectileSpeed = _projectileSpeed;
         thrownProjectile.GetComponent<EnemyProjectile>().projectileDamage = _projectileDamage;
     }
