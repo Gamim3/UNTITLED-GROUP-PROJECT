@@ -573,8 +573,10 @@ public class CharStateMachine : Entity
         // {
         //     _logic.playerHealth = _healthPoints / _maxHealth * 100;
         // }
-
-        _logic.playerHealth = _healthPoints / _maxHealth * 100;
+        if (_logic != null)
+        {
+            _logic.playerHealth = _healthPoints / _maxHealth * 100;
+        }
 
         if (_healthPoints <= 0)
         {
