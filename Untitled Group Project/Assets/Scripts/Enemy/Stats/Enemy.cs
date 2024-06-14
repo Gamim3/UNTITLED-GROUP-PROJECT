@@ -147,7 +147,7 @@ public class Enemy : Entity
                 DataPersistenceManager.instance.SaveManualGame();
             }
 
-            SceneManager.LoadScene("GuildHall");
+            SceneFader.Instance.FadeTo("GuildHall");
         }
 
         _distance = Vector3.Distance(transform.position, player.transform.position);
@@ -225,7 +225,7 @@ public class Enemy : Entity
         }
         else if (animator.GetInteger("WalkDir") == 1)
         {
-            if(_distance >= _logic.beginMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1,11) == 5)
+            if (_distance >= _logic.beginMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1, 11) == 5)
             {
                 animator.SetInteger("WalkDir", 0);
 
@@ -519,7 +519,7 @@ public class Enemy : Entity
     //checks in what state the charge is when the enemy is charging
     public void ChargeMovement()
     {
-        if(chargingAtPlayer && !jumpAtPlayer && !landed)
+        if (chargingAtPlayer && !jumpAtPlayer && !landed)
         {
             //charging
             _agent.speed = startSpeed * 1.3f;
