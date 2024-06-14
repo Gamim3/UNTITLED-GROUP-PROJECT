@@ -13,8 +13,6 @@ public class CharWalkState : CharBaseState
 
         Ctx.IsWalkState = true;
 
-        Debug.Log("Walk Enter");
-
         Ctx.DesiredMoveForce = Ctx.WalkSpeed;
 
         Ctx.MoveForce = Ctx.WalkSpeed;
@@ -47,7 +45,7 @@ public class CharWalkState : CharBaseState
         {
             SwitchState(Factory.Running());
         }
-        else if (Ctx.IsDashAction)
+        else if (Ctx.IsDashAction && Ctx.CanDash)
         {
             SwitchState(Factory.Dashing());
         }

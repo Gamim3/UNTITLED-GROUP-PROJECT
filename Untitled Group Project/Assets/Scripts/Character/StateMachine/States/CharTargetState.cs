@@ -33,6 +33,10 @@ public class CharTargetState : CharBaseState
         Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
 
 
+        Ctx.Orientation.LookAt(Ctx.GetViableTarget());
+
+        Ctx.Orientation.rotation = new Quaternion(Ctx.Orientation.rotation.x, 0, Ctx.Orientation.rotation.z, 0).normalized;
+
         CheckSwitchStates();
     }
 

@@ -420,6 +420,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 266349427911377170, guid: 0da5b4971f820954a954684bb4329179,
         type: 3}
+      propertyPath: _targetRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 266349427911377170, guid: 0da5b4971f820954a954684bb4329179,
+        type: 3}
       propertyPath: _damageSpawnLocation
       value: 
       objectReference: {fileID: 1286322791}
@@ -1129,7 +1134,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 144962.45
+      value: 159305.02
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}

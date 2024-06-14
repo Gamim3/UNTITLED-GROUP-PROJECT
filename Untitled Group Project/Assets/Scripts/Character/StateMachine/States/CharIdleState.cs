@@ -44,7 +44,7 @@ public class CharIdleState : CharBaseState
         {
             SwitchState(Factory.Running());
         }
-        else if (Ctx.IsDashAction)
+        else if (Ctx.IsDashAction && Ctx.CanDash)
         {
             SwitchState(Factory.Dashing());
         }

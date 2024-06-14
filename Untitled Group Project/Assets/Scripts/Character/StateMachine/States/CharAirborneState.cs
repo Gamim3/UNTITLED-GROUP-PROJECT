@@ -52,6 +52,8 @@ public class CharAirborneState : CharBaseState
         }
         else if (Ctx.IsDashAction)
         {
+            Debug.Log("Dash from Airborne");
+
             SetSubState(Factory.Dashing());
         }
     }

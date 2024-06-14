@@ -69,6 +69,7 @@ public class CharGroundedState : CharBaseState
         }
         else if (Ctx.IsDashAction)
         {
+            Debug.Log("Dash from Grounded");
             SetSubState(Factory.Dashing());
         }
     }

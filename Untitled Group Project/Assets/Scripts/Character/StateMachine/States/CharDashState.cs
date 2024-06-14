@@ -13,14 +13,24 @@ public class CharDashState : CharBaseState
     {
         InitializeSubState();
 
-        Ctx.IsIdleState = true;
+        Ctx.IsDashingState = true;
+
+        Ctx.DashMent = new Vector3(Ctx.CurrentMovementInput.x, 0, Ctx.CurrentMovementInput.y);
+
+        if (Ctx.DashMent == Vector3.zero)
+        {
+            Ctx.DashMent = Ctx.PlayerObj.forward;
+        }
+
+        Ctx.CanDash = false;
 
         HandleDash();
+        Ctx.StartCoroutine(Ctx.DashCooldown());
     }
 
     public override void ExitState()
     {
-        Ctx.IsIdleState = false;
+        Ctx.IsDashingState = false;
     }
 
 
@@ -40,11 +50,11 @@ public class CharDashState : CharBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction)
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction)
         {
             SwitchState(Factory.Running());
         }
@@ -53,7 +63,6 @@ public class CharDashState : CharBaseState
     // void HandleDash(float x, float y)
     void HandleDash()
     {
-        Ctx.PlayerRigidBody.AddForce(new Vector3(0, 0, 1) * Ctx.DashForce, ForceMode.Impulse);
+        Ctx.PlayerRigidBody.AddForce(Ctx.DashMent * Ctx.DashForce, ForceMode.Impulse);
     }
-
 }

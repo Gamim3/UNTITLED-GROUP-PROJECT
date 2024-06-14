@@ -53,7 +53,7 @@ public class CharRunState : CharBaseState
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsDashAction)
+        else if (Ctx.IsDashAction && Ctx.CanDash)
         {
             SwitchState(Factory.Dashing());
         }

@@ -108,14 +108,12 @@ public class CharCombatState : CharBaseState
         {
             if (Ctx.GetCurrentAttackAnimation() == previousAttack)
             {
-                Debug.Log("Dont do attack");
                 previousAttack = Ctx.GetCurrentAttackAnimation();
                 Ctx.HitBoxCollider.enabled = false;
                 return;
             }
             else
             {
-                Debug.Log("Do attack");
                 previousAttack = Ctx.GetCurrentAttackAnimation();
 
                 switch (previousAttack)

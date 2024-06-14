@@ -57,6 +57,8 @@ public class CharJumpState : CharBaseState
         }
         else if (Ctx.IsDashAction)
         {
+            Debug.Log("Dash from Jumping");
+
             SetSubState(Factory.Dashing());
         }
     }

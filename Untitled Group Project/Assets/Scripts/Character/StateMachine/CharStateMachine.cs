@@ -37,7 +37,7 @@ public class CharStateMachine : Entity
 
     [SerializeField] private Transform _orientation;
     public Transform Orientation
-    { get { return _orientation; } }
+    { get { return _orientation; } set { _orientation = value; } }
 
     [SerializeField] Rigidbody _playerRigidBody;
     public Rigidbody PlayerRigidBody
@@ -133,6 +133,18 @@ public class CharStateMachine : Entity
     [SerializeField] float _dashForce;
     public float DashForce
     { get { return _dashForce; } }
+
+    [SerializeField] Vector3 _dashMent;
+    public Vector3 DashMent
+    { get { return _dashMent; } set { _dashMent = value; } }
+
+    [SerializeField] bool _canDash;
+    public bool CanDash
+    { get { return _canDash; } set { _canDash = value; } }
+
+    [SerializeField] float _isDashTime;
+    public float IsDashTime
+    { get { return _isDashTime; } set { _isDashTime = value; } }
 
     #endregion
 
@@ -589,6 +601,7 @@ public class CharStateMachine : Entity
 
         if (_healthPoints <= 0)
         {
+            _healthPoints = 1;
             SceneManager.LoadScene("GuildHall");
         }
     }
@@ -609,7 +622,7 @@ public class CharStateMachine : Entity
 
     void OnMovement(InputAction.CallbackContext context)
     {
-        _currentMovementInput = context.ReadValue<Vector2>();
+        _currentMovementInput = context.ReadValue<Vector2>().normalized;
         _isMoveAction = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
@@ -721,6 +734,7 @@ public class CharStateMachine : Entity
         foreach (Collider collider in allColliders)
         {
             _targetsInRange.Add(collider.transform);
+            Debug.Log(collider.transform.name);
         }
 
         if (_targetsInRange.Count == 0)
@@ -747,15 +761,15 @@ public class CharStateMachine : Entity
         float minimalDistance = Mathf.Infinity;
         Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) / 2;
 
-        for (int targetIndex = 0; targetIndex < _targetsVisible.Count; targetIndex++)
+        for (int targetIndex = 0; targetIndex < _targetsInRange.Count; targetIndex++)
         {
-            Transform target = _targetsVisible[targetIndex];
-            Vector3 TargetScreenPoint = _playerCam.WorldToScreenPoint(target.transform.position);
+            Transform target = _targetsInRange[targetIndex];
+            Vector3 targetScreenPoint = _playerCam.WorldToScreenPoint(target.transform.position);
 
             // Only calculate the distance with an enemy if it is located within the screen bounds
-            if (TargetScreenPoint.x > 0 && TargetScreenPoint.x < Screen.width && TargetScreenPoint.y > 0 && TargetScreenPoint.y < Screen.height)
+            if (targetScreenPoint.x > 0 && targetScreenPoint.x < Screen.width && targetScreenPoint.y > 0 && targetScreenPoint.y < Screen.height)
             {
-                float distance = Vector2.Distance(TargetScreenPoint, screenCenter);
+                float distance = Vector2.Distance(targetScreenPoint, screenCenter);
 
                 if (distance < minimalDistance)
                 {
@@ -906,6 +920,14 @@ public class CharStateMachine : Entity
     }
 
     #endregion
+
+
+    public IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(_isDashTime);
+
+        _canDash = true;
+    }
 
     private void OnDrawGizmos()
     {
