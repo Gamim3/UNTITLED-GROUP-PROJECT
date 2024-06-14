@@ -602,7 +602,7 @@ public class CharStateMachine : Entity
         if (_healthPoints <= 0)
         {
             _healthPoints = 1;
-            SceneManager.LoadScene("GuildHall");
+            SceneFader.Instance.FadeTo("GuildHall");
         }
     }
 
