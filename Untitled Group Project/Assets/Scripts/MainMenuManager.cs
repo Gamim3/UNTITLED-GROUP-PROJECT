@@ -84,6 +84,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _audioPanel;
     [SerializeField] GameObject _firstAudioButton;
 
+    [SerializeField] AudioSource _buttonPopAudio;
     [SerializeField] AudioMixer _mainMixer;
 
     [SerializeField] Slider _masterSlider;
@@ -324,37 +325,49 @@ public class MainMenuManager : MonoBehaviour
     {
         _mainMixer.SetFloat("MasterVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("MasterVol", vol);
+        _buttonPopAudio.Play();
     }
     public void SetMusicVol(float vol)
     {
         _mainMixer.SetFloat("MusicVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("MusicVol", vol);
+        _buttonPopAudio.Play();
     }
     public void SetSfxVol(float vol)
     {
         _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("SFXVol", vol);
+        _buttonPopAudio.Play();
     }
 
     public void SetMouseSensitivity(float value)
     {
         PlayerPrefs.SetFloat("MouseSensitivity", value);
         _sensTxt.text = value.ToString("0.##");
+        _buttonPopAudio.Play();
     }
 
     public void SetCamDistance(float value)
     {
         PlayerPrefs.SetFloat("CamDistance", value);
+        _buttonPopAudio.Play();
         _distanceTxt.text = value.ToString("0.##");
     }
 
     public void SetToggleSprint(bool value)
     {
+        _buttonPopAudio.Play();
         PlayerPrefs.SetInt("ToggleRun", value ? 1 : 0);
+    }
+
+    public void PlayButtonPop()
+    {
+        _buttonPopAudio.Play();
     }
 
     public void DeleteSaveFileButton(int index)
     {
+        _buttonPopAudio.Play();
         Debug.Log("Delete");
         // TODO - make this work if a save file has already been deleted
         DataPersistenceManager.instance.DeleteSelectedSaveFile(_saveFiles[index].SaveFileName);
