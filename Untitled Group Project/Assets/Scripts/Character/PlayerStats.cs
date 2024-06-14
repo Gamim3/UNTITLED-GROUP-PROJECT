@@ -15,6 +15,11 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public float xpGoalIncrement = 1.5f;
     [SerializeField] Recipe[] _recipeToUnlock;
 
+    [Header("Audio Effects")]
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _hurtSound;
+    [SerializeField] AudioClip _levelUpSound;
+
     public event XpChanged OnXpGained;
 
     private void Start()
@@ -42,6 +47,9 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     void LevelUp()
     {
+        _audioSource.clip = _levelUpSound;
+        _audioSource.Play();
+
         if (level == 0)
         {
             xpGoal = initialXpGoal;
@@ -56,6 +64,12 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         }
         xp = 0;
         level++;
+    }
+
+    void OnPlayerDamage()
+    {
+        _audioSource.clip = _hurtSound;
+        _audioSource.Play();
     }
 
     public void AddXp(int xpToGet)

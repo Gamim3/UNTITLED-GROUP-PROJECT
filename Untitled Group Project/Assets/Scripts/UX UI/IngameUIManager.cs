@@ -211,7 +211,6 @@ public class IngameUIManager : MonoBehaviour
             if (_closestTransform != null)
             {
                 _interactPanel.SetActive(true);
-                Debug.Log($"Clostest Transform: {_closestTransform.name}");
             }
             else
             {
@@ -545,8 +544,12 @@ public class IngameUIManager : MonoBehaviour
         return false;
     }
 
-    IEnumerator XpSlider(int xpAmount)
+    IEnumerator XpSlider(int xpAmount, bool firstCall = true)
     {
+        if (firstCall)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
         if (smoothXpSlider)
         {
             yield return new WaitForSeconds(0.01f);
@@ -554,12 +557,17 @@ public class IngameUIManager : MonoBehaviour
             if (_xpSliderImage.fillAmount < _playerStats.xp / _playerStats.xpGoal)
             {
                 _xpSliderImage.fillAmount += xpAmount / 100;
-                StartCoroutine(XpSlider(xpAmount));
+                Debug.Log($"Slider FillAmount Set To {_xpSliderImage.fillAmount}");
+                StartCoroutine(XpSlider(xpAmount, false));
+            }
+            else
+            {
+                Debug.Log($"XpSlider Value Was {_xpSliderImage.fillAmount} and needed to be {_playerStats.xp / _playerStats.xpGoal}");
+                _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
             }
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
             _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
         }
         _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;

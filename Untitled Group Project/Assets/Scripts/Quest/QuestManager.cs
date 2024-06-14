@@ -85,9 +85,16 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         {
             if (activeQuests[i - 1] == quest)
             {
-                if (completionAmount[i - 1] >= quest.questGoalAmount)
+                if (i - 1 < completionAmount.Count)
                 {
-                    return true;
+                    if (completionAmount[i - 1] >= quest.questGoalAmount)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    continue;
                 }
             }
         }

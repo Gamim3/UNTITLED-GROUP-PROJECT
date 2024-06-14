@@ -100,6 +100,7 @@ public class CraftingManager : MonoBehaviour
                 }
                 InventoryManager.Instance.AddItem(selectedRecipeToCraft.itemToCraft.itemID, selectedRecipeToCraft.amountToCraft);
                 InventoryManager.Instance.UpdateItemsInfoList();
+                GetComponent<AudioSource>().Play();
             }
         }
         else
