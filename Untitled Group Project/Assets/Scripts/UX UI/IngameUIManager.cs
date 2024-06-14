@@ -622,6 +622,6 @@ public class IngameUIManager : MonoBehaviour
     {
         if (DataPersistenceManager.instance)
             DataPersistenceManager.instance.SaveAutoGame();
-        SceneManager.LoadScene("MainMenu");
+        SceneFader.Instance.FadeTo("MainMenu");
     }
 }

@@ -7,6 +7,7 @@ public class TpToArena : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("Game");
+        if (other.transform.GetComponentInParent<PlayerStats>())
+            SceneFader.Instance.FadeTo("Game");
     }
 }

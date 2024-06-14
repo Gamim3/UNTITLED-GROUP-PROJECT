@@ -266,7 +266,7 @@ public class MainMenuManager : MonoBehaviour
         // DataPersistenceManager.instance.ChangeSelectedSaveData(_saveSlots[0].SaveDataName);
         // SceneManager.LoadScene(_gameScene);
 
-        SceneManager.LoadScene(_gameScene);
+        SceneFader.Instance.FadeTo(_gameScene);
         // SceneManager.UnloadSceneAsync(_mainMenuScene);
 
         Cursor.visible = false;
@@ -313,7 +313,7 @@ public class MainMenuManager : MonoBehaviour
 
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
-        SceneManager.LoadScene(_gameScene);
+        SceneFader.Instance.FadeTo(_gameScene);
         // SceneManager.UnloadSceneAsync(_mainMenuScene);
 
         Cursor.visible = false;
