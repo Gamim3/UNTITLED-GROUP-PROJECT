@@ -70,7 +70,7 @@ public class CharSlopedState : CharBaseState
         {
             SetSubState(Factory.Running());
         }
-        else if (Ctx.IsDashAction)
+        else if (Ctx.IsDashAction && Ctx.CanDash)
         {
             Debug.Log("Dash from Grounded");
 

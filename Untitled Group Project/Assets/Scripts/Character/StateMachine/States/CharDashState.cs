@@ -25,12 +25,12 @@ public class CharDashState : CharBaseState
         Ctx.CanDash = false;
 
         HandleDash();
-        Ctx.StartCoroutine(Ctx.DashCooldown());
     }
 
     public override void ExitState()
     {
         Ctx.IsDashingState = false;
+        Ctx.StartCoroutine(Ctx.DashCooldown());
     }
 
 
