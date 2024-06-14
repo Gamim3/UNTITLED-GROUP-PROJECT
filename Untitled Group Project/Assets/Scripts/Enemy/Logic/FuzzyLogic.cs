@@ -51,6 +51,9 @@ public class FuzzyLogic : MonoBehaviour
     { get { return _minMiddleDistance; } }
 
     [SerializeField] float _midMiddleDistance;
+    public float PeakMiddleDistance
+    { get { return _midMiddleDistance; } }
+
     [SerializeField] float _maxMiddleDistance;
     public float EndMiddleDistance
     { get { return _maxMiddleDistance; } }

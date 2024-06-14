@@ -309,6 +309,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.19601329
+        functionName: StopAiming
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -361,6 +368,13 @@ ModelImporter:
         messageOptions: 0
       - time: 1
         functionName: ExecuteAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.31850994
+        functionName: StopAiming
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -466,6 +480,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.20284766
+        functionName: StopAiming
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -518,6 +539,13 @@ ModelImporter:
         messageOptions: 0
       - time: 1
         functionName: ExecuteAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.24205026
+        functionName: StopAiming
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

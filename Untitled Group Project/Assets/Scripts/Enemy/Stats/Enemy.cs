@@ -63,6 +63,7 @@ public class Enemy : Entity
     private float startSpeed;
 
     private bool hasNotEnteredCombat;
+    private bool aimingForPlayer;
 
     //bools to set sertain states during the chargin animation
     private bool chargingAtPlayer;
@@ -114,7 +115,15 @@ public class Enemy : Entity
 
         //CheckIfPlayerIsLeftOrRight();
 
-        InstantlyTurn(_agent.destination);
+        if(_agent.destination != null)
+        {
+            InstantlyTurn(_agent.destination);
+        }
+
+        if (aimingForPlayer)
+        {
+            InstantlyTurn(player.transform.position);
+        }
 
         ChargeMovement();
 
@@ -164,7 +173,7 @@ public class Enemy : Entity
 
     //these voids get called with animation events
 
-    #region HitboxTiming
+    #region Hit/Damage Timing
     //these voids get used to enable/disable the damage dealing part of limbs so that only the left claw deals damage during left claw attack etc.
 
     public void IsAttacking(string bodypart)
@@ -211,6 +220,11 @@ public class Enemy : Entity
         }
     }
 
+    public void StopAiming()
+    {
+        aimingForPlayer = false;
+    }
+
     #endregion
 
     #region AnimationQueuing
@@ -225,7 +239,7 @@ public class Enemy : Entity
         }
         else if (animator.GetInteger("WalkDir") == 1)
         {
-            if (_distance >= _logic.beginMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1, 11) == 5)
+            if (_distance >= _logic.PeakMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1, 11) == 5)
             {
                 animator.SetInteger("WalkDir", 0);
 
@@ -253,9 +267,12 @@ public class Enemy : Entity
         if (playerInSight && _brain.attackQueue.Count != 0)
         {
             _agent.ResetPath();
+
             landed = false;
             jumpAtPlayer = false;
             chargingAtPlayer = false;
+
+            aimingForPlayer = false;
 
             switch (_brain.attackQueue.Peek())
             {
@@ -269,15 +286,19 @@ public class Enemy : Entity
                     StartCoroutine(RegainEnergy());
                     break;
                 case Attacks attack when attack == Attacks.SpikeThrow:
+                    aimingForPlayer = true;
                     SpikeThrow();
                     break;
                 case Attacks attack when attack == Attacks.LeftClaw:
+                    aimingForPlayer = true;
                     LeftClawAttack();
                     break;
                 case Attacks attack when attack == Attacks.RightClaw:
+                    aimingForPlayer = true;
                     RightClawAttack();
                     break;
                 case Attacks attack when attack == Attacks.Bite:
+                    aimingForPlayer = true;
                     BiteAttack();
                     break;
                 case Attacks attack when attack == Attacks.Charge:
