@@ -72,6 +72,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _optionsPanel;
     [SerializeField] GameObject _firstOptionsButton;
 
+    [Header("General")]
+    [SerializeField] Slider _sensSlider;
+    [SerializeField] Slider _distanceSlider;
+    [SerializeField] Toggle _sprintToggle;
+
+    [SerializeField] TMP_Text _sensTxt;
+    [SerializeField] TMP_Text _distanceTxt;
+
     [Header("Audio")]
     [SerializeField] GameObject _audioPanel;
     [SerializeField] GameObject _firstAudioButton;
@@ -154,6 +162,38 @@ public class MainMenuManager : MonoBehaviour
         SetMasterVol(_masterSlider.value);
         SetMusicVol(_musicSlider.value);
         SetSfxVol(_sfxSlider.value);
+
+        if (PlayerPrefs.HasKey("MouseSensitivity"))
+        {
+            _sensSlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+            SetMouseSensitivity(_sensSlider.value);
+        }
+        else
+        {
+            _sensSlider.value = 1;
+            SetMouseSensitivity(1);
+        }
+
+        if (PlayerPrefs.HasKey("CamDistance"))
+        {
+            _distanceSlider.value = PlayerPrefs.GetFloat("CamDistance");
+            SetCamDistance(_distanceSlider.value);
+        }
+        else
+        {
+            _distanceSlider.value = 4;
+            SetCamDistance(4);
+        }
+        if (PlayerPrefs.HasKey("ToggleRun"))
+        {
+            SetToggleSprint(PlayerPrefs.GetInt("ToggleRun") == 1);
+            _sprintToggle.isOn = PlayerPrefs.GetInt("ToggleRun") == 1;
+        }
+        else
+        {
+            SetToggleSprint(false);
+            _sprintToggle.isOn = false;
+        }
     }
 
     public void RefreshSaveFiles()
@@ -294,6 +334,23 @@ public class MainMenuManager : MonoBehaviour
     {
         _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("SFXVol", vol);
+    }
+
+    public void SetMouseSensitivity(float value)
+    {
+        PlayerPrefs.SetFloat("MouseSensitivity", value);
+        _sensTxt.text = value.ToString("0.##");
+    }
+
+    public void SetCamDistance(float value)
+    {
+        PlayerPrefs.SetFloat("CamDistance", value);
+        _distanceTxt.text = value.ToString("0.##");
+    }
+
+    public void SetToggleSprint(bool value)
+    {
+        PlayerPrefs.SetInt("ToggleRun", value ? 1 : 0);
     }
 
     public void DeleteSaveFileButton(int index)
