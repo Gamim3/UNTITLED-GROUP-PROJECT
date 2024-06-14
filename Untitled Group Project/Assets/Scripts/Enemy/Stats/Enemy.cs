@@ -58,10 +58,16 @@ public class Enemy : Entity
     [SerializeField] GameObject otherCanvas;
     [SerializeField] InventoryManager invManager;
 
-    //Private variables
+    //Private/not serialized variables
 
     private float startSpeed;
+
     private bool hasNotEnteredCombat;
+
+    //bools to set sertain states during the chargin animation
+    private bool chargingAtPlayer;
+    private bool jumpAtPlayer;
+    private bool landed;
 
     private Animator animator;
 
@@ -78,6 +84,11 @@ public class Enemy : Entity
 
     public override void Start()
     {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
+        _agent.speed = _moveSpeed;
+        startSpeed = _moveSpeed;
+
         hasNotEnteredCombat = true;
 
         StartCoroutine(FieldOfViewRoutine());
@@ -89,15 +100,12 @@ public class Enemy : Entity
 
         animator = GetComponent<Animator>();
 
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = _moveSpeed;
-        startSpeed = _moveSpeed;
-
         base.Start();
     }
 
     public override void Update()
     {
+        //Checks if player is insight hasent enterd combat and que is not empty if so begins the combat chain by executing a attack
         if (playerInSight && hasNotEnteredCombat && _brain.attackQueue.Count != 0)
         {
             hasNotEnteredCombat = false;
@@ -106,6 +114,11 @@ public class Enemy : Entity
 
         //CheckIfPlayerIsLeftOrRight();
 
+        InstantlyTurn(_agent.destination);
+
+        ChargeMovement();
+
+        //debug to see some visualized fuzzy logic
         if (Input.GetKeyDown(KeyCode.F))
         {
             _fuzzyLogicVisuals.SetActive(!_fuzzyLogicVisuals.activeSelf);
@@ -129,20 +142,17 @@ public class Enemy : Entity
 
             InventoryManager.Instance.AddItem(DroppableItems[0].item.itemID, Random.Range(1, 3));
 
-            //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().SaveAutoGame();
-
             if (DataPersistenceManager.instance != null)
             {
                 DataPersistenceManager.instance.SaveManualGame();
             }
 
             SceneManager.LoadScene("GuildHall");
-
-            //GameObject.Find("DataPersistenceManager").GetComponent<DataPersistenceManager>().OnSceneLoaded(SceneManager.GetSceneByName("GuildHall"), LoadSceneMode.Single);
         }
 
         _distance = Vector3.Distance(transform.position, player.transform.position);
 
+        //sets the vallue's in fuzzy logic script so they can be used for action calculation
         _logic.enemyHealth = _healthPoints / _maxHealth * 100;
         _logic.energy = _energy / _maxEnergy * 100;
         _logic.distance = _distance;
@@ -153,6 +163,10 @@ public class Enemy : Entity
     #region AnimationVoids
 
     //these voids get called with animation events
+
+    #region HitboxTiming
+    //these voids get used to enable/disable the damage dealing part of limbs so that only the left claw deals damage during left claw attack etc.
+
     public void IsAttacking(string bodypart)
     {
         if (bodypart == "LeftClaw")
@@ -165,6 +179,12 @@ public class Enemy : Entity
         }
         else if (bodypart == "Head")
         {
+            isHeadAtacking = true;
+        }
+        else if (bodypart == "All")
+        {
+            isLeftClawAtacking = true;
+            isRightClawAttacking = true;
             isHeadAtacking = true;
         }
     }
@@ -183,17 +203,42 @@ public class Enemy : Entity
         {
             isHeadAtacking = false;
         }
+        else if (bodypart == "All")
+        {
+            isLeftClawAtacking = false;
+            isRightClawAttacking = false;
+            isHeadAtacking = false;
+        }
     }
+
+    #endregion
+
+    #region AnimationQueuing
 
     public void QueueAttack()
     {
+        //makes sure the enemy queue's an attack when standing stil or continues walking to/away from the player when in that naimation state.
+
         if (animator.GetInteger("WalkDir") == 0)
         {
             _brain.MakeDesicion();
         }
         else if (animator.GetInteger("WalkDir") == 1)
         {
-            Engage();
+            if(_distance >= _logic.beginMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1,11) == 5)
+            {
+                animator.SetInteger("WalkDir", 0);
+
+                _brain.MakeDesicion();
+
+                _brain.attackQueue.Dequeue();
+
+                ExecuteAttack();
+            }
+            else
+            {
+                Engage();
+            }
         }
         else if (animator.GetInteger("WalkDir") == -1)
         {
@@ -203,9 +248,14 @@ public class Enemy : Entity
 
     public void ExecuteAttack()
     {
-        if (animator.GetInteger("WalkDir") == 0 && playerInSight && _brain.attackQueue.Count != 0)
+        // this void gets called at the end of a animation to execute the next queued attack
+
+        if (playerInSight && _brain.attackQueue.Count != 0)
         {
             _agent.ResetPath();
+            landed = false;
+            jumpAtPlayer = false;
+            chargingAtPlayer = false;
 
             switch (_brain.attackQueue.Peek())
             {
@@ -260,6 +310,11 @@ public class Enemy : Entity
         }
     }
 
+    #endregion
+
+    #region SpikeThrowTiming
+    //these voids get called at specific times during the spikethrow animation making sure that the spike spawns in its hand an that its get proppeled forward when thrown.
+
     public void SpawnSpike()
     {
         thrownProjectile = Instantiate(_projectile, _projectileSpawnPosition.position, _projectileSpawnPosition.rotation, _parent);
@@ -277,10 +332,34 @@ public class Enemy : Entity
 
     #endregion
 
+    #region ChargeTimings
+
+    //this void makes the enemy not be able to change its charge direction
+    public void ChargeJump()
+    {
+        landed = false;
+        chargingAtPlayer = false;
+        jumpAtPlayer = true;
+    }
+
+    //this fully stops the enemy's charge
+    public void JumpLand()
+    {
+        chargingAtPlayer = false;
+        jumpAtPlayer = false;
+        landed = true;
+    }
+
+    #endregion
+
+    #endregion
+
     #region AttackVoids
 
     //Voids that correspond to every attack the enemy does
     //These voids get called in ExecuteAttack() inside the AnimationVoids Region
+
+    #region Movement
 
     public void Engage()
     {
@@ -339,6 +418,9 @@ public class Enemy : Entity
         }
     }
 
+    #endregion
+
+    #region StatusRegainingAction
     public IEnumerator RegainEnergy()
     {
         animator.SetBool("Exhousted", true);
@@ -357,6 +439,10 @@ public class Enemy : Entity
         ExecuteAttack();
     }
 
+    #endregion
+
+    #region RangedAttacks
+
     public void SpikeThrow()
     {
         animator.SetTrigger("SpikeThrow");
@@ -368,6 +454,24 @@ public class Enemy : Entity
             _brain.attackQueue.Dequeue();
         }
     }
+
+    public void ChargeAttack()
+    {
+        animator.SetTrigger("DashAttack");
+
+        chargingAtPlayer = true;
+
+        Exhaustion(_exhaustionSpeed * 1000);
+
+        if (_brain.attackQueue.Peek() == Attacks.Charge)
+        {
+            _brain.attackQueue.Dequeue();
+        }
+    }
+
+    #endregion
+
+    #region MeleeAttacks
 
     public void LeftClawAttack()
     {
@@ -405,21 +509,43 @@ public class Enemy : Entity
         }
     }
 
-    public void ChargeAttack()
-    {
-        animator.SetTrigger("DashAttack");
+    #endregion
 
-        Exhaustion(_exhaustionSpeed * 1000);
-
-        if (_brain.attackQueue.Peek() == Attacks.RightClaw)
-        {
-            _brain.attackQueue.Dequeue();
-        }
-    }
 
     #endregion
 
     #region Checks
+
+    //checks in what state the charge is when the enemy is charging
+    public void ChargeMovement()
+    {
+        if(chargingAtPlayer && !jumpAtPlayer && !landed)
+        {
+            //charging
+            _agent.speed = startSpeed * 1.3f;
+            _agent.destination = player.transform.position;
+        }
+        else if (!chargingAtPlayer && jumpAtPlayer && !landed)
+        {
+            //Jumped
+            _agent.destination = transform.position + transform.forward * 2f;
+        }
+        else if (!chargingAtPlayer && !jumpAtPlayer && landed)
+        {
+            //landed
+            _agent.speed = startSpeed;
+        }
+    }
+
+    private void InstantlyTurn(Vector3 destination)
+    {
+        //When on target -> dont rotate!
+        if ((destination - transform.position).magnitude < 0.1f) return;
+
+        Vector3 direction = (destination - transform.position).normalized;
+        Quaternion qDir = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, qDir, Time.deltaTime * _agent.angularSpeed);
+    }
 
     //Checks if player is at the left or right so it can move its head that way with a animator blend tree
     public void CheckIfPlayerIsLeftOrRight()
