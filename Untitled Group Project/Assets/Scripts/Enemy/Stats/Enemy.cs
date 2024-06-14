@@ -376,8 +376,11 @@ public class Enemy : Entity
         else
         {
             animator.SetInteger("WalkDir", 0);
-            _brain.attackQueue.Dequeue();
-            _brain.attackQueue.Clear();
+            if(_brain.attackQueue.Count != 0)
+            {
+                _brain.attackQueue.Dequeue();
+                _brain.attackQueue.Clear();
+            }
 
             _brain.MakeDesicion();
 
