@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using System.Collections;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -147,6 +148,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<AudioSource>().volume = 0;
         RefreshSaveFiles();
 
         if (_createGameStatusTxt != null)
@@ -195,6 +197,7 @@ public class MainMenuManager : MonoBehaviour
             SetToggleSprint(false);
             _sprintToggle.isOn = false;
         }
+        StartCoroutine(EnableAudio());
     }
 
     public void RefreshSaveFiles()
@@ -404,6 +407,12 @@ public class MainMenuManager : MonoBehaviour
 
         DataPersistenceManager.instance.ChangeSelectedSaveFile(_saveFiles[0].SaveFileName);
         DataPersistenceManager.instance.ChangeSelectedSaveData(_saveFiles[0].SaveDataName);
+    }
+
+    IEnumerator EnableAudio()
+    {
+        yield return new WaitForSeconds(0.6f);
+        GetComponent<AudioSource>().volume = 1;
     }
 
     public void QuitBtn()
