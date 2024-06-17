@@ -631,7 +631,7 @@ public class CharStateMachine : Entity
 
     private void OnCollisionEnter(Collision other)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
+        if (Physics.SphereCast(transform.position, sphereRadius, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
         {
             float baba = Vector3.Distance(transform.position, tempHit.point);
 
@@ -650,7 +650,7 @@ public class CharStateMachine : Entity
 
     private void OnCollisionExit(Collision other)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
+        if (Physics.SphereCast(transform.position, sphereRadius, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
         {
             float baba = Vector3.Distance(transform.position, tempHit.point);
 
