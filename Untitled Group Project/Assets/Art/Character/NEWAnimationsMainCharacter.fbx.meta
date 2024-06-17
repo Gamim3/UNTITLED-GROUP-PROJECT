@@ -609,7 +609,7 @@ ModelImporter:
       name: InAir
       takeName: InAir
       internalID: -2702400367771620057
-      firstFrame: 0
+      firstFrame: 1
       lastFrame: 11
       wrapMode: 0
       orientationOffsetY: 0
