@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _hurtSound;
     [SerializeField] AudioClip _levelUpSound;
+    [SerializeField] AudioClip _enemyHitSound;
 
     public event XpChanged OnXpGained;
 
@@ -69,6 +70,12 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     void OnPlayerDamage()
     {
         _audioSource.clip = _hurtSound;
+        _audioSource.Play();
+    }
+
+    void OnEnemyHit()
+    {
+        _audioSource.clip = _enemyHitSound;
         _audioSource.Play();
     }
 
