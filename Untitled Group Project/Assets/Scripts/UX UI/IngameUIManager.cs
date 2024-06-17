@@ -620,6 +620,7 @@ public class IngameUIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         if (DataPersistenceManager.instance)
             DataPersistenceManager.instance.SaveAutoGame();
         SceneFader.Instance.FadeTo("MainMenu");

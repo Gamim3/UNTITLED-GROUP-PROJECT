@@ -14,6 +14,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-5926535531796281260
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ambience
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 287a62467763c244a997904c2bcf3069
+  m_Children: []
+  m_Volume: 9f3cd412e9e418d458be228c1956de8d
+  m_Pitch: 8be398db6c278c5439ba28653099a5aa
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -1191776774731959931}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-1799797736975425200
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -33,6 +52,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-1191776774731959931
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e35b1863cb3ca644ca8ffa2eccb796df
+  m_EffectName: Attenuation
+  m_MixLevel: 0e9a66d6a9618694b9a5ffcf38b107b3
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -49,6 +82,8 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: 9f3cd412e9e418d458be228c1956de8d
+    name: AmbienceVol
   - guid: d0aca568b9fbc47499f9c7e8c6c1974c
     name: MasterVol
   - guid: 718b14a20a35f6f4f930e5bb60f766b2
@@ -60,6 +95,7 @@ AudioMixerController:
     - 108167cd9df886743ac0bac021a2b81a
     - 657f05c78053dc0499bb59be8d4e6324
     - cc6e79bbd3626874fa2470f048069e60
+    - 287a62467763c244a997904c2bcf3069
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -75,6 +111,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 198142962248710459}
   - {fileID: -1799797736975425200}
+  - {fileID: -5926535531796281260}
   m_Volume: d0aca568b9fbc47499f9c7e8c6c1974c
   m_Pitch: 395e149e182cf5949a48c949c2b0fe9a
   m_Send: 00000000000000000000000000000000
