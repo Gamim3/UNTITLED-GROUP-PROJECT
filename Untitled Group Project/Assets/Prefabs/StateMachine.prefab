@@ -180,9 +180,12 @@ MonoBehaviour:
   _isAttack2Action: 0
   _isTargetingAction: 0
   _isDashAction: 0
+  _mouseSensPref: MouseSensitivity
+  _toggleRunPref: RunToggle
+  _camOffsetPref: CamDistance
   _toggleRun: 0
   _mouseSensitivity: 30
-  _camOffset: {fileID: 0}
+  _mouseSensMultiplier: 1
   _camOffsetX: 0
   _camOffsetY: 0
   _camOffsetZ: 0
@@ -313,7 +316,7 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4620403517256656474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 1801030406056267441, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1801030406056267441, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}

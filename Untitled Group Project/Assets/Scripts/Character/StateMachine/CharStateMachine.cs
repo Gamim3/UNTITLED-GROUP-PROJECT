@@ -299,6 +299,10 @@ public class CharStateMachine : Entity
     public float MouseSensitivity
     { get { return _mouseSensitivity; } }
 
+    [SerializeField] float _mouseSensMultiplier;
+    public float MouseSensMultiplier
+    { get { return _mouseSensMultiplier; } }
+
     [SerializeField] float _camOffsetX;
     public float CamOffsetX
     { get { return _camOffsetX; } }
@@ -480,7 +484,7 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Jump").canceled += OnJump;
 
         playerInput.actions.FindAction("Run").started += OnRun;
-        playerInput.actions.FindAction("Run").performed += OnRun;
+        // playerInput.actions.FindAction("Run").performed += OnRun;
         playerInput.actions.FindAction("Run").canceled += OnRun;
 
         playerInput.actions.FindAction("Attack1").started += OnAttack1;
@@ -515,7 +519,7 @@ public class CharStateMachine : Entity
         playerInput.actions.FindAction("Jump").canceled -= OnJump;
 
         playerInput.actions.FindAction("Run").started -= OnRun;
-        playerInput.actions.FindAction("Run").performed -= OnRun;
+        // playerInput.actions.FindAction("Run").performed -= OnRun;
         playerInput.actions.FindAction("Run").canceled -= OnRun;
 
         playerInput.actions.FindAction("Attack1").started -= OnAttack1;
@@ -687,11 +691,15 @@ public class CharStateMachine : Entity
     {
         if (_toggleRun && context.ReadValueAsButton() == true)
         {
+            _isRunAction = !_isRunAction;
+        }
+        else if (!_toggleRun && context.ReadValueAsButton() == true)
+        {
             _isRunAction = true;
         }
-        else if (!_toggleRun)
+        else if (!_toggleRun && context.ReadValueAsButton() == false)
         {
-            _isRunAction = context.ReadValueAsButton();
+            _isRunAction = false;
         }
     }
 
@@ -968,10 +976,9 @@ public class CharStateMachine : Entity
 
     #endregion
 
-
     public void SetSettings()
     {
-        _mouseSensitivity = PlayerPrefs.GetFloat(_mouseSensPref);
+        _mouseSensMultiplier = PlayerPrefs.GetFloat(_mouseSensPref);
         _toggleRun = PlayerPrefs.GetInt(_toggleRunPref) == 0 ? false : true;
         _camOffsetZ = PlayerPrefs.GetFloat(_camOffsetPref);
     }
