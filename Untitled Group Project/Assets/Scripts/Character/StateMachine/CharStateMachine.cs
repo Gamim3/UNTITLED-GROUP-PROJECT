@@ -553,6 +553,8 @@ public class CharStateMachine : Entity
 
         }
 
+        Debug.DrawRay(transform.position, Vector3.down, Color.cyan);
+
         if (_nextTarget != null)
         {
             _playerObj.forward = _nextTarget.position;
@@ -623,6 +625,40 @@ public class CharStateMachine : Entity
     public void OnTriggerEnter(Collider other)
     {
         _currentState.OnTriggerEnterState(other);
+    }
+
+    RaycastHit tempHit;
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
+        {
+            float baba = Vector3.Distance(transform.position, tempHit.point);
+
+            Debug.Log($"Collision detected this close to the ground: {baba - _playerHeight / 2}");
+            if (MyApproximation(baba, _playerHeight / 2, 0.02f))
+            {
+                Debug.Log("GROUNDED");
+            }
+        }
+    }
+
+    private bool MyApproximation(float a, float b, float tolerance)
+    {
+        return Mathf.Abs(a - b) < tolerance;
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out tempHit, _playerHeight / 2 + 0.01f, _groundLayer))
+        {
+            float baba = Vector3.Distance(transform.position, tempHit.point);
+
+            if (!MyApproximation(baba, _playerHeight / 2, 0.01f))
+            {
+                Debug.Log("Not Grounded");
+            }
+        }
     }
 
     #endregion
@@ -942,5 +978,6 @@ public class CharStateMachine : Entity
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _targetRadius);
+
     }
 }
