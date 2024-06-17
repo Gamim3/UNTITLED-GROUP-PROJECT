@@ -221,7 +221,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: MovementX
+    m_ConditionEvent: MovementY
     m_EventTreshold: 1.1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3331184514653190293}
@@ -2207,7 +2207,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: IntroAttack
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -452967798183602522}

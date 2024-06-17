@@ -162,9 +162,9 @@ Material:
     - _AlphaRemapMax: 1
     - _AlphaRemapMin: 0
     - _AlphaSrcBlend: 1
-    - _AmbientBoost: 0.42
+    - _AmbientBoost: 0.87
     - _Anisotropy: 0
-    - _BaseLevel: -0.08
+    - _BaseLevel: 1.07
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0

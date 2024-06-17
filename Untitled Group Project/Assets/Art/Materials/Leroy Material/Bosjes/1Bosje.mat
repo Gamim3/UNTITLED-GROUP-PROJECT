@@ -56,10 +56,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.241
-    - _AmbientBoost: 0.59
-    - _BaseLevel: -0.2
+    - _AmbientBoost: 0.62
+    - _BaseLevel: 0.34
     - _Cutoff: 0.241
-    - _Displacement: 0.42
+    - _Displacement: 1.06
     - _NoiseSize: 1.2
     m_Colors: []
   m_BuildTextureStacks: []

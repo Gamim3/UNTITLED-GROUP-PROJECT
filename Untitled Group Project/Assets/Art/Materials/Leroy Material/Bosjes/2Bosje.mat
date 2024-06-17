@@ -162,9 +162,9 @@ Material:
     - _AlphaRemapMax: 1
     - _AlphaRemapMin: 0
     - _AlphaSrcBlend: 1
-    - _AmbientBoost: 0.59
+    - _AmbientBoost: 0.62
     - _Anisotropy: 0
-    - _BaseLevel: -0.2
+    - _BaseLevel: 0.34
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
@@ -177,7 +177,7 @@ Material:
     - _DetailSmoothnessScale: 1
     - _DiffusionProfile: 0
     - _DiffusionProfileHash: 0
-    - _Displacement: 0.42
+    - _Displacement: 1.06
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
