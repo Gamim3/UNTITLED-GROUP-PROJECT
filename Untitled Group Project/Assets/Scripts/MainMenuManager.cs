@@ -91,6 +91,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Slider _masterSlider;
     [SerializeField] Slider _musicSlider;
     [SerializeField] Slider _sfxSlider;
+    [SerializeField] Slider _ambienceSlider;
 
     [Header("Video")]
     [SerializeField] GameObject _videoPanel;
@@ -138,12 +139,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        // TODO - maybe use this idk yet
-        // DontDestroyOnLoad(FindObjectOfType<EventSystem>().gameObject);       
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-        // DontDestroyOnLoad(FindObjectOfType<Camera>().gameObject);
     }
 
     private void Start()
@@ -154,17 +151,30 @@ public class MainMenuManager : MonoBehaviour
         if (_createGameStatusTxt != null)
             _createGameStatusTxt.text = "";
 
-        // TODO - more checks to see if this works ( seems promosing )
+        if (PlayerPrefs.HasKey("MasterVol"))
+        {
+            _masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
+            _musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
+            _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol");
+            _ambienceSlider.value = PlayerPrefs.GetFloat("AmbienceVol");
 
-        // SceneManager.LoadSceneAsync(_gameScene, LoadSceneMode.Additive);
+            SetMasterVol(_masterSlider.value);
+            SetMusicVol(_musicSlider.value);
+            SetSfxVol(_sfxSlider.value);
+            SetAmbienceVol(_ambienceSlider.value);
+        }
+        else
+        {
+            _masterSlider.value = 1;
+            _musicSlider.value = 1;
+            _sfxSlider.value = 1;
+            _ambienceSlider.value = 1;
 
-        _masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
-        _musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
-        _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol");
-
-        SetMasterVol(_masterSlider.value);
-        SetMusicVol(_musicSlider.value);
-        SetSfxVol(_sfxSlider.value);
+            SetMasterVol(_masterSlider.value);
+            SetMusicVol(_musicSlider.value);
+            SetSfxVol(_sfxSlider.value);
+            SetAmbienceVol(_ambienceSlider.value);
+        }
 
         if (PlayerPrefs.HasKey("MouseSensitivity"))
         {
@@ -340,6 +350,12 @@ public class MainMenuManager : MonoBehaviour
     {
         _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("SFXVol", vol);
+        _buttonPopAudio.Play();
+    }
+    public void SetAmbienceVol(float vol)
+    {
+        _mainMixer.SetFloat("AmbienceVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("AmbienceVol", vol);
         _buttonPopAudio.Play();
     }
 
