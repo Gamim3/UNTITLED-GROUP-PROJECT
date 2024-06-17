@@ -7592,8 +7592,8 @@ MonoBehaviour:
   _ambienceAudioSource: {fileID: 1785030588}
   _guildHallAmbience: {fileID: 8300000, guid: ecac3bfbcc58f074c8a84d5a35efa931, type: 3}
   _gameAmbience: {fileID: 8300000, guid: 77fa9302dee6c5d4ba1e37106797148d, type: 3}
-  _menuMusic: {fileID: 8300000, guid: 45c2d9e0f4c0aba4baba04b2ad72bba4, type: 3}
-  _guildhallMusic: {fileID: 8300000, guid: 45c2d9e0f4c0aba4baba04b2ad72bba4, type: 3}
+  _menuMusic: {fileID: 8300000, guid: 06fbf6a3698613a4c91c4af8cb8c1e4f, type: 3}
+  _guildhallMusic: {fileID: 8300000, guid: 06fbf6a3698613a4c91c4af8cb8c1e4f, type: 3}
   _gameMusic: {fileID: 8300000, guid: 9f753d66f67fce44ca831032b36fc28e, type: 3}
 --- !u!82 &1785030592
 AudioSource:
@@ -7606,7 +7606,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 198142962248710459, guid: 4b9c22d1dcabc194299ac69b88a63235,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 06fbf6a3698613a4c91c4af8cb8c1e4f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
