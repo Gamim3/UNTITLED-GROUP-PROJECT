@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 using static EnemyBrain;
@@ -45,6 +46,10 @@ public class Enemy : Entity
     [Header("Movement")]
     private NavMeshAgent _agent;
 
+    [Header("Roaming")]
+    [SerializeField] float wanderTimer;
+    [SerializeField] float wanderRadius;
+
     [Header("RangedAttackRequirements")]
     [SerializeField] Transform _parent;
     [SerializeField] GameObject _projectile;
@@ -62,6 +67,7 @@ public class Enemy : Entity
     //Private/not serialized variables
 
     private float startSpeed;
+    private float timer;
 
     private bool hasNotEnteredCombat;
     private bool aimingForPlayer;
@@ -90,6 +96,8 @@ public class Enemy : Entity
         _agent.updateRotation = false;
         _agent.speed = _moveSpeed;
         startSpeed = _moveSpeed;
+
+        timer = wanderTimer;
 
         hasNotEnteredCombat = true;
 
@@ -127,6 +135,33 @@ public class Enemy : Entity
         }
 
         ChargeMovement();
+
+        if (!playerInSight)
+        {
+            timer += Time.deltaTime;
+
+            if (pathComplete() == true)
+            {
+                if (animator.GetInteger("WalkDir") != 0)
+                {
+                    animator.SetInteger("WalkDir", 0);
+                }
+            }
+            else
+            {
+                if (animator.GetInteger("WalkDir") != 1)
+                {
+                    animator.SetInteger("WalkDir", 1);
+                }
+            }
+
+            if (timer >= wanderTimer)
+            {
+                Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, 3);
+                _agent.SetDestination(newPos);
+                timer = 0;
+            }
+        }
 
         //debug to see some visualized fuzzy logic
         if (Input.GetKeyDown(KeyCode.F1))
@@ -242,11 +277,11 @@ public class Enemy : Entity
     {
         //makes sure the enemy queue's an attack when standing stil or continues walking to/away from the player when in that naimation state.
 
-        if (animator.GetInteger("WalkDir") == 0)
+        if (animator.GetInteger("WalkDir") == 0 && playerInSight)
         {
             _brain.MakeDesicion();
         }
-        else if (animator.GetInteger("WalkDir") == 1)
+        else if (animator.GetInteger("WalkDir") == 1 && playerInSight)
         {
             if (_distance >= _logic.PeakMiddleDistance && _distance <= _logic.EndMiddleDistance && Random.Range(1, 11) == 5)
             {
@@ -263,7 +298,7 @@ public class Enemy : Entity
                 Engage();
             }
         }
-        else if (animator.GetInteger("WalkDir") == -1)
+        else if (animator.GetInteger("WalkDir") == -1 && playerInSight)
         {
             Disengage();
         }
@@ -329,11 +364,11 @@ public class Enemy : Entity
                     break;
             }
         }
-        else if (animator.GetInteger("WalkDir") == 1 && animator.GetInteger("WalkDir") != -1)
+        else if (animator.GetInteger("WalkDir") == 1 && animator.GetInteger("WalkDir") != -1 && playerInSight)
         {
             Engage();
         }
-        else if (animator.GetInteger("WalkDir") == -1 && animator.GetInteger("WalkDir") != 0)
+        else if (animator.GetInteger("WalkDir") == -1 && animator.GetInteger("WalkDir") != 0 && playerInSight)
         {
             Disengage();
         }
@@ -606,6 +641,33 @@ public class Enemy : Entity
             animator.SetFloat("PlayerLoc", animatorParameter + neckMoveAmount);
         }
     }
+
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
+
+    protected bool pathComplete()
+    {
+        if (Vector3.Distance(_agent.destination, _agent.transform.position) <= _agent.stoppingDistance)
+        {
+            if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
     //Ienumerator that loops an calls FieldOfViewCheck() every loop
