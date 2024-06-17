@@ -15,6 +15,8 @@ public class CharJumpState : CharBaseState
 
         Ctx.IsJumpingState = true;
 
+        Ctx.PlayerAnimator.SetTrigger("Jump");
+
         Ctx.IsJumpTime = Ctx.MaxJumpTime;
 
         Ctx.IsExitingSlope = true;
@@ -87,7 +89,7 @@ public class CharJumpState : CharBaseState
     void HandleJump()
     {
         Ctx.IsForced = true;
-        Ctx.ExtraForce = 3.5f;
+        Ctx.ExtraForce = Ctx.JumpForce;
 
         Ctx.PlayerRigidBody.velocity = new Vector3(Ctx.PlayerRigidBody.velocity.x, 0f, Ctx.PlayerRigidBody.velocity.z);
         Ctx.PlayerRigidBody.AddForce(Ctx.JumpMent * Ctx.JumpForce, ForceMode.Impulse);

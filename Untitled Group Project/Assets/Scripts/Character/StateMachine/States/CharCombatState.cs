@@ -26,14 +26,9 @@ public class CharCombatState : CharBaseState
 
     public override void UpdateState()
     {
-        // Debug.Log("Update Combat");
-
-        // Ctx.PlayerAnimator.GetCurrentAnimatorClipInfo(0).
-
-        // CHECK IF STILL ATTACK ANIMATION
         if (Ctx.IsAttack1Action)
         {
-            Ctx.PlayerAnimator.SetInteger("NormalAttack", 4);
+            Ctx.PlayerAnimator.SetInteger("NormalAttack", 6);
         }
         else
         {
@@ -42,35 +37,10 @@ public class CharCombatState : CharBaseState
 
         if (Ctx.CheckAttackAnimation())
         {
-            // Debug.Log($"Hitbox Active, animation playing: {current_animation}");
-            Ctx.Damage = 3;
-
-
-            // if (current_animation == "NBAttacks1")
-            // {
-            //     Debug.Log("Attack 1");
-            // }
-            // if (current_animation == "NBAttacks2")
-            // {
-            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 2;
-            //     Debug.Log("Attack 2");
-            // }
-            // if (current_animation == "NBAttacks3")
-            // {
-            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 3;
-            //     Debug.Log("Attack 3");
-            // }
-            // if (current_animation == "NBAttacks4")
-            // {
-            //     Ctx.HitBoxCollider.GetComponent<AttackTest>().damage = 15;
-            //     Debug.Log("Attack 4");
-            // }
-
             Ctx.HitBoxCollider.enabled = true;
         }
         else
         {
-            Debug.Log("Hitbox Inactive");
             previousAttack = "";
             Ctx.HitBoxCollider.enabled = false;
         }

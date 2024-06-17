@@ -13,6 +13,8 @@ public class CharDashState : CharBaseState
     {
         InitializeSubState();
 
+        Ctx.PlayerAnimator.SetTrigger("Dash");
+
         Ctx.IsDashingState = true;
 
         Ctx.DashMent = new Vector3(Ctx.CurrentMovementInput.x, 0, Ctx.CurrentMovementInput.y);
@@ -30,10 +32,9 @@ public class CharDashState : CharBaseState
     public override void ExitState()
     {
         Ctx.IsDashingState = false;
+
         Ctx.StartCoroutine(Ctx.DashCooldown());
     }
-
-
 
     public override void UpdateState()
     {
@@ -63,6 +64,9 @@ public class CharDashState : CharBaseState
     // void HandleDash(float x, float y)
     void HandleDash()
     {
+        Ctx.IsForced = true;
+        Ctx.ExtraForce = Ctx.DashForce;
+
         Ctx.PlayerRigidBody.AddForce(Ctx.DashMent * Ctx.DashForce, ForceMode.Impulse);
     }
 }

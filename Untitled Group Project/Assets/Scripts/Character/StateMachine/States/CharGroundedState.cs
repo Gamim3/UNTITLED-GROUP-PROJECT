@@ -17,6 +17,7 @@ public class CharGroundedState : CharBaseState
         Ctx.MoveMultiplier = 1f;
         Ctx.ForceSlowDownRate = 5;
         Ctx.IsAirborneState = false;
+
         // Ctx.DesiredMoveForce = Ctx.WalkSpeed;
         Ctx.JumpMent = new Vector3(0, 1, 0);
 

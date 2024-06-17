@@ -518,7 +518,7 @@ public class IngameUIManager : MonoBehaviour
             if (_interactPanel != null)
             {
                 _interactPanel.SetActive(false);
-                Debug.Log("SetCanvasFalse");
+                // Debug.Log("SetCanvasFalse");
                 _interactableTxt.text = "";
             }
             else

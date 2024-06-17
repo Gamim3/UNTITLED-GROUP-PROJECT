@@ -96,8 +96,8 @@ public class CharStateMachine : Entity
     public int BaseDamage
     { get { return _baseDamage; } }
 
-    [SerializeField] int _damage;
-    public int Damage
+    [SerializeField] float _damage;
+    public float Damage
     { get { return _damage; } set { _damage = value; } }
 
     #endregion
@@ -559,6 +559,15 @@ public class CharStateMachine : Entity
         }
 
         CurrentMovement = (Orientation.forward * CurrentMovementInput.y) + (Orientation.right * CurrentMovementInput.x); // NORMALIZE MAYBE?
+
+        if (_isGroundedState || _isSlopedState)
+        {
+            _playerAnimator.SetBool("Grounded", true);
+        }
+        else
+        {
+            _playerAnimator.SetBool("Grounded", false);
+        }
 
 
         IsGrounded = CheckGrounded();

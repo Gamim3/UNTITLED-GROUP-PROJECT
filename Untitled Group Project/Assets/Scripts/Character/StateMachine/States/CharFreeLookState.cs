@@ -43,8 +43,8 @@ public class CharFreeLookState : CharBaseState
         float mouseY = Ctx.IsCamAction.y * Ctx.MouseSensitivity * Time.deltaTime;
         float mouseX = Ctx.IsCamAction.x * Ctx.MouseSensitivity * Time.deltaTime;
 
-        Ctx.PlayerAnimator.SetFloat("MovementX", 0);
-        Ctx.PlayerAnimator.SetFloat("MovementY", 1);
+        // Ctx.PlayerAnimator.SetFloat("MovementX", 0);
+        // Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
 
 
         Ctx.YRotation += mouseX;
