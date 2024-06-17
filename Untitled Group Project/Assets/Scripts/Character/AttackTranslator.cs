@@ -15,6 +15,10 @@ public class AttackTranslator : MonoBehaviour
 
     public void AttackStart(float damage)
     {
+        if (damage == 0)
+        {
+            charStateMachine.HitBoxCollider.enabled = false;
+        }
         charStateMachine.HitBoxCollider.enabled = true;
         charStateMachine.Damage = damage;
     }

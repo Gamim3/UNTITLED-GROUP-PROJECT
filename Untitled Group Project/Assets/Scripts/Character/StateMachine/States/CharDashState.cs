@@ -17,7 +17,7 @@ public class CharDashState : CharBaseState
 
         Ctx.IsDashingState = true;
 
-        Ctx.DashMent = new Vector3(Ctx.CurrentMovementInput.x, 0, Ctx.CurrentMovementInput.y);
+        Ctx.DashMent = (Ctx.Orientation.forward * Ctx.CurrentMovementInput.y) + (Ctx.Orientation.right * Ctx.CurrentMovementInput.x);
 
         if (Ctx.DashMent == Vector3.zero)
         {

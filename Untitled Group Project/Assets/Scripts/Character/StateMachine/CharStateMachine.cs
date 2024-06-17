@@ -558,7 +558,7 @@ public class CharStateMachine : Entity
             _playerObj.forward = _nextTarget.position;
         }
 
-        CurrentMovement = (Orientation.forward * CurrentMovementInput.y) + (Orientation.right * CurrentMovementInput.x); // NORMALIZE MAYBE?
+        _currentMovement = (_orientation.forward * _currentMovementInput.y) + (_orientation.right * _currentMovementInput.x); // NORMALIZE MAYBE?
 
         if (_isGroundedState || _isSlopedState)
         {

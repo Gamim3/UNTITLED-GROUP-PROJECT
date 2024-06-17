@@ -230,6 +230,7 @@ MonoBehaviour:
   _audioSource: {fileID: 0}
   _hurtSound: {fileID: 0}
   _levelUpSound: {fileID: 0}
+  _enemyHitSound: {fileID: 0}
 --- !u!54 &6021294360769394147
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -901,6 +902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SWORD
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765041480176833863, guid: e5e405b66ed78fa4aac821c5d6bf754f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6578169170899587069, guid: e5e405b66ed78fa4aac821c5d6bf754f,
         type: 3}
