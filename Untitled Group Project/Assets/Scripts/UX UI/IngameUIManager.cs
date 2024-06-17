@@ -258,7 +258,7 @@ public class IngameUIManager : MonoBehaviour
             }
         }
     }
-
+    #region UI Panels
     public void ToggleInventory()
     {
         if (craftingCanvas.activeSelf && inventoryCanvas.activeSelf)
@@ -338,9 +338,10 @@ public class IngameUIManager : MonoBehaviour
         upgradesCanvas.GetComponent<Canvas>().enabled = !upgradesCanvas.GetComponent<Canvas>().enabled;
         upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = upgradesCanvas.GetComponent<Canvas>().enabled;
     }
-
+    #endregion
     void OnXpGained(int xpAmount)
     {
+        Debug.Log($"Gained {xpAmount} xp");
         _xpBar.GetComponent<Animator>().SetTrigger("Trigger");
 
         if (_playerStats.xp != 0)
@@ -352,6 +353,7 @@ public class IngameUIManager : MonoBehaviour
             _levelText.text = _playerStats.level.ToString();
         }
     }
+
 
     private void CheckInteractable()
     {
@@ -546,15 +548,19 @@ public class IngameUIManager : MonoBehaviour
 
     IEnumerator XpSlider(int xpAmount, bool firstCall = true)
     {
+        float requiredFillAmount = (float)_playerStats.xp / (float)_playerStats.xpGoal;
+        Debug.Log($"Required fill amount: {requiredFillAmount}");
         if (firstCall)
         {
+            _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
+            _levelText.text = _playerStats.level.ToString();
             yield return new WaitForSeconds(0.2f);
         }
         if (smoothXpSlider)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
 
-            if (_xpSliderImage.fillAmount < _playerStats.xp / _playerStats.xpGoal)
+            if (_xpSliderImage.fillAmount < requiredFillAmount)
             {
                 _xpSliderImage.fillAmount += xpAmount / 100;
                 Debug.Log($"Slider FillAmount Set To {_xpSliderImage.fillAmount}");
@@ -562,16 +568,15 @@ public class IngameUIManager : MonoBehaviour
             }
             else
             {
-                Debug.Log($"XpSlider Value Was {_xpSliderImage.fillAmount} and needed to be {_playerStats.xp / _playerStats.xpGoal}");
-                _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+                Debug.Log($"XpSlider Value Was {_xpSliderImage.fillAmount} and needed to be {requiredFillAmount}");
+                _xpSliderImage.fillAmount = requiredFillAmount;
             }
         }
         else
         {
-            _xpSliderImage.fillAmount = _playerStats.xp / _playerStats.xpGoal;
+            _xpSliderImage.fillAmount = requiredFillAmount;
+            Debug.Log($"Updated Xp Slider {_playerStats.xp}/ {_playerStats.xpGoal}");
         }
-        _xpSliderText.text = _playerStats.xp + "/" + _playerStats.xpGoal;
-        _levelText.text = _playerStats.level.ToString();
     }
 
     public void ChangeSensitivity(float value)
