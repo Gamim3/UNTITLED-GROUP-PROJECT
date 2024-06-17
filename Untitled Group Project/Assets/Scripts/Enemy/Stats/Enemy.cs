@@ -129,7 +129,7 @@ public class Enemy : Entity
         ChargeMovement();
 
         //debug to see some visualized fuzzy logic
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             _fuzzyLogicVisuals.SetActive(!_fuzzyLogicVisuals.activeSelf);
             otherCanvas.SetActive(!otherCanvas.activeSelf);
