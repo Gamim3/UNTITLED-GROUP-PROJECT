@@ -638,7 +638,11 @@ public class CharStateMachine : Entity
             Debug.Log($"Collision detected this close to the ground: {baba - _playerHeight / 2}");
             if (MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
-                Debug.Log("GROUNDED");
+                Debug.Log("Grounded");
+            }
+            else
+            {
+                Debug.Log("Not Grounded Anymore");
             }
         }
     }
@@ -657,6 +661,10 @@ public class CharStateMachine : Entity
             if (!MyApproximation(baba, _playerHeight / 2, 0.01f))
             {
                 Debug.Log("Not Grounded");
+            }
+            else
+            {
+                Debug.Log("Still Grounded");
             }
         }
     }
