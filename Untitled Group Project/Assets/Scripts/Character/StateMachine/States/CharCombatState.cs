@@ -35,16 +35,6 @@ public class CharCombatState : CharBaseState
             Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
         }
 
-        if (Ctx.CheckAttackAnimation())
-        {
-            Ctx.HitBoxCollider.enabled = true;
-        }
-        else
-        {
-            previousAttack = "";
-            Ctx.HitBoxCollider.enabled = false;
-        }
-
         CheckSwitchStates();
     }
 

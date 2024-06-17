@@ -154,12 +154,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   _groundDrag: 4
-  sphereRadius: 0.5
-  sphereOffset: 0.4
+  sphereRadius: 0.35
+  sphereOffset: 0.3
   _isSloped: 0
   _isExitingSlope: 0
   _maxSlopeAngle: 360
-  _playerHeight: 2
+  _playerHeight: 1.6
   _camTarget: {fileID: 6277244278688490470}
   _minXRotation: 60
   _maxXRotation: 70
@@ -311,9 +311,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Height: 2
+  m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!1 &4620403517256656474
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,7 +916,7 @@ PrefabInstance:
     - target: {fileID: 6538285846788695417, guid: e5e405b66ed78fa4aac821c5d6bf754f,
         type: 3}
       propertyPath: m_Radius
-      value: 0.03
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6538285846788695417, guid: e5e405b66ed78fa4aac821c5d6bf754f,
         type: 3}
