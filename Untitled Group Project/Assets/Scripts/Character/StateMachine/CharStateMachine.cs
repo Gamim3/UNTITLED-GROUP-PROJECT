@@ -287,17 +287,17 @@ public class CharStateMachine : Entity
     [Header("Settings")]
     #region Settings
 
+    [SerializeField] string _mouseSensPref;
+    [SerializeField] string _toggleRunPref;
+    [SerializeField] string _camOffsetPref;
+
     [SerializeField] bool _toggleRun;
     public bool ToggleRun
-    { get { return ToggleRun1; } }
+    { get { return _toggleRun; } }
 
     [SerializeField] float _mouseSensitivity;
     public float MouseSensitivity
     { get { return _mouseSensitivity; } }
-
-    [SerializeField] CinemachineCameraOffset _camOffset;
-    public CinemachineCameraOffset CamOffset
-    { get { return _camOffset; } }
 
     [SerializeField] float _camOffsetX;
     public float CamOffsetX
@@ -431,13 +431,7 @@ public class CharStateMachine : Entity
 
     [SerializeField] bool _hasDied;
     public bool HasDied
-    {
-        get { return _hasDied; }
-        set { _hasDied = value; }
-    }
-
-    public bool ToggleRun1 { get => _toggleRun; set => _toggleRun = value; }
-    public bool ToggleRun2 { get => _toggleRun; set => _toggleRun = value; }
+    { get { return _hasDied; } set { _hasDied = value; } }
 
     #endregion
 
@@ -691,11 +685,11 @@ public class CharStateMachine : Entity
 
     void OnRun(InputAction.CallbackContext context)
     {
-        if (ToggleRun1 && context.ReadValueAsButton() == true)
+        if (_toggleRun && context.ReadValueAsButton() == true)
         {
             _isRunAction = true;
         }
-        else if (!ToggleRun1)
+        else if (!_toggleRun)
         {
             _isRunAction = context.ReadValueAsButton();
         }
@@ -974,6 +968,13 @@ public class CharStateMachine : Entity
 
     #endregion
 
+
+    public void SetSettings()
+    {
+        _mouseSensitivity = PlayerPrefs.GetFloat(_mouseSensPref);
+        _toggleRun = PlayerPrefs.GetInt(_toggleRunPref) == 0 ? false : true;
+        _camOffsetZ = PlayerPrefs.GetFloat(_camOffsetPref);
+    }
 
     public IEnumerator DashCooldown()
     {

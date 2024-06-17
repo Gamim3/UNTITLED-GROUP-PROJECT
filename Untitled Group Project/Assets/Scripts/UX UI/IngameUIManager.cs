@@ -613,6 +613,7 @@ public class IngameUIManager : MonoBehaviour
     public void Resume()
     {
         _playerInput.actions.FindActionMap("Game").Enable();
+        _charStateMachine.SetSettings();
         Time.timeScale = 1;
         _pausePanel.SetActive(false);
         _paused = false;
