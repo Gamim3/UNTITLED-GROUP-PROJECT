@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 using static EnemyBrain;
 using Random = UnityEngine.Random;
 
@@ -24,6 +23,8 @@ public class Enemy : Entity
 
     [Header("AnimationSettings")]
     [SerializeField] float neckMoveAmount;
+
+    [SerializeField] GameObject[] DamageLimb;
 
     [Header("Distanc/Detection")]
     [SerializeField] float _distance;
@@ -115,7 +116,7 @@ public class Enemy : Entity
 
         //CheckIfPlayerIsLeftOrRight();
 
-        if(_agent.destination != null)
+        if (_agent.destination != null)
         {
             InstantlyTurn(_agent.destination);
         }
@@ -225,6 +226,14 @@ public class Enemy : Entity
         aimingForPlayer = false;
     }
 
+    public void SetDamage(float dmg)
+    {
+        for (int i = 0; i < DamageLimb.Length; i++)
+        {
+            DamageLimb[i].GetComponent<MeleeCollision>().damage = dmg;
+        }
+    }
+
     #endregion
 
     #region AnimationQueuing
@@ -318,7 +327,6 @@ public class Enemy : Entity
                         ExecuteAttack();
                     }
                     break;
-
             }
         }
         else if (animator.GetInteger("WalkDir") == 1 && animator.GetInteger("WalkDir") != -1)
@@ -397,7 +405,7 @@ public class Enemy : Entity
         else
         {
             animator.SetInteger("WalkDir", 0);
-            if(_brain.attackQueue.Count != 0)
+            if (_brain.attackQueue.Count != 0)
             {
                 _brain.attackQueue.Dequeue();
                 _brain.attackQueue.Clear();

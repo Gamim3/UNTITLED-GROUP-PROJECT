@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.01407274, g: 0.014835434, b: 0.018644454, a: 1}
+  m_IndirectSpecularColor: {r: 0.01407502, g: 0.014839383, b: 0.018648775, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2949,7 +2949,7 @@ Transform:
   m_GameObject: {fileID: 878996607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -28.71, y: -12.84, z: 8.54}
+  m_LocalPosition: {x: -28.71, y: -14.41, z: 8.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3102,10 +3102,16 @@ MonoBehaviour:
   _exhaustionSpeed: 1
   _meleeRange: 3.5
   _projectileSpeed: 40
-  _projectileDamage: 5
+  _projectileDamage: 12
   neckMoveAmount: 0.01
+  DamageLimb:
+  - {fileID: 2588706156276374448}
+  - {fileID: 6989869449057181310}
+  - {fileID: 4131999707551373421}
+  - {fileID: 5607116425988738420}
+  - {fileID: 8612214797655928063}
   _distance: 0
-  radius: 34
+  radius: 50
   angle: 90
   _delay: 0.2
   player: {fileID: 1165769283}
@@ -6639,7 +6645,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 245872.62
+      value: 246897.1
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
