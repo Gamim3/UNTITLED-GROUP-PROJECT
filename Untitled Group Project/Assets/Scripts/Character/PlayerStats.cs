@@ -16,18 +16,31 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     [SerializeField] Recipe[] _recipeToUnlock;
 
     [Header("Audio Effects")]
-    [SerializeField] AudioSource _audioSource;
-    [SerializeField] AudioClip _hurtSound;
+    [SerializeField] AudioSource _playerAudioSource;
+    [SerializeField] AudioSource _sfxAudioSource;
+    [SerializeField] AudioClip[] _hurtSounds;
     [SerializeField] AudioClip _levelUpSound;
     [SerializeField] AudioClip _enemyHitSound;
 
     public event XpChanged OnXpGained;
 
+    [SerializeField] bool _loadPlayerPrefs = true;
+
     private void Start()
     {
-        if (xpGoal == 0)
+        if (_loadPlayerPrefs)
         {
-            xpGoal = tutorialXpGoal;
+            xp = PlayerPrefs.GetInt("Xp", 0);
+            level = PlayerPrefs.GetInt("Level", 0);
+            xpGoal = PlayerPrefs.GetInt("XpGoal", tutorialXpGoal);
+        }
+
+        for (int i = 0; i < level; i++)
+        {
+            if (_recipeToUnlock.Length > level && _recipeToUnlock[i] != null)
+            {
+                CraftingManager.Instance.AddRecipe(_recipeToUnlock[i]);
+            }
         }
     }
 
@@ -48,8 +61,8 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     void LevelUp()
     {
-        _audioSource.clip = _levelUpSound;
-        _audioSource.Play();
+        _playerAudioSource.clip = _levelUpSound;
+        _playerAudioSource.Play();
 
         if (level == 0)
         {
@@ -65,23 +78,33 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         }
         xp = 0;
         level++;
+        PlayerPrefs.SetInt("Level", level);
+        PlayerPrefs.SetInt("XpGoal", xpGoal);
     }
 
     void OnPlayerDamage()
     {
-        _audioSource.clip = _hurtSound;
-        _audioSource.Play();
+        int random = Random.Range(0, _hurtSounds.Length);
+        if (_hurtSounds[random] != null)
+        {
+            _playerAudioSource.clip = _hurtSounds[random];
+            _playerAudioSource.Play();
+        }
     }
 
     void OnEnemyHit()
     {
-        _audioSource.clip = _enemyHitSound;
-        _audioSource.Play();
+        if (_enemyHitSound != null)
+        {
+            _playerAudioSource.clip = _enemyHitSound;
+            _sfxAudioSource.Play();
+        }
     }
 
     public void AddXp(int xpToGet)
     {
         xp += xpToGet;
+        PlayerPrefs.SetInt("Xp", xp);
         OnXpGained.Invoke(xpToGet);
     }
     public delegate void XpChanged(int xpAmount);
