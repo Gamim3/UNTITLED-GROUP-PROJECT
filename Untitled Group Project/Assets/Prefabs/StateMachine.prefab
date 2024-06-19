@@ -150,6 +150,7 @@ MonoBehaviour:
   _canDash: 1
   _isDashTime: 1
   _isGrounded: 1
+  _groundContact: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 9
@@ -230,10 +231,12 @@ MonoBehaviour:
   initialXpGoal: 1000
   xpGoalIncrement: 1.5
   _recipeToUnlock: []
-  _audioSource: {fileID: 0}
-  _hurtSound: {fileID: 0}
+  _playerAudioSource: {fileID: 0}
+  _sfxAudioSource: {fileID: 0}
+  _hurtSounds: []
   _levelUpSound: {fileID: 0}
   _enemyHitSound: {fileID: 0}
+  _loadPlayerPrefs: 1
 --- !u!54 &6021294360769394147
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -271,6 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8071513859085972249}
   - component: {fileID: 4656001043476044128}
+  - component: {fileID: 6239555376456226017}
   m_Layer: 8
   m_Name: PlayerObj
   m_TagString: Player
@@ -314,9 +318,30 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Height: 1.6
+  m_Height: 1.45
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.04, z: 0}
+--- !u!135 &6239555376456226017
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2845915322674470586}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &4620403517256656474
 GameObject:
   m_ObjectHideFlags: 0

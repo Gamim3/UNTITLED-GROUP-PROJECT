@@ -46,9 +46,9 @@ public class CharSlopedState : CharBaseState
             Ctx.MoveMultiplier = 2f;
         }
 
-        if (Ctx.PlayerRigidBody.velocity.y > 0 || Ctx.PlayerRigidBody.velocity.y > 0)
+        if (!Ctx.GroundContact)
         {
-            // Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
+            Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 
         CheckSwitchStates();

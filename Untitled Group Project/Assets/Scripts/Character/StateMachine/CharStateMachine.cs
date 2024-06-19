@@ -155,6 +155,10 @@ public class CharStateMachine : Entity
     public bool IsGrounded
     { get { return _isGrounded; } set { _isGrounded = value; } }
 
+    [SerializeField] bool _groundContact;
+    public bool GroundContact
+    { get { return _groundContact; } }
+
     [SerializeField] LayerMask _groundLayer;
 
     [SerializeField] float _groundDrag;
@@ -637,10 +641,12 @@ public class CharStateMachine : Entity
             if (MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
                 Debug.Log("Grounded");
+                _groundContact = true;
             }
             else
             {
                 Debug.Log("Not Grounded Anymore");
+                _groundContact = false;
             }
         }
     }
@@ -659,10 +665,12 @@ public class CharStateMachine : Entity
             if (!MyApproximation(baba, _playerHeight / 2, 0.01f))
             {
                 Debug.Log("Not Grounded");
+                _groundContact = false;
             }
             else
             {
                 Debug.Log("Still Grounded");
+                _groundContact = true;
             }
         }
     }

@@ -33,7 +33,10 @@ public class CharJumpState : CharBaseState
 
     #region MonoBehaveiours
 
-    public override void UpdateState() { }
+    public override void UpdateState()
+    {
+        Ctx.Movement = Vector3.zero;
+    }
 
     public override void FixedUpdateState()
     {
@@ -88,8 +91,8 @@ public class CharJumpState : CharBaseState
 
     void HandleJump()
     {
-        Ctx.IsForced = true;
-        Ctx.ExtraForce = Ctx.JumpForce;
+        // Ctx.IsForced = true;
+        // Ctx.ExtraForce = Ctx.JumpForce;
 
         Ctx.PlayerRigidBody.velocity = new Vector3(Ctx.PlayerRigidBody.velocity.x, 0f, Ctx.PlayerRigidBody.velocity.z);
         Ctx.PlayerRigidBody.AddForce(Ctx.JumpMent * Ctx.JumpForce, ForceMode.Impulse);
