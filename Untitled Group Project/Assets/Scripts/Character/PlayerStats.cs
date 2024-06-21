@@ -110,6 +110,12 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     {
         xp += xpToGet;
         PlayerPrefs.SetInt("Xp", xp);
+        StartCoroutine(InvokeXp(xpToGet));
+    }
+
+    IEnumerator InvokeXp(int xpToGet)
+    {
+        yield return new WaitForNextFrameUnit();
         OnXpGained.Invoke(xpToGet);
     }
     public delegate void XpChanged(int xpAmount);
