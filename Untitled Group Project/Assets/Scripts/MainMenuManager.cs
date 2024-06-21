@@ -151,62 +151,27 @@ public class MainMenuManager : MonoBehaviour
         if (_createGameStatusTxt != null)
             _createGameStatusTxt.text = "";
 
-        if (PlayerPrefs.HasKey("MasterVol"))
-        {
-            _masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
-            _musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
-            _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol");
-            _ambienceSlider.value = PlayerPrefs.GetFloat("AmbienceVol");
+        _masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 1);
+        _musicSlider.value = PlayerPrefs.GetFloat("MusicVol", 1);
+        _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol", 1);
+        _ambienceSlider.value = PlayerPrefs.GetFloat("AmbienceVol", 1);
 
-            SetMasterVol(_masterSlider.value);
-            SetMusicVol(_musicSlider.value);
-            SetSfxVol(_sfxSlider.value);
-            SetAmbienceVol(_ambienceSlider.value);
-        }
-        else
-        {
-            _masterSlider.value = 1;
-            _musicSlider.value = 1;
-            _sfxSlider.value = 1;
-            _ambienceSlider.value = 1;
+        SetMasterVol(_masterSlider.value);
+        SetMusicVol(_musicSlider.value);
+        SetSfxVol(_sfxSlider.value);
+        SetAmbienceVol(_ambienceSlider.value);
 
-            SetMasterVol(_masterSlider.value);
-            SetMusicVol(_musicSlider.value);
-            SetSfxVol(_sfxSlider.value);
-            SetAmbienceVol(_ambienceSlider.value);
-        }
 
-        if (PlayerPrefs.HasKey("MouseSensitivity"))
-        {
-            _sensSlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
-            SetMouseSensitivity(_sensSlider.value);
-        }
-        else
-        {
-            _sensSlider.value = 1;
-            SetMouseSensitivity(1);
-        }
+        _sensSlider.value = PlayerPrefs.GetFloat("MouseSensitivity", 1);
+        SetMouseSensitivity(_sensSlider.value);
 
-        if (PlayerPrefs.HasKey("CamDistance"))
-        {
-            _distanceSlider.value = PlayerPrefs.GetFloat("CamDistance");
-            SetCamDistance(_distanceSlider.value);
-        }
-        else
-        {
-            _distanceSlider.value = 4;
-            SetCamDistance(4);
-        }
-        if (PlayerPrefs.HasKey("ToggleRun"))
-        {
-            SetToggleSprint(PlayerPrefs.GetInt("ToggleRun") == 1);
-            _sprintToggle.isOn = PlayerPrefs.GetInt("ToggleRun") == 1;
-        }
-        else
-        {
-            SetToggleSprint(false);
-            _sprintToggle.isOn = false;
-        }
+
+        _distanceSlider.value = PlayerPrefs.GetFloat("CamDistance", 4);
+        SetCamDistance(_distanceSlider.value);
+
+        SetToggleSprint(PlayerPrefs.GetInt("ToggleRun") == 1);
+        _sprintToggle.isOn = PlayerPrefs.GetInt("ToggleRun") == 1;
+
         StartCoroutine(EnableAudio());
     }
 

@@ -165,9 +165,9 @@ public class IngameUIManager : MonoBehaviour
         Time.timeScale = 1;
 
         #region PlayerPrefs
-        ChangeSensitivity(PlayerPrefs.GetFloat(_mouseSens));
+        ChangeSensitivity(PlayerPrefs.GetFloat(_mouseSens, 1));
         _sensSlider.value = _mouseSensitivity;
-        ChangeCamDistance(PlayerPrefs.GetFloat(_camDistance));
+        ChangeCamDistance(PlayerPrefs.GetFloat(_camDistance, 4));
         _distanceSlider.value = _distanceToCam;
 
         if (PlayerPrefs.GetInt(_runToggle) == 0)
