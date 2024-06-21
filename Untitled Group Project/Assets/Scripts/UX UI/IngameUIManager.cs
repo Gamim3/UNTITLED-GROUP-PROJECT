@@ -672,6 +672,7 @@ public class IngameUIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Resume();
         Time.timeScale = 1;
         if (DataPersistenceManager.instance)
             DataPersistenceManager.instance.SaveAutoGame();
