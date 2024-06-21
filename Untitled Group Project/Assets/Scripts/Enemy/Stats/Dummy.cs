@@ -5,6 +5,7 @@ using UnityEngine;
 public class Dummy : Entity
 {
     [SerializeField] Animator _dummyAnimator;
+    [SerializeField] QuestManager _questManager;
 
     public override void Start()
     {
@@ -29,6 +30,8 @@ public class Dummy : Entity
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+
+        _questManager.AddQuestAmount(QuestType.HIT);
 
         if (Random.Range(0, 2) == 0)
         {
