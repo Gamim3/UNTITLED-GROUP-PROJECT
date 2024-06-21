@@ -57,6 +57,10 @@ public class Enemy : Entity
     [Range(0, 360)]
     public float throwAngle;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] EnemyAudioClips enemyAudio;
+
     [Header("Dependancy")]
     [SerializeField] EnemyBrain _brain;
     [SerializeField] QuestManager _questManager;
@@ -416,6 +420,36 @@ public class Enemy : Entity
 
     #endregion
 
+    #region Sound Timing
+
+    public void PlaySound(string soundToPlay)
+    {
+        switch (soundToPlay)
+        {
+            case string soundName when soundName == "Walk":
+                audioSource.clip = enemyAudio.walkSound;
+                audioSource.Play();
+                break;
+            case string soundName when soundName == "Bite":
+                audioSource.clip = enemyAudio.biteAttackSound;
+                audioSource.Play();
+                break;
+            case string soundName when soundName == "ClawL":
+                audioSource.clip = enemyAudio.leftAttackSound;
+                audioSource.Play();
+                break;
+            case string soundName when soundName == "ClawR":
+                audioSource.clip = enemyAudio.rightAttackSound;
+                audioSource.Play();
+                break;
+            default:
+                Debug.LogError("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                break;
+        }
+    }
+
+    #endregion
+
     #endregion
 
     #region AttackVoids
@@ -700,7 +734,7 @@ public class Enemy : Entity
                 }
                 else
                 {
-                    playerInSight = false;
+                    //playerInSight = false;
                 }
             }
             else

@@ -330,6 +330,13 @@ ModelImporter:
         floatParameter: 9
         intParameter: 0
         messageOptions: 0
+      - time: 0.24812625
+        functionName: PlaySound
+        data: ClawR
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 9
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -359,9 +366,30 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: SetDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 15
+        intParameter: 0
+        messageOptions: 0
       - time: 0.22807793
         functionName: IsAttacking
         data: LeftClaw
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.31850994
+        functionName: StopAiming
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.34747395
+        functionName: PlaySound
+        data: ClawR
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -385,20 +413,6 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.31850994
-        functionName: StopAiming
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: SetDamage
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 15
         intParameter: 0
         messageOptions: 0
       transformMask: []
@@ -444,6 +458,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: PlaySound
+        data: Walk
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -473,6 +494,27 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: SetDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 10
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.1394809
+        functionName: PlaySound
+        data: Bite
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.20284766
+        functionName: StopAiming
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.24532935
         functionName: IsAttacking
         data: Head
@@ -499,20 +541,6 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.20284766
-        functionName: StopAiming
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: SetDamage
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 10
         intParameter: 0
         messageOptions: 0
       transformMask: []
@@ -618,6 +646,13 @@ ModelImporter:
       - time: 1
         functionName: ExecuteAttack
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: PlaySound
+        data: Walk
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
