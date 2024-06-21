@@ -76,13 +76,15 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         {
             CraftingManager.Instance.AddRecipe(_recipeToUnlock[level]);
         }
-        xp = 0;
+        int extraXP = xpGoal - xp;
+        xp = extraXP;
         level++;
+        PlayerPrefs.SetInt("Xp", xp);
         PlayerPrefs.SetInt("Level", level);
         PlayerPrefs.SetInt("XpGoal", xpGoal);
     }
 
-    void OnPlayerDamage()
+    public void OnPlayerDamage()
     {
         int random = Random.Range(0, _hurtSounds.Length);
         if (_hurtSounds[random] != null)
@@ -92,7 +94,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         }
     }
 
-    void OnEnemyHit()
+    public void OnEnemyHit()
     {
         if (_enemyHitSound != null)
         {
