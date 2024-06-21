@@ -292,7 +292,7 @@ ModelImporter:
         messageOptions: 0
       - time: 0.9073084
         functionName: AttackEnd
-        data: 
+        data: Attack1
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -335,7 +335,7 @@ ModelImporter:
         messageOptions: 0
       - time: 0.9254227
         functionName: AttackEnd
-        data: 
+        data: Intro
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
