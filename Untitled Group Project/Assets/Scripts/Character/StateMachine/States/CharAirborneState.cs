@@ -15,6 +15,8 @@ public class CharAirborneState : CharBaseState
 
         Ctx.MoveMultiplier = Ctx.AirSpeed;
         Ctx.ForceSlowDownRate = 1;
+
+        Ctx.PlayerRigidBody.drag = 0;
     }
 
     public override void ExitState()
