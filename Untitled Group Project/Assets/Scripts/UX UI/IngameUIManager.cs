@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -60,7 +61,7 @@ public class IngameUIManager : MonoBehaviour
     #endregion
 
     #region Settings
-    [Header("Settings")]
+    [Header("General Settings")]
     [SerializeField] Toggle _toggleRunBtn;
     [SerializeField] Slider _sensSlider;
     [SerializeField] Slider _distanceSlider;
@@ -68,6 +69,16 @@ public class IngameUIManager : MonoBehaviour
     [SerializeField] float _mouseSensitivity;
     [SerializeField] bool _toggleRun;
     [SerializeField] float _distanceToCam;
+
+    [Header("Audio Settings")]
+    [SerializeField] AudioMixer _mainMixer;
+    [SerializeField] AudioSource _buttonPopAudio;
+
+    [SerializeField] Slider _masterSlider;
+    [SerializeField] Slider _musicSlider;
+    [SerializeField] Slider _sfxSlider;
+    [SerializeField] Slider _ambienceSlider;
+
     #endregion
     #region PlayerPrefs
     [Header("PlayerPrefs")]
@@ -165,6 +176,16 @@ public class IngameUIManager : MonoBehaviour
         Time.timeScale = 1;
 
         #region PlayerPrefs
+        _masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 1);
+        _musicSlider.value = PlayerPrefs.GetFloat("MusicVol", 1);
+        _sfxSlider.value = PlayerPrefs.GetFloat("SFXVol", 1);
+        _ambienceSlider.value = PlayerPrefs.GetFloat("AmbienceVol", 1);
+
+        SetMasterVol(_masterSlider.value);
+        SetMusicVol(_musicSlider.value);
+        SetSfxVol(_sfxSlider.value);
+        SetAmbienceVol(_ambienceSlider.value);
+
         ChangeSensitivity(PlayerPrefs.GetFloat(_mouseSens, 1));
         _sensSlider.value = _mouseSensitivity;
         ChangeCamDistance(PlayerPrefs.GetFloat(_camDistance, 4));
@@ -577,6 +598,31 @@ public class IngameUIManager : MonoBehaviour
             _xpSliderImage.fillAmount = requiredFillAmount;
             Debug.Log($"Updated Xp Slider {_playerStats.xp}/ {_playerStats.xpGoal}");
         }
+    }
+
+    public void SetMasterVol(float vol)
+    {
+        _mainMixer.SetFloat("MasterVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("MasterVol", vol);
+        _buttonPopAudio.Play();
+    }
+    public void SetMusicVol(float vol)
+    {
+        _mainMixer.SetFloat("MusicVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("MusicVol", vol);
+        _buttonPopAudio.Play();
+    }
+    public void SetSfxVol(float vol)
+    {
+        _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("SFXVol", vol);
+        _buttonPopAudio.Play();
+    }
+    public void SetAmbienceVol(float vol)
+    {
+        _mainMixer.SetFloat("AmbienceVol", Mathf.Log10(vol) * 20);
+        PlayerPrefs.SetFloat("AmbienceVol", vol);
+        _buttonPopAudio.Play();
     }
 
     public void ChangeSensitivity(float value)

@@ -95,4 +95,10 @@ public class AudioManager : MonoBehaviour
         }
 
     }
+
+    public void PlaySfx(AudioClip clip)
+    {
+        _sfxAudioSource.clip = clip;
+        _sfxAudioSource.Play();
+    }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour, IDataPersistence
@@ -17,7 +19,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     [Header("Audio Effects")]
     [SerializeField] AudioSource _playerAudioSource;
-    [SerializeField] AudioSource _sfxAudioSource;
     [SerializeField] AudioClip[] _hurtSounds;
     [SerializeField] AudioClip _levelUpSound;
     [SerializeField] AudioClip _enemyHitSound;
@@ -87,7 +88,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public void OnPlayerDamage()
     {
         int random = Random.Range(0, _hurtSounds.Length);
-        if (_hurtSounds[random] != null)
+        if (_hurtSounds.Any() && _hurtSounds[random] != null)
         {
             _playerAudioSource.clip = _hurtSounds[random];
             _playerAudioSource.Play();
@@ -98,8 +99,10 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     {
         if (_enemyHitSound != null)
         {
-            _playerAudioSource.clip = _enemyHitSound;
-            _sfxAudioSource.Play();
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySfx(_enemyHitSound);
+            }
         }
     }
 
