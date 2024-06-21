@@ -38,7 +38,7 @@ public class CharWalkState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction && !Ctx.IsDashAction || Ctx.IsJumpingState)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Idle());
         }

@@ -578,15 +578,6 @@ public class CharStateMachine : Entity
 
         IsSloped = CheckSloped();
 
-        if (IsGrounded || IsSloped)
-        {
-            PlayerRigidBody.drag = GroundDrag;
-        }
-        else if (!IsSloped && !IsGrounded)
-        {
-            PlayerRigidBody.drag = 0;
-        }
-
         // HandleStrafeSpeed();
         SpeedControl();
 
@@ -642,6 +633,7 @@ public class CharStateMachine : Entity
             {
                 Debug.Log("Grounded");
                 _groundContact = true;
+                _isJumpTime = 0;
             }
             else
             {
@@ -662,7 +654,7 @@ public class CharStateMachine : Entity
         {
             float baba = Vector3.Distance(transform.position, tempHit.point);
 
-            if (!MyApproximation(baba, _playerHeight / 2, 0.01f))
+            if (!MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
                 Debug.Log("Not Grounded");
                 _groundContact = false;
@@ -671,6 +663,7 @@ public class CharStateMachine : Entity
             {
                 Debug.Log("Still Grounded");
                 _groundContact = true;
+                _isJumpTime = 0;
             }
         }
     }

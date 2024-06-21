@@ -27,6 +27,8 @@ public class CharGroundedState : CharBaseState
         {
             Ctx.MoveForce = Ctx.WalkSpeed;
         }
+
+        Ctx.PlayerRigidBody.drag = Ctx.GroundDrag;
     }
 
     public override void ExitState()

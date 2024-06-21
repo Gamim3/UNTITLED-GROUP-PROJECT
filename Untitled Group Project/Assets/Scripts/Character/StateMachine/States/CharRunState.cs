@@ -49,7 +49,7 @@ public class CharRunState : CharBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
         {
             SwitchState(Factory.Walking());
         }

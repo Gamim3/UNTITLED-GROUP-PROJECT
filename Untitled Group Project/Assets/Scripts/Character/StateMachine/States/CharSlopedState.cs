@@ -17,7 +17,8 @@ public class CharSlopedState : CharBaseState
 
         Ctx.PlayerRigidBody.useGravity = false;
 
-        Ctx.JumpMent = new Vector3(0, 1, 0);
+        // Ctx.JumpMent = new Vector3(0, 1, 0);
+        Ctx.PlayerRigidBody.drag = Ctx.GroundDrag;
     }
 
     public override void ExitState()
@@ -48,6 +49,7 @@ public class CharSlopedState : CharBaseState
 
         if (!Ctx.GroundContact)
         {
+            Debug.LogError("Force down");
             Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 

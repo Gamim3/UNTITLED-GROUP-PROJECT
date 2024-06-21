@@ -21,6 +21,8 @@ public class CharJumpState : CharBaseState
 
         Ctx.IsExitingSlope = true;
 
+        Ctx.PlayerRigidBody.drag = 0;
+
         HandleJump();
     }
 
@@ -70,7 +72,6 @@ public class CharJumpState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        // Can only leave jump when jump time has reset
         if (Ctx.IsGrounded && !Ctx.IsSloped && Ctx.IsJumpTime == 0)
         {
             SwitchState(Factory.Grounded());
@@ -83,16 +84,12 @@ public class CharJumpState : CharBaseState
         {
             SwitchState(Factory.Airborne());
         }
-        // else if (Ctx.IsJumpAction && Ctx.IsGrounded || Ctx.IsJumpAction && Ctx.IsSloped) // Maybe for double jump check if has jumps left
-        // {
-        //     SwitchState(Factory.Jumping());
-        // }
     }
 
     void HandleJump()
     {
-        // Ctx.IsForced = true;
-        // Ctx.ExtraForce = Ctx.JumpForce;
+        Ctx.IsForced = true;
+        Ctx.ExtraForce = Ctx.JumpForce;
 
         Ctx.PlayerRigidBody.velocity = new Vector3(Ctx.PlayerRigidBody.velocity.x, 0f, Ctx.PlayerRigidBody.velocity.z);
         Ctx.PlayerRigidBody.AddForce(Ctx.JumpMent * Ctx.JumpForce, ForceMode.Impulse);
