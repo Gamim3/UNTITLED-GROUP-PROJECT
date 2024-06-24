@@ -48,7 +48,7 @@ public class InventoryManager : MonoBehaviour
             Instance = this;
         }
 
-        Debug.Log(Instance);
+        //Debug.Log(Instance);
         // player = FindObjectOfType<CharStateMachine>().gameObject;
     }
 
@@ -364,7 +364,7 @@ public class InventoryManager : MonoBehaviour
         allItems = items;
 
         var itemsToId = new List<Item>();
-        Debug.Log($"Items Found In Files: {items.Length}");
+        //Debug.Log($"Items Found In Files: {items.Length}");
 
         foreach (var item in items)
         {

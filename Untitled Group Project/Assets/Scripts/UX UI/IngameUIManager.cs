@@ -604,25 +604,37 @@ public class IngameUIManager : MonoBehaviour
     {
         _mainMixer.SetFloat("MasterVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("MasterVol", vol);
-        _buttonPopAudio.Play();
+        if (_buttonPopAudio.gameObject.activeSelf == true)
+        {
+            _buttonPopAudio.Play();
+        }
     }
     public void SetMusicVol(float vol)
     {
         _mainMixer.SetFloat("MusicVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("MusicVol", vol);
-        _buttonPopAudio.Play();
+        if (_buttonPopAudio.gameObject.activeSelf == true)
+        {
+            _buttonPopAudio.Play();
+        }
     }
     public void SetSfxVol(float vol)
     {
         _mainMixer.SetFloat("SFXVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("SFXVol", vol);
-        _buttonPopAudio.Play();
+        if (_buttonPopAudio.gameObject.activeSelf == true)
+        {
+            _buttonPopAudio.Play();
+        }
     }
     public void SetAmbienceVol(float vol)
     {
         _mainMixer.SetFloat("AmbienceVol", Mathf.Log10(vol) * 20);
         PlayerPrefs.SetFloat("AmbienceVol", vol);
-        _buttonPopAudio.Play();
+        if (_buttonPopAudio.gameObject.activeSelf == true)
+        {
+            _buttonPopAudio.Play();
+        }
     }
 
     public void ChangeSensitivity(float value)

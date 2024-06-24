@@ -11,8 +11,6 @@ public class CharSlopedState : CharBaseState
     {
         InitializeSubState();
 
-        Debug.Log("Enter Sloped");
-
         Ctx.IsSlopedState = true;
 
         Ctx.PlayerRigidBody.useGravity = false;
@@ -23,8 +21,6 @@ public class CharSlopedState : CharBaseState
 
     public override void ExitState()
     {
-        Debug.Log("Exit Sloped");
-
         Ctx.IsSlopedState = false;
 
         Ctx.PlayerRigidBody.useGravity = true;
@@ -38,8 +34,6 @@ public class CharSlopedState : CharBaseState
 
     public override void FixedUpdateState()
     {
-        Debug.Log("Update Sloped");
-
         Ctx.Movement = Ctx.GetSlopeMoveDirection(Ctx.CurrentMovement);
 
         if (Ctx.PlayerRigidBody.velocity.y > 0)
@@ -49,7 +43,6 @@ public class CharSlopedState : CharBaseState
 
         if (!Ctx.GroundContact)
         {
-            Debug.LogError("Force down");
             Ctx.PlayerRigidBody.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 
@@ -74,8 +67,6 @@ public class CharSlopedState : CharBaseState
         }
         else if (Ctx.IsDashAction && Ctx.CanDash)
         {
-            Debug.Log("Dash from Grounded");
-
             SetSubState(Factory.Dashing());
         }
     }

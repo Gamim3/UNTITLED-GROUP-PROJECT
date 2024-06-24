@@ -12,8 +12,6 @@ public class CharRunState : CharBaseState
     {
         InitializeSubState();
 
-        Debug.Log("Enter Run");
-
         Ctx.IsRunState = true;
 
         Ctx.DesiredMoveForce = Ctx.RunSpeed;

@@ -632,16 +632,14 @@ public class CharStateMachine : Entity
         {
             float baba = Vector3.Distance(transform.position, tempHit.point);
 
-            Debug.Log($"Collision detected this close to the ground: {baba - _playerHeight / 2}");
+            //Debug.Log($"Collision detected this close to the ground: {baba - _playerHeight / 2}");
             if (MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
-                Debug.Log("Grounded");
                 _groundContact = true;
                 _isJumpTime = 0;
             }
             else
             {
-                Debug.Log("Not Grounded Anymore");
                 _groundContact = false;
             }
         }
@@ -660,12 +658,10 @@ public class CharStateMachine : Entity
 
             if (!MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
-                Debug.Log("Not Grounded");
                 _groundContact = false;
             }
             else
             {
-                Debug.Log("Still Grounded");
                 _groundContact = true;
                 _isJumpTime = 0;
             }
