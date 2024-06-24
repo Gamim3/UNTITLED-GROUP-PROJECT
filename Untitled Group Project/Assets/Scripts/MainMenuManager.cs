@@ -119,12 +119,14 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         DataPersistenceManager.instance.couldNotSaveEvent += CouldNotSave;
+        DataPersistenceManager.instance.SaveEvent += CouldSave;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         DataPersistenceManager.instance.couldNotSaveEvent -= CouldNotSave;
+        DataPersistenceManager.instance.SaveEvent -= CouldSave;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -255,8 +257,17 @@ public class MainMenuManager : MonoBehaviour
 
     void CouldNotSave()
     {
+        Debug.Log("HAAA");
         _createGameStatusTxt.text = $"An Error Occured Whilst Creating Save File With Name{_currentSaveFileName}";
     }
+
+    void CouldSave()
+    {
+        Debug.Log($"SAVE: {_currentSaveFileName}, {_currentSaveDataName}");
+        SceneFader.Instance.FadeTo(_gameScene);
+        DataPersistenceManager.instance.LoadGame(_currentSaveFileName, _currentSaveDataName);
+    }
+
 
     public void OptionsBtn()
     {

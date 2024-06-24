@@ -27,6 +27,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public event CouldNotSave couldNotSaveEvent;
     public delegate void CouldNotSave();
+    public event Save SaveEvent;
+    public delegate void Save();
 
     public static DataPersistenceManager instance { get; private set; }
 
@@ -238,7 +240,14 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveErrorCatch()
     {
+        Debug.LogWarning("Save error Catch");
         couldNotSaveEvent?.Invoke();
+    }
+
+    public void SaveCatch()
+    {
+        Debug.LogWarning("Save Catch");
+        SaveEvent?.Invoke();
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()

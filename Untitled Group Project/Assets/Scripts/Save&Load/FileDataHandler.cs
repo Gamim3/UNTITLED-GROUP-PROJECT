@@ -473,6 +473,8 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
+            DataPersistenceManager.instance.SaveCatch();
+
             _isSaving = false;
         }
         catch (Exception e)
@@ -618,6 +620,8 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
+            DataPersistenceManager.instance.SaveCatch();
+
             _isSaving = false;
         }
         catch (Exception e)
