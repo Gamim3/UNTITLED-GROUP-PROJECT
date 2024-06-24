@@ -28,11 +28,11 @@ public class CharCombatState : CharBaseState
     {
         if (Ctx.IsAttack1Action)
         {
-            Ctx.PlayerAnimator.SetInteger("NormalAttack", 6);
+            Ctx.PlayerAnimator.SetBool("NormalAttack", true);
         }
         else
         {
-            Ctx.PlayerAnimator.SetInteger("NormalAttack", 0);
+            Ctx.PlayerAnimator.SetBool("NormalAttack", false);
         }
 
         CheckSwitchStates();
@@ -75,7 +75,6 @@ public class CharCombatState : CharBaseState
             else
             {
                 previousAttack = Ctx.GetCurrentAttackAnimation();
-
                 switch (previousAttack)
                 {
                     case "NBAttacks1":
@@ -91,7 +90,6 @@ public class CharCombatState : CharBaseState
                         Ctx.Damage = 12;
                         break;
                 }
-
                 other.GetComponentInParent<Entity>().TakeDamage(Ctx.Damage);
             }
         }

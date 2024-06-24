@@ -21,6 +21,7 @@ public class AttackTranslator : MonoBehaviour
         }
         charStateMachine.HitBoxCollider.enabled = true;
         charStateMachine.Damage = damage;
+        charStateMachine.Damage *= charStateMachine.DamageMultiplier;
     }
 
     public void AttackEnd()

@@ -31,7 +31,10 @@ public class Dummy : Entity
     {
         base.TakeDamage(damage);
 
-        _questManager.AddQuestAmount(QuestType.HIT);
+        if (_questManager != null)
+        {
+            _questManager.AddQuestAmount(QuestType.HIT);
+        }
 
         if (Random.Range(0, 2) == 0)
         {

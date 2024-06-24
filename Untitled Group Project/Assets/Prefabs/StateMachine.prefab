@@ -145,6 +145,7 @@ MonoBehaviour:
   _hitBoxCollider: {fileID: 3914371672280220591}
   _baseDamage: 0
   _damage: 0
+  _damageMultiplier: 1
   _jumpAmount: 0
   _jumpForce: 3.5
   _jumpMent: {x: 0, y: 0, z: 0}

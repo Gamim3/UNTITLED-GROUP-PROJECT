@@ -100,6 +100,10 @@ public class CharStateMachine : Entity
     public float Damage
     { get { return _damage; } set { _damage = value; } }
 
+    [SerializeField] float _damageMultiplier;
+    public float DamageMultiplier
+    { get { return _damageMultiplier; } set { _damageMultiplier = value; } }
+
     #endregion
 
     [Header("Jumping")]
