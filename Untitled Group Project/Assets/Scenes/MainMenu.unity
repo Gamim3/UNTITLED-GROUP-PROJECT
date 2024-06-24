@@ -1977,7 +1977,8 @@ MonoBehaviour:
   _saveFileName: 
   _useEncryption: 0
   _maxAutoSaves: 3
-  _scenesNotToLoadIn: []
+  _scenesNotToLoadIn:
+  - MainMenu
 --- !u!4 &546887048
 Transform:
   m_ObjectHideFlags: 0

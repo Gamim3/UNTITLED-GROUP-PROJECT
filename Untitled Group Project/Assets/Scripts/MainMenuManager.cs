@@ -257,7 +257,6 @@ public class MainMenuManager : MonoBehaviour
 
     void CouldNotSave()
     {
-        Debug.Log("HAAA");
         _createGameStatusTxt.text = $"An Error Occured Whilst Creating Save File With Name{_currentSaveFileName}";
     }
 

@@ -29,6 +29,14 @@ public class FileDataHandler
 
     public bool CheckIfSaveFileExists(string saveFileName)
     {
+        // Check if saveFileName contains any invalid characters
+        if (saveFileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        {
+            Debug.LogError("Save file name contains invalid characters.");
+            DataPersistenceManager.instance.SaveErrorCatch();
+            return false;
+        }
+
         string directoryPath = Path.Combine(_dataDirPath, saveFileName);
         Debug.Log($"{directoryPath} exists: {Directory.Exists(directoryPath)}");
 

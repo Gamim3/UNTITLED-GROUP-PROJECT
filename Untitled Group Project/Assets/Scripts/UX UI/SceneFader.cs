@@ -29,6 +29,7 @@ public class SceneFader : MonoBehaviour
 
     public void FadeTo(string scene)
     {
+        DataPersistenceManager.instance.SaveManualGame();
         StartCoroutine(FadeOut(scene));
     }
 
