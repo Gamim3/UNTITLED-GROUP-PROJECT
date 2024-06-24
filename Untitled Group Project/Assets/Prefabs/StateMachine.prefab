@@ -921,8 +921,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7662511651959291136}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05104419, y: 0.91861117, z: -0.12642218, w: 0.37089825}
-  m_LocalPosition: {x: -5.5696387, y: 1.5561965, z: 8.718112}
+  m_LocalRotation: {x: 0.06622726, y: -0, z: -0, w: 0.9978046}
+  m_LocalPosition: {x: 0, y: 1.4, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1318,12 +1318,12 @@ PrefabInstance:
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -7.79969e-18
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.3241984e-17
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2474588646975231675, guid: 9c5fe650f0139e24bb8396a4884f573f,
         type: 3}
@@ -1640,32 +1640,32 @@ PrefabInstance:
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8678949913157765732, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8984944363652189081, guid: 0cf76797abf8ba1478569ae3b52543c5,
         type: 3}
