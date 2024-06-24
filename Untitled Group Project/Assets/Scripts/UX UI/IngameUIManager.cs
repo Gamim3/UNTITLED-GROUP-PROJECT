@@ -675,7 +675,7 @@ public class IngameUIManager : MonoBehaviour
         Resume();
         Time.timeScale = 1;
         if (DataPersistenceManager.instance)
-            DataPersistenceManager.instance.SaveAutoGame();
+            DataPersistenceManager.instance.SaveManualGame();
         SceneFader.Instance.FadeTo("MainMenu");
     }
 }

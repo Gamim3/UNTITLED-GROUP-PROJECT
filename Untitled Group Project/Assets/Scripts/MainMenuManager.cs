@@ -237,7 +237,7 @@ public class MainMenuManager : MonoBehaviour
 
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
-        DataPersistenceManager.instance.LoadGame(_currentSaveFileName, _currentSaveDataName);
+        // DataPersistenceManager.instance.LoadGame(_currentSaveFileName, _currentSaveDataName);
     }
 
     public void ContinueBtn()
@@ -297,8 +297,8 @@ public class MainMenuManager : MonoBehaviour
         _currentSaveFileName = saveSlot.SaveFileName;
         _currentSaveDataName = saveSlot.SaveDataName;
 
-        DataPersistenceManager.instance.LoadGame(saveSlot.SaveFileName, saveSlot.SaveDataName);
-
+        // DataPersistenceManager.instance.LoadGame(saveSlot.SaveFileName, saveSlot.SaveDataName);
+        // DataPersistenceManager.instance.SaveAutoGame();
         // FindObjectOfType<GameMenuManager>().SetCurrentSaveFileAndData(_currentSaveFileName, _currentSaveDataName);
 
         SceneFader.Instance.FadeTo(_gameScene);

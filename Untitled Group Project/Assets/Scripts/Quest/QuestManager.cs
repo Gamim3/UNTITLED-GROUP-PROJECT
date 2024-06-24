@@ -12,7 +12,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] int _maxActiveQuests = 4;
 
-
+    bool _hasLoaded;
 
     public List<Quest> activeQuests = new();
 
@@ -34,11 +34,11 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             Debug.LogError("No QuestBoardManager In Scene!");
         }
 
-        for (int i = 0; i < _activeQuestIds.Count; i++)
-        {
-            activeQuests.Add(GetQuestById(_activeQuestIds[i]));
-            AddQuestBoardItem(activeQuests[i]);
-        }
+        // for (int i = 0; i < _activeQuestIds.Count; i++)
+        // {
+        //     activeQuests.Add(GetQuestById(_activeQuestIds[i]));
+        //     AddQuestBoardItem(activeQuests[i]);
+        // }
     }
 
     private void OnEnable()
@@ -57,7 +57,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     void Update()
     {
-        if (activeQuests.Count == 0)
+        if (_hasLoaded && activeQuests.Count == 0) // ADDS ANOTHER QUEST SHOULD Not :(
         {
             activeQuests.Add(GetRandomQuest());
         }
@@ -193,6 +193,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     Quest GetRandomQuest()
     {
+        Debug.Log("RANDOM QUEST");
         if (activeQuests.Count == _maxActiveQuests)
         {
             Debug.Log("Reached Maximum Quest Amount");
@@ -251,6 +252,17 @@ public class QuestManager : MonoBehaviour, IDataPersistence
                 completionAmount.Add(data.completionAmounts[i]);
             }
         }
+
+        // ADDED BY DOUCHE_BOX
+        if (_activeQuestIds.Count == 0)
+        {
+            activeQuests.Add(_allQuests[0]);
+            AddQuestBoardItem(_allQuests[0]);
+            completionAmount.Add(0);
+            _activeQuestIds.Add(_allQuests[0].questId);
+        }
+        _hasLoaded = true;
+        // ADDED BY DOUCHE_BOX
     }
 
     public void SaveData(GameData data)

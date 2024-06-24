@@ -10,6 +10,8 @@ public class Dummy : Entity
     public override void Start()
     {
         base.Start();
+
+        _questManager = FindAnyObjectByType<QuestManager>();
     }
 
     public override void Update()
