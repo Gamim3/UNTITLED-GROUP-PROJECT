@@ -73,6 +73,8 @@ public class Enemy : Entity
     private float startSpeed;
     private float timer;
 
+    private float timeSinceLastAction;
+
     private bool hasNotEnteredCombat;
     private bool aimingForPlayer;
 
@@ -166,6 +168,25 @@ public class Enemy : Entity
                 Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, 3);
                 _agent.SetDestination(newPos);
                 timer = 0;
+            }
+        }
+        else
+        {
+            timeSinceLastAction += Time.deltaTime;
+        }
+
+        if (timeSinceLastAction > 20)
+        {
+            timeSinceLastAction = 0;
+
+            if(_brain.attackQueue.Count == 0)
+            {
+                _brain.MakeDesicion();
+                ExecuteAttack();
+            }
+            else
+            {
+                ExecuteAttack();
             }
         }
 
@@ -281,6 +302,8 @@ public class Enemy : Entity
 
     public void QueueAttack()
     {
+        timeSinceLastAction = 0;
+
         //makes sure the enemy queue's an attack when standing stil or continues walking to/away from the player when in that naimation state.
 
         if (animator.GetInteger("WalkDir") == 0 && playerInSight)
@@ -312,6 +335,8 @@ public class Enemy : Entity
 
     public void ExecuteAttack()
     {
+        timeSinceLastAction = 0;
+
         // this void gets called at the end of a animation to execute the next queued attack
 
         if (playerInSight && _brain.attackQueue.Count != 0)
@@ -407,6 +432,8 @@ public class Enemy : Entity
     //this void makes the enemy not be able to change its charge direction
     public void ChargeJump()
     {
+        timeSinceLastAction = 0;
+
         landed = false;
         chargingAtPlayer = false;
         jumpAtPlayer = true;
@@ -415,6 +442,8 @@ public class Enemy : Entity
     //this fully stops the enemy's charge
     public void JumpLand()
     {
+        timeSinceLastAction = 0;
+
         chargingAtPlayer = false;
         jumpAtPlayer = false;
         landed = true;
@@ -422,6 +451,8 @@ public class Enemy : Entity
 
     public void ChargingAtPlayer()
     {
+        timeSinceLastAction = 0;
+
         if (_distance < chargeJumpRange)
         {
             animator.SetTrigger("DashAttack");
@@ -471,6 +502,8 @@ public class Enemy : Entity
 
     public void Engage()
     {
+        timeSinceLastAction = 0;
+
         if (_distance > 5f)
         {
             animator.SetInteger("WalkDir", 1);
@@ -498,6 +531,8 @@ public class Enemy : Entity
 
     public void Disengage()
     {
+        timeSinceLastAction = 0;
+
         if (_distance < 20)
         {
             animator.SetInteger("WalkDir", -1);
@@ -534,6 +569,8 @@ public class Enemy : Entity
     #region StatusRegainingAction
     public IEnumerator RegainEnergy()
     {
+        timeSinceLastAction = 0;
+
         animator.SetBool("Exhousted", true);
         _energy = _maxEnergy;
 
@@ -556,6 +593,8 @@ public class Enemy : Entity
 
     public void SpikeThrow()
     {
+        timeSinceLastAction = 0;
+
         animator.SetTrigger("SpikeThrow");
 
         Exhaustion(_exhaustionSpeed * 750);
@@ -568,6 +607,8 @@ public class Enemy : Entity
 
     public void ChargeAttack()
     {
+        timeSinceLastAction = 0;
+
         animator.SetTrigger("DashAttack");
 
         chargingAtPlayer = true;
@@ -586,6 +627,8 @@ public class Enemy : Entity
 
     public void LeftClawAttack()
     {
+        timeSinceLastAction = 0;
+
         animator.SetTrigger("LeftClawAttack");
 
         Exhaustion(_exhaustionSpeed * 1000);
@@ -598,6 +641,8 @@ public class Enemy : Entity
 
     public void RightClawAttack()
     {
+        timeSinceLastAction = 0;
+
         animator.SetTrigger("RightClawAttack");
 
         Exhaustion(_exhaustionSpeed * 1000);
