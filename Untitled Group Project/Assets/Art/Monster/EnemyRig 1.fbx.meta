@@ -67,35 +67,42 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.27333015
+      - time: 0
+        functionName: SetDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 10
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.015265636
         functionName: ChargeJump
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.30420372
+      - time: 0.02770598
         functionName: IsAttacking
-        data: Head
+        data: All
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4072812
+      - time: 0.2059341
         functionName: JumpLand
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.50260556
+      - time: 0.31827375
         functionName: StoppedAttacking
         data: Head
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.55682236
+      - time: 0.3923417
         functionName: QueueAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -107,13 +114,6 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: SetDamage
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 10
         intParameter: 0
         messageOptions: 0
       transformMask: []
@@ -685,7 +685,28 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: ChargingAtPlayer
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.46933714
+        functionName: ChargingAtPlayer
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.83374697
+        functionName: ChargingAtPlayer
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

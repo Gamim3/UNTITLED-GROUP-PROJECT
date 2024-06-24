@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 using static EnemyBrain;
@@ -19,6 +18,7 @@ public class Enemy : Entity
     [SerializeField] float _exhaustedTime;
     [SerializeField] float _exhaustionSpeed;
     [SerializeField] float _meleeRange;
+    [SerializeField] float chargeJumpRange = 4;
     [SerializeField] float _projectileSpeed;
     [SerializeField] float _projectileDamage;
 
@@ -418,6 +418,14 @@ public class Enemy : Entity
         landed = true;
     }
 
+    public void ChargingAtPlayer()
+    {
+        if (_distance < chargeJumpRange)
+        {
+            animator.SetTrigger("DashAttack");
+        }
+    }
+
     #endregion
 
     #region Sound Timing
@@ -623,7 +631,7 @@ public class Enemy : Entity
         if (chargingAtPlayer && !jumpAtPlayer && !landed)
         {
             //charging
-            _agent.speed = startSpeed * 1.3f;
+            _agent.speed = startSpeed * 1.4f;
             _agent.destination = player.transform.position;
         }
         else if (!chargingAtPlayer && jumpAtPlayer && !landed)
