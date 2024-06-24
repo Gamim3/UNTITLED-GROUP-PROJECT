@@ -96,6 +96,8 @@ public class Enemy : Entity
 
     public override void Start()
     {
+        _moveSpeed = _moveSpeed * Time.deltaTime;
+
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.speed = _moveSpeed;
