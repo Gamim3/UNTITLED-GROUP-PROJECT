@@ -116,6 +116,11 @@ public class IngameUIManager : MonoBehaviour
         if (playerInput != null)
         {
             _playerInput.actions.FindAction("Pause").started -= OnPause;
+
+            _playerInput.actions.FindAction("Inventory").started -= OnInventory;
+
+            _playerInput.actions.FindAction("Interact").started -= OnInteract;
+            _playerInput.actions.FindAction("Interact").canceled -= OnInteract;
         }
     }
 
@@ -127,7 +132,11 @@ public class IngameUIManager : MonoBehaviour
         _onPause = context.ReadValueAsButton();
         if (_onPause)
         {
-            if (!_paused)
+            if (IsUIShowing())
+            {
+                CloseAllUI();
+            }
+            else if (!_paused)
             {
                 Pause();
             }
@@ -325,18 +334,14 @@ public class IngameUIManager : MonoBehaviour
 
         if (_questBoardCam.gameObject.activeSelf)
         {
-            // _questBoardCam.enabled = false;
             _questBoardCam.gameObject.SetActive(false);
-            // _normalCam.enabled = true;
             _normalCam.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
         {
-            // _questBoardCam.enabled = true;
             _questBoardCam.gameObject.SetActive(true);
-            // _normalCam.enabled = false;
             _normalCam.gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -567,6 +572,26 @@ public class IngameUIManager : MonoBehaviour
         return false;
     }
 
+    void CloseAllUI()
+    {
+        inventoryCanvas.GetComponent<Canvas>().enabled = false;
+        inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+
+        craftingCanvas.GetComponent<Canvas>().enabled = false;
+        craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+
+        upgradesCanvas.GetComponent<Canvas>().enabled = false;
+        upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+
+        _questBoardCam.gameObject.SetActive(false);
+        _normalCam.gameObject.SetActive(true);
+
+        Resume();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     IEnumerator XpSlider(int xpAmount, bool firstCall = true)
     {
         float requiredFillAmount = (float)_playerStats.xp / (float)_playerStats.xpGoal;
@@ -599,6 +624,7 @@ public class IngameUIManager : MonoBehaviour
             Debug.Log($"Updated Xp Slider {_playerStats.xp}/ {_playerStats.xpGoal}");
         }
     }
+    #region Settings
 
     public void SetMasterVol(float vol)
     {
@@ -664,6 +690,7 @@ public class IngameUIManager : MonoBehaviour
         }
 
     }
+    #endregion
 
     public void Pause()
     {
