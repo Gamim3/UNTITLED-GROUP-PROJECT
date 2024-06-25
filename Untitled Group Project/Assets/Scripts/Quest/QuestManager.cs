@@ -248,8 +248,11 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         {
             if (data.questIds[i] > 0)
             {
-                _activeQuestIds.Add(data.questIds[i]);
+                activeQuests.Add(GetQuestById(data.questIds[i]));
+                AddQuestBoardItem(GetQuestById(data.questIds[i]));
                 completionAmount.Add(data.completionAmounts[i]);
+                _activeQuestIds.Add(data.questIds[i]);
+                Debug.Log("LOAD");
             }
         }
 
