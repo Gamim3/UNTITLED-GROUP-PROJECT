@@ -574,19 +574,34 @@ public class IngameUIManager : MonoBehaviour
 
     void CloseAllUI()
     {
-        inventoryCanvas.GetComponent<Canvas>().enabled = false;
-        inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        if (inventoryCanvas != null)
+        {
+            inventoryCanvas.GetComponent<Canvas>().enabled = false;
+            inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        }
 
-        craftingCanvas.GetComponent<Canvas>().enabled = false;
-        craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        if (craftingCanvas != null)
+        {
+            craftingCanvas.GetComponent<Canvas>().enabled = false;
+            craftingCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        }
 
-        upgradesCanvas.GetComponent<Canvas>().enabled = false;
-        upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        if (upgradesCanvas != null)
+        {
+            upgradesCanvas.GetComponent<Canvas>().enabled = false;
+            upgradesCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        }
 
-        _questBoardCam.gameObject.SetActive(false);
-        _normalCam.gameObject.SetActive(true);
+        if (_questBoardCam != null && _normalCam != null)
+        {
+            _questBoardCam.gameObject.SetActive(false);
+            _normalCam.gameObject.SetActive(true);
+        }
 
-        Resume();
+        if (_pausePanel != null)
+        {
+            Resume();
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
