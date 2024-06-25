@@ -139,11 +139,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        if (data.itemId[slotId] == -1)
-        {
-            return;
-        }
-        else
+        if (data.itemId[slotId] <= 0)
         {
             InventoryManager.Instance.SpawnNewItem(data.itemId[slotId], data.itemAmount[slotId], this.slotId);
             Debug.Log($"Spawned New Item From Slot {slotId} On GameObject {gameObject.name}");
