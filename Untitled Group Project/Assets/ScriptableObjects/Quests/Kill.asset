@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 726c610de6dcc31428eec95794c17066, type: 3}
-  m_Name: First Kill
+  m_Name: Kill
   m_EditorClassIdentifier: 
   questType: 1
-  questName: First Hunt
-  questDescription: Hunt and kill your first monster
+  questName: Hunt
+  questDescription: Kill the wretched beast
   questId: 2
   questGoalAmount: 1
   itemToCollect:
@@ -22,7 +22,7 @@ MonoBehaviour:
     amount: 0
   enemyToHunt: 0
   xpReward: 200
-  recipeToUnlock: {fileID: 0}
+  recipeToUnlock: {fileID: 11400000, guid: 19b63518b21393d4db2e1846efd93617, type: 2}
   itemToGet:
-    item: {fileID: 11400000, guid: 864547fb35ecdd341a766d4da229c1e8, type: 2}
-    amount: 3
+    item: {fileID: 11400000, guid: 95553d2023a189a4980d8bff858e3018, type: 2}
+    amount: 1

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Upgrade : ScriptableObject
 {
     public UpgradeType upgradeType;
-    public float upgradeAmount;
+    public float upgradeMultiplier;
 }
 
 public enum UpgradeType

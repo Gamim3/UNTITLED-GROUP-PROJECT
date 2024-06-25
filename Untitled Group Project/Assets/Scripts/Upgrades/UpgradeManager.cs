@@ -52,7 +52,7 @@ public class UpgradeManager : MonoBehaviour
                 _upgradeBtn.interactable = true;
             if (_upgradeTxt != null)
             {
-                _upgradeTxt.text = $"Upgrade {_upgrade.upgradeType.ToString().ToLower()} by {_upgrade.upgradeAmount}";
+                _upgradeTxt.text = $"Upgrade {_upgrade.upgradeType.ToString().ToLower()} by {_upgrade.upgradeMultiplier}";
             }
             if (_upgrade == null)
             {
@@ -62,9 +62,9 @@ public class UpgradeManager : MonoBehaviour
             {
                 if (_currentDamageTxt != null)
                 {
-                    if (!_currentDamageTxt.text.Contains($" + {_upgrade.upgradeAmount}"))
+                    if (!_currentDamageTxt.text.Contains($" + {_upgrade.upgradeMultiplier}"))
                     {
-                        _currentDamageTxt.text = $"{_currentDamageTxt.text} + {_upgrade.upgradeAmount}";
+                        _currentDamageTxt.text = $"{_currentDamageTxt.text} + {_upgrade.upgradeMultiplier}";
                     }
                 }
             }
@@ -72,8 +72,8 @@ public class UpgradeManager : MonoBehaviour
             {
                 if (_currentArmorTxt.text != _damageString)
                 {
-                    Debug.LogWarning($"_currentArmorTxt.text != {_currentArmorTxt.text} + {_upgrade.upgradeAmount}");
-                    _currentArmorTxt.text = $"{_currentArmorTxt.text} + {_upgrade.upgradeAmount}";
+                    Debug.LogWarning($"_currentArmorTxt.text != {_currentArmorTxt.text} + {_upgrade.upgradeMultiplier}");
+                    _currentArmorTxt.text = $"{_currentArmorTxt.text} + {_upgrade.upgradeMultiplier}";
                     Debug.LogWarning($"Set _currentArmorTxt.text To {_currentArmorTxt.text}");
                 }
             }

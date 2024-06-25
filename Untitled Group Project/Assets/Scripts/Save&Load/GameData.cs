@@ -21,6 +21,7 @@ public class GameData
     public int level;
     public int xp;
     public int xpGoal;
+    public int swordId;
 
     [Header("Quest")]
     public int[] questIds;
@@ -42,6 +43,7 @@ public class GameData
         xp = 0;
         xpGoal = 0;
         level = 0;
+        swordId = -1;
 
         questIds = new int[4];
         completionAmounts = new int[4];

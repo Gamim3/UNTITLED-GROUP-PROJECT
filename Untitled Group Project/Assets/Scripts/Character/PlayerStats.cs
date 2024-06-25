@@ -8,8 +8,10 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 {
     public int xp;
     public int level;
-
     public int xpGoal;
+    public int swordId;
+
+    [SerializeField] Item _currentWeapon;
 
     [Header("Settings")]
     [SerializeField] int tutorialXpGoal = 100;
@@ -25,15 +27,16 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     public event XpChanged OnXpGained;
 
-    [SerializeField] bool _loadPlayerPrefs = true;
-
     private void Start()
     {
-        if (_loadPlayerPrefs)
+        if (swordId != -1)
         {
-            xp = PlayerPrefs.GetInt("Xp", 0);
-            level = PlayerPrefs.GetInt("Level", 0);
-            xpGoal = PlayerPrefs.GetInt("XpGoal", tutorialXpGoal);
+            _currentWeapon = InventoryManager.Instance.GetItemById(swordId);
+
+            if (_currentWeapon != null)
+            {
+                GetComponent<CharStateMachine>().DamageMultiplier = _currentWeapon.upgrade.upgradeMultiplier;
+            }
         }
 
         for (int i = 0; i < level; i++)
@@ -80,9 +83,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         int extraXP = xpGoal - xp;
         xp = extraXP;
         level++;
-        PlayerPrefs.SetInt("Xp", xp);
-        PlayerPrefs.SetInt("Level", level);
-        PlayerPrefs.SetInt("XpGoal", xpGoal);
     }
 
     public void OnPlayerDamage()
@@ -134,6 +134,8 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         {
             xpGoal = data.xpGoal;
         }
+
+        swordId = data.swordId;
     }
 
     public void SaveData(GameData data)

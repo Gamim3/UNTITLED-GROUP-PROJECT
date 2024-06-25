@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Wood Sword
   m_EditorClassIdentifier: 
   upgradeType: 0
-  upgradeAmount: 2
+  upgradeMultiplier: 1.1
