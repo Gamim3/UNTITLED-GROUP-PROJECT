@@ -58,22 +58,26 @@ public class CharGroundedState : CharBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsMoveAction && !Ctx.IsDashAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsDashAction && !Ctx.IsStunned)
         {
             SetSubState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && !Ctx.IsStunned)
         {
             SetSubState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsDashAction && !Ctx.IsStunned)
         {
             SetSubState(Factory.Running());
         }
-        else if (Ctx.IsDashAction && Ctx.CanDash)
+        else if (Ctx.IsDashAction && Ctx.CanDash && !Ctx.IsStunned)
         {
             Debug.Log("Dash from Grounded");
             SetSubState(Factory.Dashing());
+        }
+        else if (Ctx.IsStunned)
+        {
+            SetSubState(Factory.Stun());
         }
     }
 

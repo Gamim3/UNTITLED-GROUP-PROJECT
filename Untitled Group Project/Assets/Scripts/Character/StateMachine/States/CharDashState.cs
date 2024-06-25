@@ -47,17 +47,21 @@ public class CharDashState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction)
+        if (!Ctx.IsMoveAction && !Ctx.IsStunned)
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsStunned)
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsStunned)
         {
             SwitchState(Factory.Running());
+        }
+        else if (Ctx.IsStunned)
+        {
+            SwitchState(Factory.Stun());
         }
     }
 

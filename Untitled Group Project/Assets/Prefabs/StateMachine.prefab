@@ -179,6 +179,9 @@ MonoBehaviour:
   _targetsVisible: []
   _currentTarget: {fileID: 0}
   _nextTarget: {fileID: 0}
+  _isStunned: 0
+  _maxStunTime: 0.3
+  _stunTime: 0
   _isMoveAction: 0
   _isCamAction: {x: 0, y: 0}
   _isJumpAction: 0
@@ -214,6 +217,7 @@ MonoBehaviour:
   _isWalkState: 0
   _isRunState: 0
   _isDashingState: 0
+  _isStunnedState: 0
   _isForced: 0
   _extraForce: 0
   _forceSlowDownRate: 0
@@ -233,6 +237,8 @@ MonoBehaviour:
   xp: 0
   level: 0
   xpGoal: 0
+  swordId: 0
+  _currentWeapon: {fileID: 0}
   tutorialXpGoal: 100
   initialXpGoal: 1000
   xpGoalIncrement: 1.5
@@ -255,7 +261,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aa931a4d8680d5b4b90d8a19266734a3, type: 3}
   _levelUpSound: {fileID: 8300000, guid: a64f54eb34d0c564da623606d2b5076f, type: 3}
   _enemyHitSound: {fileID: 8300000, guid: 43bda9598a8111e408c74a6e357655ee, type: 3}
-  _loadPlayerPrefs: 1
 --- !u!54 &6021294360769394147
 Rigidbody:
   m_ObjectHideFlags: 0

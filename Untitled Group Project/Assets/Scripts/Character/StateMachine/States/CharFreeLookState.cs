@@ -45,13 +45,16 @@ public class CharFreeLookState : CharBaseState
 
         // Ctx.PlayerAnimator.SetFloat("MovementX", 0);
 
-        if (Ctx.IsWalkState)
+        if (!Ctx.IsStunned)
         {
-            Ctx.PlayerAnimator.SetFloat("MovementY", 1);
-        }
-        else if (Ctx.IsRunState)
-        {
-            Ctx.PlayerAnimator.SetFloat("MovementY", 2);
+            if (Ctx.IsWalkState)
+            {
+                Ctx.PlayerAnimator.SetFloat("MovementY", 1);
+            }
+            else if (Ctx.IsRunState)
+            {
+                Ctx.PlayerAnimator.SetFloat("MovementY", 2);
+            }
         }
 
 

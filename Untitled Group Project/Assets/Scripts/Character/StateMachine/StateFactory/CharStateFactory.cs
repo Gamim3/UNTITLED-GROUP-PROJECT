@@ -16,6 +16,7 @@ enum CharStates
     WALKING,
     RUNNING,
     DASHING,
+    STUN,
 
     TEST,
 }
@@ -42,6 +43,7 @@ public class CharStateFactory
         _states[CharStates.WALKING] = new CharWalkState(_context, this);
         _states[CharStates.RUNNING] = new CharRunState(_context, this);
         _states[CharStates.DASHING] = new CharDashState(_context, this);
+        _states[CharStates.STUN] = new CharStunState(_context, this);
 
         // _states[CharStates.ULTRA] = new TestUltraState(_context, this);
         // _states[CharStates.SUPER] = new TestSuperState(_context, this);
@@ -110,6 +112,10 @@ public class CharStateFactory
     public CharBaseState Dashing()
     {
         return _states[CharStates.DASHING];
+    }
+    public CharBaseState Stun()
+    {
+        return _states[CharStates.STUN];
     }
     #endregion
 

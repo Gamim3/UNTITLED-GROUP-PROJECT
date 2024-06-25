@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerStats : MonoBehaviour, IDataPersistence
 {

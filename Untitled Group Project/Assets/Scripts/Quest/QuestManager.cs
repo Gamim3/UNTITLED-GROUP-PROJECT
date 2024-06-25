@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour, IDataPersistence
 {
-    QuestBoardManager _questBoardManager;
+    [SerializeField] QuestBoardManager _questBoardManager;
 
     [SerializeField] Quest[] _allQuests;
     [SerializeField] List<int> _activeQuestIds = new List<int>();
@@ -249,7 +249,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             if (data.questIds[i] > 0)
             {
                 activeQuests.Add(GetQuestById(data.questIds[i]));
-                AddQuestBoardItem(GetQuestById(data.questIds[i]));
+                _questBoardManager.AddQuest(GetQuestById(data.questIds[i]));
                 completionAmount.Add(data.completionAmounts[i]);
                 _activeQuestIds.Add(data.questIds[i]);
                 Debug.Log("LOAD");
@@ -260,7 +260,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         if (_activeQuestIds.Count == 0)
         {
             activeQuests.Add(_allQuests[0]);
-            AddQuestBoardItem(_allQuests[0]);
+            _questBoardManager.AddQuest(_allQuests[0]);
             completionAmount.Add(0);
             _activeQuestIds.Add(_allQuests[0].questId);
         }

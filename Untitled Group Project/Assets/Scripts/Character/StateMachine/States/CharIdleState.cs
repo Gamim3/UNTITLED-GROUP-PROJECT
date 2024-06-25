@@ -39,17 +39,21 @@ public class CharIdleState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && Ctx.IsJumpTime == 0 && !Ctx.IsDashAction)
+        if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsDashAction && Ctx.IsJumpTime == 0 && !Ctx.IsDashAction && !Ctx.IsStunned)
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && Ctx.IsJumpTime == 0 && !Ctx.IsDashAction)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && Ctx.IsJumpTime == 0 && !Ctx.IsDashAction && !Ctx.IsStunned)
         {
             SwitchState(Factory.Running());
         }
-        else if (Ctx.IsDashAction && Ctx.CanDash)
+        else if (Ctx.IsDashAction && Ctx.CanDash && !Ctx.IsStunned)
         {
             SwitchState(Factory.Dashing());
+        }
+        else if (Ctx.IsStunned)
+        {
+            SwitchState(Factory.Stun());
         }
     }
 }

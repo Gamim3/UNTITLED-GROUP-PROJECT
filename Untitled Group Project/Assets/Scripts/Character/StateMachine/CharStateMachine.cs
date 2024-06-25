@@ -255,6 +255,23 @@ public class CharStateMachine : Entity
 
     #endregion
 
+    [Header("Stun")]
+    #region Stun
+
+    [SerializeField] bool _isStunned;
+    public bool IsStunned
+    { get { return _isStunned; } set { _isStunned = value; } }
+
+    [SerializeField] float _maxStunTime;
+    public float MaxStunTime
+    { get { return _maxStunTime; } }
+
+    [SerializeField] float _stunTime;
+    public float StunTime
+    { get { return _stunTime; } set { _stunTime = value; } }
+
+    #endregion
+
     [Header("Inputs")]
     #region Inputs
 
@@ -421,6 +438,10 @@ public class CharStateMachine : Entity
     [SerializeField] bool _isDashingState;
     public bool IsDashingState
     { get { return _isDashingState; } set { _isDashingState = value; } }
+
+    [SerializeField] bool _isStunnedState;
+    public bool IsStunnedState
+    { get { return _isStunnedState; } set { _isStunnedState = value; } }
 
     #endregion
 
@@ -967,7 +988,11 @@ public class CharStateMachine : Entity
 
     public override void TakeDamage(float damage)
     {
-        _healthPoints -= damage;
+        base.TakeDamage(damage);
+
+        Debug.Log("PLAYER TAKES DAMAGE");
+
+        _isStunned = true;
     }
 
     public override void Exhaustion(float Energy)
