@@ -631,6 +631,7 @@ public class CharStateMachine : Entity
         if (_healthPoints <= 0)
         {
             _healthPoints = 1;
+            _playerAnimator.SetBool("Death", true);
             SceneFader.Instance.FadeTo("GuildHall");
         }
     }

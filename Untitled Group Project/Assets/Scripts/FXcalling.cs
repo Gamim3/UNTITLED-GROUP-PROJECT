@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class FXcalling : MonoBehaviour
 {
-    public ParticleSystem[] particleFX;
+    public GameObject dustParticle;
+    public Transform particlePos;
+    public ParticleSystem dustDash;
     public void FXCall(string AttackString)
     {
         if(AttackString == "LeftClaw")
         {
-            particleFX[0].Play();
+            GameObject kaas = Instantiate(dustParticle, particlePos.position, particlePos.rotation);
+            Destroy(kaas, 4);
         }
         if (AttackString == "Dash")
         {
-            particleFX[1].Play();
+            dustDash.Play();
         }
     }
 }
