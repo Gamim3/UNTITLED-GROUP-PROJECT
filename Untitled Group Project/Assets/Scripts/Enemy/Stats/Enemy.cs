@@ -533,8 +533,10 @@ public class Enemy : Entity
     {
         timeSinceLastAction = 0;
 
-        if (_distance < 20)
+        if (_distance < 15)
         {
+            _agent.speed = startSpeed * 1.2f;
+
             animator.SetInteger("WalkDir", -1);
 
             Vector3 directionToPlayer = transform.position - player.transform.position;
@@ -552,6 +554,8 @@ public class Enemy : Entity
         }
         else
         {
+            _agent.speed = startSpeed;
+
             animator.SetInteger("WalkDir", 0);
             if (_brain.attackQueue.Count != 0)
             {
@@ -756,7 +760,6 @@ public class Enemy : Entity
 
         return false;
     }
-
 
 
     //Ienumerator that loops an calls FieldOfViewCheck() every loop
