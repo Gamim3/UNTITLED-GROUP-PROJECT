@@ -799,7 +799,7 @@ public class CharStateMachine : Entity
         return Vector3.ProjectOnPlane(direction, _slopeHit.normal).normalized;
     }
 
-    public Transform GetViableTarget()
+    public void GetViableTarget()
     {
         Collider[] allColliders = Physics.OverlapSphere(transform.position, _targetRadius, _targetMask);
 
@@ -818,7 +818,7 @@ public class CharStateMachine : Entity
         if (_targetsInRange.Count == 0)
         {
             Debug.Log("Checked for target but there were no targets in range");
-            return null;
+            return;
         }
 
         // foreach (Transform target in _targetsInRange)
@@ -860,11 +860,11 @@ public class CharStateMachine : Entity
         if (closestTarget == null)
         {
             Debug.Log($"No target found on screen");
-            return null;
+            return;
         }
 
         Debug.Log($"Found new target: {closestTarget.name}");
-        return closestTarget;
+        _currentTarget = closestTarget;
     }
 
     public bool CheckAttackAnimation()

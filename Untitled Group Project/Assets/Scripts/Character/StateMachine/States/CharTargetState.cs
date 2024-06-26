@@ -15,7 +15,7 @@ public class CharTargetState : CharBaseState
 
         Ctx.IsTargetingState = true;
 
-        // Ctx.CamTarget.LookAt(Ctx.GetViableTarget());
+        Ctx.GetViableTarget();
     }
 
     public override void ExitState()
@@ -27,15 +27,19 @@ public class CharTargetState : CharBaseState
 
     public override void UpdateState()
     {
-        Ctx.CamTarget.LookAt(Ctx.GetViableTarget());
+        Ctx.CamTarget.LookAt(Ctx.CurrentTarget);
 
-        Ctx.PlayerAnimator.SetFloat("MovementX", Ctx.CurrentMovementInput.x);
-        Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
+        // Ctx.PlayerAnimator.SetFloat("MovementX", Ctx.CurrentMovementInput.x);
+        // Ctx.PlayerAnimator.SetFloat("MovementY", Ctx.CurrentMovementInput.y);
 
 
-        Ctx.Orientation.LookAt(Ctx.GetViableTarget());
+        Ctx.Orientation.LookAt(Ctx.CurrentTarget);
 
-        Ctx.Orientation.rotation = new Quaternion(Ctx.Orientation.rotation.x, 0, Ctx.Orientation.rotation.z, 0).normalized;
+        Ctx.PlayerObj.LookAt(Ctx.CurrentTarget);
+
+        Ctx.PlayerObj.eulerAngles = new Vector3(0, Ctx.PlayerObj.eulerAngles.y, 0);
+
+        Ctx.Orientation.eulerAngles = new Vector3(Ctx.PlayerObj.eulerAngles.x, Ctx.PlayerObj.eulerAngles.y, Ctx.PlayerObj.eulerAngles.z);
 
         CheckSwitchStates();
     }
