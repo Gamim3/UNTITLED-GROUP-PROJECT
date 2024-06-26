@@ -105,7 +105,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
     {
         for (int i = 0; i < activeQuests.Count; i++)
         {
-            if (activeQuests[i].questType == questType)
+            if (activeQuests[i].questType == questType && completionAmount.Count > i)
             {
                 completionAmount[i]++;
             }
@@ -260,7 +260,8 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         if (_activeQuestIds.Count == 0)
         {
             activeQuests.Add(_allQuests[0]);
-            _questBoardManager.AddQuest(_allQuests[0]);
+            if (_questBoardManager != null)
+                _questBoardManager.AddQuest(_allQuests[0]);
             completionAmount.Add(0);
             _activeQuestIds.Add(_allQuests[0].questId);
         }

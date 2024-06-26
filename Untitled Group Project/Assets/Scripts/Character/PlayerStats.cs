@@ -28,7 +28,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        if (swordId != -1)
+        if (swordId > 0)
         {
             _currentWeapon = InventoryManager.Instance.GetItemById(swordId);
 
@@ -67,6 +67,9 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         _playerAudioSource.clip = _levelUpSound;
         _playerAudioSource.Play();
 
+        int extraXP = xpGoal - xp;
+        xp = extraXP;
+
         if (level == 0)
         {
             xpGoal = initialXpGoal;
@@ -79,8 +82,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         {
             CraftingManager.Instance.AddRecipe(_recipeToUnlock[level]);
         }
-        int extraXP = xpGoal - xp;
-        xp = extraXP;
         level++;
     }
 
@@ -142,6 +143,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.xp = xp;
         data.xpGoal = xpGoal;
         data.level = level;
+        data.swordId = swordId;
     }
 
 }
