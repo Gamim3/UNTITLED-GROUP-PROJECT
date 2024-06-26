@@ -98,8 +98,6 @@ public class Enemy : Entity
 
     public override void Start()
     {
-        _moveSpeed = _moveSpeed * Time.deltaTime;
-
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.speed = _moveSpeed;
@@ -123,6 +121,8 @@ public class Enemy : Entity
 
     public override void Update()
     {
+        _moveSpeed = startSpeed * Time.deltaTime;
+
         //Checks if player is insight hasent enterd combat and que is not empty if so begins the combat chain by executing a attack
         if (playerInSight && hasNotEnteredCombat && _brain.attackQueue.Count != 0)
         {
