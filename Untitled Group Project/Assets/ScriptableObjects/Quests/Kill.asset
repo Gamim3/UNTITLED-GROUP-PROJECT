@@ -22,7 +22,7 @@ MonoBehaviour:
     amount: 0
   enemyToHunt: 0
   xpReward: 200
-  recipeToUnlock: {fileID: 11400000, guid: 19b63518b21393d4db2e1846efd93617, type: 2}
+  recipeToUnlock: {fileID: 11400000, guid: 5014d7f3d35f9ce41a0668856f844629, type: 2}
   itemToGet:
     item: {fileID: 11400000, guid: 95553d2023a189a4980d8bff858e3018, type: 2}
     amount: 1
