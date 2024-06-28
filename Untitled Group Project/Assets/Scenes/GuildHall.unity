@@ -2585,7 +2585,7 @@ PrefabInstance:
     - target: {fileID: 6476759470577453689, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 199259.3
+      value: 199771.53
       objectReference: {fileID: 0}
     - target: {fileID: 7719693306170975533, guid: f443277716d21a240868be3f7fa4dbc0,
         type: 3}
@@ -8356,6 +8356,7 @@ PrefabInstance:
     - {fileID: 636378434696541584, guid: 1d146c1d338f52f49a7ea150e6de29bf, type: 3}
     - {fileID: 1052603385812027867, guid: 1d146c1d338f52f49a7ea150e6de29bf, type: 3}
     - {fileID: 2121163588713524708, guid: 1d146c1d338f52f49a7ea150e6de29bf, type: 3}
+    - {fileID: 8262866963534084833, guid: 1d146c1d338f52f49a7ea150e6de29bf, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
@@ -8375,31 +8376,31 @@ PrefabInstance:
       addedObject: {fileID: 1795190678}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 90
+      insertIndex: 89
       addedObject: {fileID: 209239557}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 91
+      insertIndex: 90
       addedObject: {fileID: 1372633676}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 98
+      insertIndex: 97
       addedObject: {fileID: 1071955289}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 99
+      insertIndex: 98
       addedObject: {fileID: 542395615}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 117
+      insertIndex: 116
       addedObject: {fileID: 1092328914}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 118
+      insertIndex: 117
       addedObject: {fileID: 1402282528}
     - targetCorrespondingSourceObject: {fileID: 8706044562120348565, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
-      insertIndex: 138
+      insertIndex: 137
       addedObject: {fileID: 620384426}
     - targetCorrespondingSourceObject: {fileID: 4803926709899236496, guid: 1d146c1d338f52f49a7ea150e6de29bf,
         type: 3}
