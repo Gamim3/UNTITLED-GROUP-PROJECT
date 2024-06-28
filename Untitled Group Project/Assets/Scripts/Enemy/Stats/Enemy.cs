@@ -201,6 +201,8 @@ public class Enemy : Entity
 
         if (_healthPoints <= 0)
         {
+            animator.SetBool("Death", true);
+
             if (_questManager != null)
             {
                 for (int i = 0; i < _questManager.activeQuests.Count; i++)
@@ -218,8 +220,6 @@ public class Enemy : Entity
             {
                 DataPersistenceManager.instance.SaveManualGame();
             }
-
-            SceneFader.Instance.FadeTo("GuildHall");
         }
 
         _distance = Vector3.Distance(transform.position, player.transform.position);
@@ -294,6 +294,11 @@ public class Enemy : Entity
         {
             DamageLimb[i].GetComponent<MeleeCollision>().damage = dmg;
         }
+    }
+
+    public void DeathAnimEnd()
+    {
+        SceneFader.Instance.FadeTo("GuildHall");
     }
 
     #endregion
