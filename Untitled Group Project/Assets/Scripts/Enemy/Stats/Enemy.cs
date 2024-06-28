@@ -179,7 +179,7 @@ public class Enemy : Entity
         {
             timeSinceLastAction = 0;
 
-            if(_brain.attackQueue.Count == 0)
+            if (_brain.attackQueue.Count == 0)
             {
                 _brain.MakeDesicion();
                 ExecuteAttack();
@@ -199,8 +199,10 @@ public class Enemy : Entity
 
         base.Update();
 
-        if (_healthPoints <= 0)
+
+        if (_healthPoints <= 0 && !savebool)
         {
+            savebool = true;
             animator.SetBool("Death", true);
 
             if (_questManager != null)
@@ -230,6 +232,7 @@ public class Enemy : Entity
         _logic.distance = _distance;
     }
 
+    bool savebool = false;
     #endregion
 
     #region AnimationVoids

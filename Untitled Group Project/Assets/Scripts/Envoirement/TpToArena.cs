@@ -8,6 +8,9 @@ public class TpToArena : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.GetComponentInParent<PlayerStats>())
+        {
             SceneFader.Instance.FadeTo("Game");
+            DataPersistenceManager.instance.SaveManualGame();
+        }
     }
 }

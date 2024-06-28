@@ -154,7 +154,9 @@ MonoBehaviour:
   _dashForce: 12
   _dashMent: {x: 0, y: 0, z: 0}
   _canDash: 1
+  _maxDashTime: 1
   _isDashTime: 1
+  _resetDash: 0
   _isGrounded: 1
   _groundContact: 0
   _groundLayer:

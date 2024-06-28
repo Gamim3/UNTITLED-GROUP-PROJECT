@@ -243,30 +243,34 @@ public class QuestManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        // if ()
         Debug.Log("LOADING QUESTMANAGER");
-        for (int i = 0; i < data.questIds.Length; i++)
+        if (_questBoardManager != null)
         {
-            if (data.questIds[i] > 0)
+            for (int i = 0; i < data.questIds.Length; i++)
             {
-                activeQuests.Add(GetQuestById(data.questIds[i]));
-                _questBoardManager.AddQuest(GetQuestById(data.questIds[i]));
-                completionAmount.Add(data.completionAmounts[i]);
-                _activeQuestIds.Add(data.questIds[i]);
-                Debug.Log("LOAD");
+                if (data.questIds[i] > 0)
+                {
+                    activeQuests.Add(GetQuestById(data.questIds[i]));
+                    _questBoardManager.AddQuest(GetQuestById(data.questIds[i]));
+                    completionAmount.Add(data.completionAmounts[i]);
+                    _activeQuestIds.Add(data.questIds[i]);
+                    Debug.Log("LOAD");
+                }
             }
-        }
 
-        // ADDED BY DOUCHE_BOX
-        if (_activeQuestIds.Count == 0)
-        {
-            activeQuests.Add(_allQuests[0]);
-            if (_questBoardManager != null)
-                _questBoardManager.AddQuest(_allQuests[0]);
-            completionAmount.Add(0);
-            _activeQuestIds.Add(_allQuests[0].questId);
+            // ADDED BY DOUCHE_BOX
+            if (_activeQuestIds.Count == 0)
+            {
+                activeQuests.Add(_allQuests[0]);
+                if (_questBoardManager != null)
+                    _questBoardManager.AddQuest(_allQuests[0]);
+                completionAmount.Add(0);
+                _activeQuestIds.Add(_allQuests[0].questId);
+            }
+            _hasLoaded = true;
+            // ADDED BY DOUCHE_BOX
         }
-        _hasLoaded = true;
-        // ADDED BY DOUCHE_BOX
     }
 
     public void SaveData(GameData data)
