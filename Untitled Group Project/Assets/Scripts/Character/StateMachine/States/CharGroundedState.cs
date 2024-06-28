@@ -83,7 +83,7 @@ public class CharGroundedState : CharBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsSloped)
+        if (Ctx.IsSloped && !Ctx.IsJumpAction)
         {
             SwitchState(Factory.Sloped());
         }

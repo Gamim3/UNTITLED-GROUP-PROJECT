@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharDashState : CharBaseState
@@ -11,11 +9,18 @@ public class CharDashState : CharBaseState
 
     public override void EnterState()
     {
+
         InitializeSubState();
 
         Ctx.PlayerAnimator.SetTrigger("Dash");
 
+        Debug.Log("ENTER DASH");
+
         Ctx.IsDashingState = true;
+
+        Ctx.IsDashTime = Ctx.MaxDashTime;
+
+        Ctx.ResetDash = true;
 
         Ctx.DashMent = (Ctx.Orientation.forward * Ctx.CurrentMovementInput.y) + (Ctx.Orientation.right * Ctx.CurrentMovementInput.x);
 
@@ -24,53 +29,76 @@ public class CharDashState : CharBaseState
             Ctx.DashMent = Ctx.PlayerObj.forward;
         }
 
-        Ctx.CanDash = false;
-
-        HandleDash();
+        if (Ctx.CanDash)
+        {
+            HandleDash();
+        }
     }
 
     public override void ExitState()
     {
+        Debug.Log("EXIT DASH");
+
+        Ctx.CanDash = false;
+
+        Ctx.IsDashTime = Ctx.MaxDashTime;
+
         Ctx.IsDashingState = false;
 
-        Ctx.StartCoroutine(Ctx.DashCooldown());
+        Ctx.ResetDash = true;
     }
 
     public override void UpdateState()
     {
+        Debug.Log(" Dash Update");
+
         CheckSwitchStates();
     }
 
-    public override void FixedUpdateState() { }
+    public override void FixedUpdateState()
+    {
+        HandleDashTime();
+    }
 
     public override void InitializeSubState() { }
 
     public override void CheckSwitchStates()
     {
-        if (!Ctx.IsMoveAction && !Ctx.IsStunned)
+        if (!Ctx.IsMoveAction && !Ctx.IsStunned && Ctx.IsDashTime == 0)
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsStunned)
+        else if (Ctx.IsMoveAction && !Ctx.IsRunAction && !Ctx.IsStunned && Ctx.IsDashTime == 0)
         {
             SwitchState(Factory.Walking());
         }
-        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsStunned)
+        else if (Ctx.IsMoveAction && Ctx.IsRunAction && !Ctx.IsStunned && Ctx.IsDashTime == 0)
         {
             SwitchState(Factory.Running());
         }
-        else if (Ctx.IsStunned)
+        else if (Ctx.IsStunned && Ctx.IsDashTime == 0)
         {
             SwitchState(Factory.Stun());
         }
     }
 
-    // void HandleDash(float x, float y)
     void HandleDash()
     {
         Ctx.IsForced = true;
         Ctx.ExtraForce = Ctx.DashForce;
 
         Ctx.PlayerRigidBody.AddForce(Ctx.DashMent * Ctx.DashForce, ForceMode.Impulse);
+    }
+
+    void HandleDashTime()
+    {
+        if (Ctx.IsJumpTime > 0)
+        {
+            Ctx.IsDashTime -= Time.deltaTime;
+        }
+        else
+        {
+            Ctx.IsDashTime = 0;
+        }
     }
 }

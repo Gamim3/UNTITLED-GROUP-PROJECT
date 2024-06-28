@@ -146,9 +146,17 @@ public class CharStateMachine : Entity
     public bool CanDash
     { get { return _canDash; } set { _canDash = value; } }
 
+    [SerializeField] float _maxDashTime;
+    public float MaxDashTime
+    { get { return _maxDashTime; } }
+
     [SerializeField] float _isDashTime;
     public float IsDashTime
     { get { return _isDashTime; } set { _isDashTime = value; } }
+
+    [SerializeField] bool _resetDash;
+    public bool ResetDash
+    { get { return _resetDash; } set { _resetDash = value; } }
 
     #endregion
 
@@ -489,6 +497,8 @@ public class CharStateMachine : Entity
             _playerCam = Camera.main;
         }
 
+        _isDashTime = _maxDashTime;
+
         playerInput.actions.FindActionMap("Menu").Enable();
         playerInput.actions.FindActionMap("Game").Enable();
     }
@@ -575,11 +585,6 @@ public class CharStateMachine : Entity
 
         _movementSpeed = PlayerRigidBody.velocity.magnitude;
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-
-        }
-
         Debug.DrawRay(transform.position, Vector3.down, Color.cyan);
 
         if (_nextTarget != null)
@@ -596,6 +601,18 @@ public class CharStateMachine : Entity
         else
         {
             _playerAnimator.SetBool("Grounded", false);
+        }
+
+        if (_resetDash && _isDashTime > 0)
+        {
+            _isDashTime -= Time.deltaTime;
+            _canDash = false;
+        }
+        else if (_resetDash && _isDashTime <= 0)
+        {
+            _isDashTime = _maxDashTime;
+            _resetDash = false;
+            _canDash = true;
         }
 
 
@@ -618,11 +635,6 @@ public class CharStateMachine : Entity
 
         LastDesiredMoveForce = DesiredMoveForce;
 
-        // Possible Problem with logic ask niels
-        // if (_logic != null) 
-        // {
-        //     _logic.playerHealth = _healthPoints / _maxHealth * 100;
-        // }
         if (_logic != null)
         {
             _logic.playerHealth = _healthPoints / _maxHealth * 100;
@@ -654,7 +666,6 @@ public class CharStateMachine : Entity
         {
             float baba = Vector3.Distance(transform.position, tempHit.point);
 
-            //Debug.Log($"Collision detected this close to the ground: {baba - _playerHeight / 2}");
             if (MyApproximation(baba, _playerHeight / 2, 0.02f))
             {
                 _groundContact = true;
@@ -821,20 +832,6 @@ public class CharStateMachine : Entity
             return;
         }
 
-        // foreach (Transform target in _targetsInRange)
-        // {
-        //     if (target.GetComponent<Renderer>().isVisible)
-        //     {
-        //         _targetsVisible.Add(target);
-        //     }
-        // }
-
-        // if (_targetsVisible.Count == 0)
-        // {
-        //     Debug.Log($"Checked for visible targets but there were no targets in visible, there are {_targetsInRange.Count} targets in range");
-        //     return null;
-        // }
-
         Transform closestTarget = null;
         float minimalDistance = Mathf.Infinity;
         Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) / 2;
@@ -844,7 +841,6 @@ public class CharStateMachine : Entity
             Transform target = _targetsInRange[targetIndex];
             Vector3 targetScreenPoint = _playerCam.WorldToScreenPoint(target.transform.position);
 
-            // Only calculate the distance with an enemy if it is located within the screen bounds
             if (targetScreenPoint.x > 0 && targetScreenPoint.x < Screen.width && targetScreenPoint.y > 0 && targetScreenPoint.y < Screen.height)
             {
                 float distance = Vector2.Distance(targetScreenPoint, screenCenter);
@@ -899,19 +895,6 @@ public class CharStateMachine : Entity
     #endregion
 
     #region Speed
-
-    // public void HandleStrafeSpeed()
-    // {
-    //     if (_currentMovementInput.y == 1)
-    //     {
-    //         _strafeSpeedMultiplier = 1.0f; // Full speed when moving forward
-    //     }
-    //     else
-    //     {
-    //         // Adjust strafe speed based on forward input
-    //         _strafeSpeedMultiplier = Mathf.Lerp(0.5f, 1.0f, Mathf.Abs(_currentMovementInput.y));
-    //     }
-    // }
 
     private void SpeedControl()
     {
@@ -1008,13 +991,6 @@ public class CharStateMachine : Entity
         _mouseSensMultiplier = PlayerPrefs.GetFloat(_mouseSensPref);
         _toggleRun = PlayerPrefs.GetInt(_toggleRunPref) == 0 ? false : true;
         _camOffsetZ = PlayerPrefs.GetFloat(_camOffsetPref);
-    }
-
-    public IEnumerator DashCooldown()
-    {
-        yield return new WaitForSeconds(_isDashTime);
-
-        _canDash = true;
     }
 
     private void OnDrawGizmos()
